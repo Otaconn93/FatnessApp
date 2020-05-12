@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
-//ALL YOUR BASE ARE BELONG TO US
+//SPYDER IS AIDS
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
