@@ -1,4 +1,4 @@
-package com.shamilgradov.fatnessapp;
+package com.mobilesysteme.fatnessapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
