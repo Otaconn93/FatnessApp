@@ -166,81 +166,92 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Unit getUnitById(int _id) {
 
-        Cursor cursor = getSQLObjectCursorById("SELECT * FROM " + UNIT_TABLE_NAME
-                + " WHERE " + UNIT_ID + " = '" + _id + "'");
-
-        Unit unit = null;
-        if (cursor.moveToFirst()) {
-            unit = buildUnit(cursor);
-        }
-
-        return unit;
-    }
-
-    public FoodGroup getFoodGroupById(int _id) {
-
-        Cursor cursor = getSQLObjectCursorById("SELECT * FROM " + FOODGROUP_TABLE_NAME
-                + " WHERE " + FOODGROUP_ID + " = '" + _id + "'");
-
-        FoodGroup foodGroup = null;
-        if (cursor.moveToFirst()) {
-            foodGroup = buildFoodGroup(cursor);
-        }
-
-        return foodGroup;
-    }
-
-    public Food getFoodById(int _id) {
-
-        Cursor cursor = getSQLObjectCursorById("SELECT * FROM " + FOOD_TABLE_NAME
-                + " WHERE " + FOOD_ID + " = '" + _id + "'");
-
-        Food food = null;
-        if (cursor.moveToFirst()) {
-            food = buildFood(cursor);
-        }
-
-        return food;
-    }
-
-    public Recipe getRecipeById(int _id) {
-
-        Cursor cursor = getSQLObjectCursorById("SELECT * FROM " + RECIPE_TABLE_NAME
-                + " WHERE " + FOOD_ID + " = '" + _id + "'");
-
-        Recipe recipe = null;
-        if (cursor.moveToFirst()) {
-            recipe = buildRecipe(cursor);
-        }
-
-        return recipe;
-    }
-
-    public List<Food> getIngredientsByRecipeId(int recipe_id) {
-
-        Cursor cursor = getSQLObjectCursorById("SELECT " + RECIPEINGREDIENT_INGREDIENT_ID
-                + " FROM " + RECIPEINGREDIENT_TABLE_NAME
-                + " WHERE " + RECIPEINGREDIENT_RECIPE_ID + " = '" + recipe_id + "'");
-
-        List<Food> ingredients = null;
-        if (cursor.moveToFirst()) {
-
-            do {
-                int ingredient_id = cursor.getInt(0);
-                Food food = getFoodById(ingredient_id);                                             // TODO get by a single sql-statement
-                ingredients.add(food);
-            } while (cursor.moveToNext());
-        }
-
-        return ingredients;
-    }
-
-    private Cursor getSQLObjectCursorById(String select) {
+        String select = "SELECT * FROM " + UNIT_TABLE_NAME
+                + " WHERE " + UNIT_ID + " = '" + _id + "'";
 
         try(SQLiteDatabase db = this.getReadableDatabase();
             Cursor cursor = db.rawQuery(select, null)) {
 
-            return cursor;
+            Unit unit = null;
+            if (cursor.moveToFirst()) {
+                unit = buildUnit(cursor);
+            }
+
+            return unit;
+        }
+    }
+
+    public FoodGroup getFoodGroupById(int _id) {
+
+        String select = "SELECT * FROM " + FOODGROUP_TABLE_NAME
+                + " WHERE " + FOODGROUP_ID + " = '" + _id + "'";
+
+        try(SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(select, null)) {
+
+            FoodGroup foodGroup = null;
+            if (cursor.moveToFirst()) {
+                foodGroup = buildFoodGroup(cursor);
+            }
+
+            return foodGroup;
+        }
+    }
+
+    public Food getFoodById(int _id) {
+
+        String select = "SELECT * FROM " + FOOD_TABLE_NAME
+                + " WHERE " + FOOD_ID + " = '" + _id + "'";
+
+        try(SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(select, null)) {
+
+            Food food = null;
+            if (cursor.moveToFirst()) {
+                food = buildFood(cursor);
+            }
+
+            return food;
+        }
+    }
+
+    public Recipe getRecipeById(int _id) {
+
+        String select = "SELECT * FROM " + RECIPE_TABLE_NAME
+                + " WHERE " + RECIPE_ID + " = '" + _id + "'";
+
+        try(SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(select, null)) {
+
+            Recipe recipe = null;
+            if (cursor.moveToFirst()) {
+                recipe = buildRecipe(cursor);
+            }
+
+            return recipe;
+        }
+    }
+
+    public List<Food> getIngredientsByRecipeId(int recipe_id) {
+
+        String select = "SELECT " + RECIPEINGREDIENT_INGREDIENT_ID
+                + " FROM " + RECIPEINGREDIENT_TABLE_NAME
+                + " WHERE " + RECIPEINGREDIENT_RECIPE_ID + " = '" + recipe_id + "'";
+
+        try(SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(select, null)) {
+
+            List<Food> ingredients = null;
+            if (cursor.moveToFirst()) {
+
+                do {
+                    int ingredient_id = cursor.getInt(0);
+                    Food food = getFoodById(ingredient_id);                                             // TODO get by a single sql-statement
+                    ingredients.add(food);
+                } while (cursor.moveToNext());
+            }
+
+            return ingredients;
         }
     }
 
@@ -299,7 +310,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(UNIT_NAME, name);
         contentValues.put(UNIT_TOKEN, token);
 
-        return add(FOOD_TABLE_NAME, contentValues);
+        return add(UNIT_TABLE_NAME, contentValues);
     }
 
     public int addFoodGroup(int parent_id, String name) {
@@ -308,7 +319,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(FOODGROUP_PARENT_ID, parent_id);
         contentValues.put(FOODGROUP_NAME, name);
 
-        return add(FOOD_TABLE_NAME, contentValues);
+        return add(FOODGROUP_TABLE_NAME, contentValues);
     }
 
     public int addFood(int group_id, String name, int unit_id, int calories, int default_quantity) {
@@ -357,15 +368,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void updateFoodGroup(int _id, int parent_id, String name) {
+
+        String query = "UPDATE " + FOODGROUP_TABLE_NAME + " SET " + FOODGROUP_PARENT_ID + " = '" + parent_id + "', " + FOODGROUP_NAME + " = '" + name + "' WHERE " + FOOD_ID + " = '" + _id + "'";
+        update(query);
+    }
+
     public void updateFood(int _id, int group_id, String name, int unit_id, int calories, int default_quantity) {
 
         String query = "UPDATE " + FOOD_TABLE_NAME + " SET " + FOOD_GROUP_ID + " = '" + group_id + "', " + FOOD_NAME + " = '" + name + "', " + FOOD_UNIT_ID + " = '" + unit_id + "', " + FOOD_CALORIES + " = '" + calories + "', " + FOOD_DEFAULT_QUANTITY + " = '" + default_quantity + "' WHERE " + FOOD_ID + " = '" + _id + "'";
         update(query);
     }
 
-    public void updateRecipe(int _id, int group_id, String name, int unit_id, int calories, int default_quantity) {
+    public void updateRecipe(int _id, String name, int default_calories, String description) {
 
-        String query = "UPDATE " + FOOD_TABLE_NAME + " SET " + FOOD_GROUP_ID + " = '" + group_id + "', " + FOOD_NAME + " = '" + name + "', " + FOOD_UNIT_ID + " = '" + unit_id + "', " + FOOD_CALORIES + " = '" + calories + "', " + FOOD_DEFAULT_QUANTITY + " = '" + default_quantity + "' WHERE " + FOOD_ID + " = '" + _id + "'";
+        String query = "UPDATE " + RECIPE_TABLE_NAME + " SET " + RECIPE_NAME + " = '" + name + "', " + RECIPE_DEFAULT_CALORIES + " = '" + default_calories + "', " + RECIPE_DESCRIPTION + " = '" + description + "' WHERE " + RECIPE_ID + " = '" + _id + "'";
         update(query);
     }
 
