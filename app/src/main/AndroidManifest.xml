@@ -10,11 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".drawerActivity"
-            android:label="@string/title_activity_drawer"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
-        <activity
             android:name=".AddActivity"
             android:parentActivityName=".DashboardActivity"
             android:windowSoftInputMode="adjustResize" />
