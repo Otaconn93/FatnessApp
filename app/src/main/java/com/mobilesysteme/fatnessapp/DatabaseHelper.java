@@ -14,6 +14,7 @@ import com.mobilesysteme.fatnessapp.sqlObjects.Recipe;
 import com.mobilesysteme.fatnessapp.sqlObjects.RecipeIngredient;
 import com.mobilesysteme.fatnessapp.sqlObjects.Unit;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -241,7 +242,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try(SQLiteDatabase db = this.getReadableDatabase();
             Cursor cursor = db.rawQuery(select, null)) {
 
-            List<Food> ingredients = null;
+            List<Food> ingredients = new ArrayList<>();
             if (cursor.moveToFirst()) {
 
                 do {
@@ -252,6 +253,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
 
             return ingredients;
+        }
+    }
+
+    public List<Food> getFoodByFoodGroupId(int foodgroup_id) {
+
+        String select = "SELECT * FROM " + FOOD_TABLE_NAME
+                + " WHERE " + FOOD_GROUP_ID + " = '" + foodgroup_id + "'";
+
+        try(SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(select, null)) {
+
+            List<Food> foods = new ArrayList<>();
+            if (cursor.moveToFirst()) {
+
+                do {
+                    foods.add( buildFood(cursor));
+                } while (cursor.moveToNext());
+            }
+
+            return foods;
+        }
+    }
+
+    public List<FoodGroup> getRootFoodGroups() {
+
+        return getChildFoodGroups(-1);
+    }
+
+    public List<FoodGroup> getChildFoodGroups(int parent_id) {
+
+        String select = "SELECT * FROM " + FOODGROUP_TABLE_NAME
+                + " WHERE " + FOODGROUP_PARENT_ID + " = '" + parent_id + "'";
+
+        try(SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(select, null)) {
+
+            List<FoodGroup> rootFoodGroups = new ArrayList<>();
+            if (cursor.moveToFirst()) {
+
+                do {
+                    rootFoodGroups.add(buildFoodGroup(cursor));
+                } while (cursor.moveToNext());
+            }
+
+            return rootFoodGroups;
         }
     }
 
