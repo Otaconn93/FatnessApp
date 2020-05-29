@@ -1,6 +1,8 @@
 package com.mobilesysteme.fatnessapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -10,7 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobilesysteme.fatnessapp.sqlObjects.FoodGroup;
 
-public class AddActivity extends AppCompatActivity implements OnRootFoodGroupListClickListener{
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class AddActivity extends AppCompatActivity implements OnFoodGroupClickListener {
 
     private static DatabaseHelper databaseHelper;
 
@@ -57,8 +62,16 @@ public class AddActivity extends AppCompatActivity implements OnRootFoodGroupLis
     }
 
     @Override
-    public void onItemClick(FoodGroup foodGroup, int position) {
-        subFoodGroupAdapter = new SubFoodGroupAdapter(databaseHelper.getChildFoodGroups(position + 1));
-        subFoodGroupRecyclerView.setAdapter(subFoodGroupAdapter);
+    public void onItemClick(FoodGroup foodGroup, int position, boolean isRoot) {
+        int datasetSize = databaseHelper.getChildFoodGroups(foodGroup.getId()).size();
+
+        if(isRoot && datasetSize > 0) { // check if food group has children
+            subFoodGroupAdapter = new SubFoodGroupAdapter(databaseHelper.getChildFoodGroups(foodGroup.getId()), this);
+            subFoodGroupRecyclerView.setAdapter(subFoodGroupAdapter);
+        } else {
+            Intent intent = new Intent(getBaseContext(), FoodListActivity.class);
+            intent.putExtra("POSITION", foodGroup.getId());
+            startActivity(intent);
+        }
     }
 }

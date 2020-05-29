@@ -16,7 +16,7 @@ import java.util.List;
 
 public class RootFoodGroupAdapter extends RecyclerView.Adapter<RootFoodGroupAdapter.RootFoodGroupViewHolder> {
     private List<FoodGroup> dataset;
-    private OnRootFoodGroupListClickListener listener;
+    private OnFoodGroupClickListener listener;
 
     public static class RootFoodGroupViewHolder extends RecyclerView.ViewHolder {
         public CardView cv;
@@ -26,7 +26,7 @@ public class RootFoodGroupAdapter extends RecyclerView.Adapter<RootFoodGroupAdap
         }
     }
 
-    public RootFoodGroupAdapter(List<FoodGroup> myDataset, OnRootFoodGroupListClickListener myListener) {
+    public RootFoodGroupAdapter(List<FoodGroup> myDataset, OnFoodGroupClickListener myListener) {
         dataset = myDataset;
         listener = myListener;
     }
@@ -34,7 +34,7 @@ public class RootFoodGroupAdapter extends RecyclerView.Adapter<RootFoodGroupAdap
     @NonNull
     @Override
     public RootFoodGroupViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        CardView view = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.rootfoodgroup_item, parent, false);
+        CardView view = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.foodgroup_item, parent, false);
         RootFoodGroupViewHolder vh = new RootFoodGroupViewHolder(view);
         return vh;
     }
@@ -47,7 +47,7 @@ public class RootFoodGroupAdapter extends RecyclerView.Adapter<RootFoodGroupAdap
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onItemClick(dataset.get(position), position);
+                listener.onItemClick(dataset.get(position), position, true);
             }
         });
     }
