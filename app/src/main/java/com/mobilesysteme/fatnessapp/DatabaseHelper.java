@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.mobilesysteme.fatnessapp.sqlObjects.Eaten;
+import com.mobilesysteme.fatnessapp.sqlObjects.EatenFood;
+import com.mobilesysteme.fatnessapp.sqlObjects.EatenRecipe;
 import com.mobilesysteme.fatnessapp.sqlObjects.Food;
 import com.mobilesysteme.fatnessapp.sqlObjects.FoodGroup;
 import com.mobilesysteme.fatnessapp.sqlObjects.Recipe;
@@ -15,13 +18,14 @@ import com.mobilesysteme.fatnessapp.sqlObjects.RecipeIngredient;
 import com.mobilesysteme.fatnessapp.sqlObjects.Unit;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "fatness.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
 
     // UNIT_TABLE
@@ -134,6 +138,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "FOREIGN KEY(" + RECIPEINGREDIENT_RECIPE_ID + ") REFERENCES " + RECIPE_TABLE_NAME + "(" + RECIPE_ID + ") ON DELETE CASCADE, "
             + "FOREIGN KEY(" + RECIPEINGREDIENT_INGREDIENT_ID + ") REFERENCES " + FOOD_TABLE_NAME + "(" + FOOD_ID + ") ON DELETE CASCADE)";
 
+    // EATENFOOD_TABLE & EATENRECIPE_TABLE
+    private static final String EATENFOOD_TABLE_NAME = "eaten_food";
+    private static final String EATENRECIPE_TABLE_NAME = "eaten_recipe";
+
+    private static final String EATEN_ID = "_id";
+    private static final String EATEN_ID_TYPE = SqlFieldType.INTEGER.toString();
+
+    private static final String EATEN_EATEN_ID = "eaten_id";
+    private static final String EATEN_EATEN_ID_TYPE = SqlFieldType.INTEGER.toString();
+
+    private static final String EATEN_CALORIES = "calories";
+    private static final String EATEN_CALORIES_TYPE = SqlFieldType.INTEGER.toString();
+
+    private static final String EATEN_DATE = "date";
+    private static final String EATEN_DATE_TYPE = SqlFieldType.DATETIME.toString();
+
+    private static final String EATENFOOD_CREATE_TABLE_TYPE = "CREATE TABLE " + EATENFOOD_TABLE_NAME + "("
+            + EATEN_ID + " " + EATEN_ID_TYPE + " PRIMARY KEY AUTOINCREMENT, "
+            + EATEN_EATEN_ID + " " + EATEN_EATEN_ID_TYPE + ", "
+            + EATEN_CALORIES + " " + EATEN_CALORIES_TYPE + ", "
+            + EATEN_DATE + " " + EATEN_DATE_TYPE + " DEFAULT CURRENT_TIMESTAMP, "
+            + "FOREIGN KEY(" + EATEN_EATEN_ID + ") REFERENCES " + FOOD_TABLE_NAME + "(" + FOOD_ID + "))";
+
+    private static final String EATENRECIPE_CREATE_TABLE_TYPE = "CREATE TABLE " + EATENRECIPE_TABLE_NAME + "("
+            + EATEN_ID + " " + EATEN_ID_TYPE + " PRIMARY KEY AUTOINCREMENT, "
+            + EATEN_EATEN_ID + " " + EATEN_EATEN_ID_TYPE + ", "
+            + EATEN_CALORIES + " " + EATEN_CALORIES_TYPE + ", "
+            + EATEN_DATE + " " + EATEN_DATE_TYPE + " DEFAULT CURRENT_TIMESTAMP, "
+            + "FOREIGN KEY(" + EATEN_EATEN_ID + ") REFERENCES " + RECIPE_TABLE_NAME + "(" + RECIPE_ID + "))";
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -148,6 +182,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL(FOOD_CREATE_TABLE);
             db.execSQL(RECIPE_CREATE_TABLE);
             db.execSQL(RECIPEINGREDIENT_CREATE_TABLE);
+            db.execSQL(EATENFOOD_CREATE_TABLE_TYPE);
+            db.execSQL(EATENRECIPE_CREATE_TABLE_TYPE);
         } catch (SQLException ex) {
             Log.e("DatabaseHelper", "Error creating tables", ex);
         }
@@ -161,6 +197,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + FOOD_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + RECIPE_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + RECIPEINGREDIENT_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + EATENFOOD_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + EATENRECIPE_TABLE_NAME);
+
+        DatabaseContentHelperUtils.fillDatabase(this);
 
         onCreate(db);
     }
@@ -256,6 +296,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public EatenFood getEatenFoodById(int _id) {
+
+        String select = "SELECT * FROM " + EATENFOOD_TABLE_NAME
+                + " WHERE " + EATEN_ID + " = '" + _id + "'";
+
+        try(SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(select, null)) {
+
+            EatenFood eatenFood = null;
+            if (cursor.moveToFirst()) {
+                eatenFood = buildEatenFood(cursor);
+            }
+
+            return eatenFood;
+        }
+    }
+
+    public EatenRecipe getEatenRecipeById(int _id) {
+
+        String select = "SELECT * FROM " + EATENRECIPE_TABLE_NAME
+                + " WHERE " + EATEN_ID + " = '" + _id + "'";
+
+        try(SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(select, null)) {
+
+            EatenRecipe eatenRecipe = null;
+            if (cursor.moveToFirst()) {
+                eatenRecipe = buildEatenRecipe(cursor);
+            }
+
+            return eatenRecipe;
+        }
+    }
+
     public List<Food> getFoodByFoodGroupId(int foodgroup_id) {
 
         String select = "SELECT * FROM " + FOOD_TABLE_NAME
@@ -301,6 +375,101 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public List<EatenFood> getEatenFoods() {
+
+        String select = "SELECT * FROM " + EATENFOOD_TABLE_NAME;
+
+        try(SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(select, null)) {
+
+            List<EatenFood> eatenFoods = new ArrayList<>();
+            if (cursor.moveToFirst()) {
+
+                do {
+                    eatenFoods.add(buildEatenFood(cursor));
+                } while (cursor.moveToNext());
+            }
+
+            return eatenFoods;
+        }
+    }
+
+    public List<EatenRecipe> getEatenRecipes() {
+
+        String select = "SELECT * FROM " + EATENRECIPE_TABLE_NAME;
+
+        try(SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(select, null)) {
+
+            List<EatenRecipe> eatenRecipes = new ArrayList<>();
+            if (cursor.moveToFirst()) {
+
+                do {
+                    eatenRecipes.add(buildEatenRecipe(cursor));
+                } while (cursor.moveToNext());
+            }
+
+            return eatenRecipes;
+        }
+    }
+
+    public List<EatenFood> getTodayEatenFoods() {
+
+        String select = "SELECT * FROM " + EATENFOOD_TABLE_NAME
+                + " WHERE DATE(" + EATEN_DATE + ") = DATE('now')";
+
+        try(SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(select, null)) {
+
+            List<EatenFood> eatenFoods = new ArrayList<>();
+            if (cursor.moveToFirst()) {
+
+                do {
+                    eatenFoods.add(buildEatenFood(cursor));
+                } while (cursor.moveToNext());
+            }
+
+            return eatenFoods;
+        }
+    }
+
+    public List<EatenRecipe> getTodayEatenRecipes() {
+
+        String select = "SELECT * FROM " + EATENRECIPE_TABLE_NAME
+                + " WHERE DATE(" + EATEN_DATE + ") = DATE('now')";
+
+        try(SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(select, null)) {
+
+            List<EatenRecipe> eatenRecipes = new ArrayList<>();
+            if (cursor.moveToFirst()) {
+
+                do {
+                    eatenRecipes.add(buildEatenRecipe(cursor));
+                } while (cursor.moveToNext());
+            }
+
+            return eatenRecipes;
+        }
+    }
+
+    public int getTodayConsumedCalories() {
+
+        String select = "SELECT Sum(" + EATEN_CALORIES + ") " +
+                "FROM " + EATENRECIPE_TABLE_NAME +  ", " + EATENRECIPE_TABLE_NAME
+                + " WHERE DATE(" + EATEN_DATE + ") = DATE('now')";
+
+        try(SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(select, null)) {
+
+            if (cursor.moveToFirst()) {
+                return cursor.getInt(cursor.getColumnIndex(EATEN_CALORIES));
+            }
+
+            return -1;
+        }
+    }
+
     private Unit buildUnit(Cursor cursor) {
 
         int _id = cursor.getInt(cursor.getColumnIndex(UNIT_ID));
@@ -335,10 +504,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         int _id = cursor.getInt(cursor.getColumnIndex(RECIPE_ID));
         String name = cursor.getString(cursor.getColumnIndex(RECIPE_NAME));
-        int default_calories = cursor.getInt(cursor.getColumnIndex(RECIPE_DEFAULT_CALORIES));
         String description = cursor.getString(cursor.getColumnIndex(RECIPE_DESCRIPTION));
 
-        return new Recipe(_id, name, default_calories, description);
+        return new Recipe(_id, name, description);
     }
 
     private RecipeIngredient buildRecipeIngredient(Cursor cursor) {
@@ -348,6 +516,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int ingredient_quantity = cursor.getInt(cursor.getColumnIndex(RECIPEINGREDIENT_INGREDIENT_QUANTITY));
 
         return new RecipeIngredient(recipe_id, ingredient_id, ingredient_quantity);
+    }
+
+    private EatenFood buildEatenFood(Cursor cursor) {
+
+        int _id = cursor.getInt(cursor.getColumnIndex(EATEN_ID));
+        int food_id = cursor.getInt(cursor.getColumnIndex(EATEN_EATEN_ID));
+        int calories = cursor.getInt(cursor.getColumnIndex(EATEN_CALORIES));
+        String dateSting = cursor.getString(cursor.getColumnIndex(EATEN_DATE));
+
+        return new EatenFood(_id, food_id, calories, DateUtils.getDateFromString(dateSting));
+    }
+
+    private EatenRecipe buildEatenRecipe(Cursor cursor) {
+
+        int _id = cursor.getInt(cursor.getColumnIndex(EATEN_ID));
+        int recipe_id = cursor.getInt(cursor.getColumnIndex(EATEN_EATEN_ID));
+        int calories = cursor.getInt(cursor.getColumnIndex(EATEN_CALORIES));
+        String dateSting = cursor.getString(cursor.getColumnIndex(EATEN_DATE));
+
+        return new EatenRecipe(_id, recipe_id, calories, DateUtils.getDateFromString(dateSting));
     }
 
     public int addUnit(String name, String token) {
@@ -407,6 +595,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public int addEatenFood(int food_id, int calories, Date date) {
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(EATEN_EATEN_ID, food_id);
+        contentValues.put(EATEN_CALORIES, calories);
+        contentValues.put(EATEN_DATE, DateUtils.getDateAsString(date));
+
+        return add(EATENFOOD_TABLE_NAME, contentValues);
+    }
+
+    public int addEatenRecipe(int recipe_id, int calories, Date date) {
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(EATEN_EATEN_ID, recipe_id);
+        contentValues.put(EATEN_CALORIES, calories);
+        contentValues.put(EATEN_DATE, DateUtils.getDateAsString(date));
+
+        return add(EATENRECIPE_TABLE_NAME, contentValues);
+    }
+
     private int add(String tableName, ContentValues contentValues) {
 
         try(SQLiteDatabase db = this.getWritableDatabase()) {
@@ -429,6 +637,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void updateRecipe(int _id, String name, int default_calories, String description) {
 
         String query = "UPDATE " + RECIPE_TABLE_NAME + " SET " + RECIPE_NAME + " = '" + name + "', " + RECIPE_DEFAULT_CALORIES + " = '" + default_calories + "', " + RECIPE_DESCRIPTION + " = '" + description + "' WHERE " + RECIPE_ID + " = '" + _id + "'";
+        update(query);
+    }
+
+    public void updateEatenFood(int _id, int food_id, int calories, Date date) {
+
+        String query = "UPDATE " + EATENFOOD_TABLE_NAME + " SET " + EATEN_EATEN_ID + " = '" + food_id + "', " + EATEN_CALORIES + " = '" + calories + "', " + EATEN_DATE + " = '" + date + "' WHERE " + EATEN_ID + " = '" + _id + "'";
+        update(query);
+    }
+
+    public void updateEatenRecipe(int _id, int recipe_id, int calories, Date date) {
+
+        String query = "UPDATE " + EATENFOOD_TABLE_NAME + " SET " + EATEN_EATEN_ID + " = '" + recipe_id + "', " + EATEN_CALORIES + " = '" + calories + "', " + EATEN_DATE + " = '" + date + "' WHERE " + EATEN_ID + " = '" + _id + "'";
         update(query);
     }
 
@@ -457,6 +677,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean deleteRecipeIngredientsByRecipeId(int recipe_id) {
         return delete("DELETE FROM " + RECIPEINGREDIENT_TABLE_NAME + " WHERE " + RECIPEINGREDIENT_RECIPE_ID + " = '" + recipe_id + "'");
+    }
+
+    public boolean deleteEatenFoodById(int _id) {
+        return delete("DELETE FROM " + EATENFOOD_TABLE_NAME + " WHERE " + EATEN_ID + " = '" + _id + "'");
+    }
+
+    public boolean deleteEatenRecipeById(int _id) {
+        return delete("DELETE FROM " + EATENRECIPE_TABLE_NAME + " WHERE " + EATEN_ID + " = '" + _id + "'");
     }
 
     private boolean delete(String deleteStatement) {

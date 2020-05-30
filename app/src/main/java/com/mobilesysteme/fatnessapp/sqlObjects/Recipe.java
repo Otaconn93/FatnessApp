@@ -6,13 +6,11 @@ public class Recipe {
 
     private int _id;
     private String name;
-    private int default_calories;
     private String description;
 
-    public Recipe(int _id, String name, int default_calories, String description) {
+    public Recipe(int _id, String name, String description) {
         this._id = _id;
         this.name = name;
-        this.default_calories = default_calories;
         this.description = description;
     }
 
@@ -32,10 +30,6 @@ public class Recipe {
 
     public String getName() {
         return name;
-    }
-
-    public int getDefaultCalories() {
-        return default_calories;
     }
 
     public String getDescription() {
