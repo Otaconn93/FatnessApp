@@ -13,6 +13,8 @@
             android:name=".AddActivity"
             android:parentActivityName=".DashboardActivity"
             android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".FirstLaunchActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".FoodListActivity"
             android:parentActivityName=".AddActivity"
             android:windowSoftInputMode="adjustResize" />
