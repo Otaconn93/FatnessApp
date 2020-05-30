@@ -12,16 +12,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class DashboardActivity extends AppCompatActivity {
 
+    private static DatabaseHelper databaseHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.dashToolbar);
-        setSupportActionBar(toolbar);
-
+        init();
         setTitle("Fatness-App");
+    }
 
+    private void init() {
         FloatingActionButton fabAdd = findViewById(R.id.fabAdd);
         fabAdd.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -29,6 +30,11 @@ public class DashboardActivity extends AppCompatActivity {
                 openAddActivity();
             }
         });
+        Toolbar toolbar = (Toolbar) findViewById(R.id.dashToolbar);
+        setSupportActionBar(toolbar);
+
+        databaseHelper = new DatabaseHelper(getApplicationContext());
+        //DatabaseContentHelperUtils.fillDatabase(databaseHelper);
     }
 
     private void openAddActivity() {
