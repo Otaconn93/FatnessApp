@@ -4,16 +4,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mobilesysteme.fatnessapp.sqlObjects.Food;
 import com.mobilesysteme.fatnessapp.sqlObjects.FoodGroup;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 public class AddActivity extends AppCompatActivity implements OnFoodGroupClickListener {
 
@@ -63,15 +70,17 @@ public class AddActivity extends AppCompatActivity implements OnFoodGroupClickLi
 
     @Override
     public void onItemClick(FoodGroup foodGroup, int position, boolean isRoot) {
-        int datasetSize = databaseHelper.getChildFoodGroups(foodGroup.getId()).size();
-
-        if(isRoot && datasetSize > 0) { // check if food group has children
-            subFoodGroupAdapter = new SubFoodGroupAdapter(databaseHelper.getChildFoodGroups(foodGroup.getId()), this);
+        if(isRoot) { // check if food group has children
+            List<FoodGroup> resultSet = new ArrayList<>();
+            resultSet.add(foodGroup);
+            resultSet.addAll(databaseHelper.getChildFoodGroups(foodGroup.getId()));
+            subFoodGroupAdapter = new SubFoodGroupAdapter(resultSet, this);
             subFoodGroupRecyclerView.setAdapter(subFoodGroupAdapter);
         } else {
             Intent intent = new Intent(getBaseContext(), FoodListActivity.class);
             intent.putExtra("POSITION", foodGroup.getId());
             startActivity(intent);
+            finish();
         }
     }
 }
