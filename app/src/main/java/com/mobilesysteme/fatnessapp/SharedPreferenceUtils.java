@@ -112,7 +112,7 @@ public class SharedPreferenceUtils {
      * @param context the ApplicationContext needed to access the SharedPreferences
      * @param targetWeight the targeted weight of the user in kg
      */
-    public static void saveTargetWeight(Context context, int targetWeight) {
+    public static void saveUserTargetWeight(Context context, int targetWeight) {
 
         context.getSharedPreferences(FILE_NAME, 0)
                 .edit()
@@ -125,7 +125,7 @@ public class SharedPreferenceUtils {
      * @param context the ApplicationContext needed to access the SharedPreferences
      * @param deadline the date of the users deadline
      */
-    public static void saveDeadline(Context context, Date deadline) {
+    public static void saveUserDeadline(Context context, Date deadline) {
 
         context.getSharedPreferences(FILE_NAME, 0)
                 .edit()
@@ -173,7 +173,7 @@ public class SharedPreferenceUtils {
      * removes the targeted weight from the SharedPreferences
      * @param context the ApplicationContext needed to access the SharedPreferences
      */
-    public static void removeTargetWeight(Context context) {
+    public static void removeUserTargetWeight(Context context) {
 
         context.getSharedPreferences(FILE_NAME, 0)
                 .edit()
@@ -185,7 +185,7 @@ public class SharedPreferenceUtils {
      * removes the users deadline to achieve its target weight from the SharedPreferences
      * @param context the ApplicationContext needed to access the SharedPreferences
      */
-    public static void removeDeadline(Context context) {
+    public static void removeUserDeadline(Context context) {
 
         context.getSharedPreferences(FILE_NAME, 0)
                 .edit()
