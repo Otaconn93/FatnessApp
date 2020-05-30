@@ -8,6 +8,7 @@ public class SharedPreferenceUtils {
     private static final String USER_HEIGHT_KEY = "userHeight";
     private static final String USER_WEIGHT_KEY = "userWeight";
     private static final String USER_AGE_KEY = "userAge";
+    private static final String FIRST_LAUNCH_KEY = "firstLaunch";
 
     /**
      * saves the users height to the SharedPreferences
@@ -49,6 +50,18 @@ public class SharedPreferenceUtils {
     }
 
     /**
+     * saves the status of the first activity launch to the SharedPreferences
+     * @param context the ApplicationContext needed to access the SharedPreferences
+     * @param newValue updated first launch value
+     */
+    public static void saveFirstLaunch(Context context, boolean newValue) {
+        context.getSharedPreferences(FILE_NAME, 0)
+                .edit()
+                .putBoolean(FIRST_LAUNCH_KEY, newValue)
+                .apply();
+    }
+
+    /**
      * extracts the users height from the SharedPreferences
      * @param context the ApplicationContext needed to access the SharedPreferences
      * @return the height of the user in centimeter
@@ -79,6 +92,16 @@ public class SharedPreferenceUtils {
 
         return context.getSharedPreferences(FILE_NAME, 0)
                 .getInt(USER_AGE_KEY, 0);
+    }
+
+    /**
+     *  extracts the status of the first app launch from the SharedPreferences
+     * @param context the ApplicationContext needed to access the SharedPreferences
+     * @return if the app is launched for the first time
+     */
+    public static boolean getFirstLaunch(Context context) {
+        return context.getSharedPreferences(FILE_NAME, 0)
+                .getBoolean(FIRST_LAUNCH_KEY, true);
     }
 
     /**
