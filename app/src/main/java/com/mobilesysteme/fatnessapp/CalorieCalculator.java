@@ -1,5 +1,7 @@
 package com.mobilesysteme.fatnessapp;
 
+import android.content.Context;
+
 public class CalorieCalculator {
 
     private float height = 180; // in cm
@@ -8,10 +10,12 @@ public class CalorieCalculator {
     private String gender = "m"; // w oder m
     private float dailyCaloriesLeft = 2000; // in kcal
     private float weightGoal = 88; // in kg
+    private SharedPreferenceUtils spu = new SharedPreferenceUtils();
 
-
-    public CalorieCalculator(float height) {
-        this.height = height;
+    public CalorieCalculator(Context context) {
+        setHeight(spu.getUserHeight(context));
+        setAge(spu.getUserAge(context));
+        setWeight(spu.getUserWeight(context));
     }
 
     /**
@@ -23,10 +27,10 @@ public class CalorieCalculator {
      * @return average calories per Day calculated from personal details
      */
     public float calculateDailyCalories(){
-        if(gender.equals("m")){
-            return (float) ((float) 655 + (9.6 * weight) + (1.8 * height) - (4.7 * age));
-        }else if(gender.equals("w")){
-            return (float) ((float) 66 + (13.7 * weight) + (5 * height) - (6.8 * age));
+        if(getGender().equals("m")){
+            return (float) ((float) 655 + (9.6 * getWeight()) + (1.8 * getHeight()) - (4.7 * getAge()));
+        }else if(getGender().equals("w")){
+            return (float) ((float) 66 + (13.7 * getWeight()) + (5 * getHeight()) - (6.8 * getAge()));
         }
         return 0;
     }
@@ -59,8 +63,11 @@ public class CalorieCalculator {
         return dailyCaloriesLeft;
     }
 
-    private void setDailyCaloriesLeft(float dailyCaloriesLeft) {
-        this.dailyCaloriesLeft = dailyCaloriesLeft;
-    }
+    private void setDailyCaloriesLeft(float dailyCaloriesLeft) { this.dailyCaloriesLeft = dailyCaloriesLeft; }
+
+    public String getGender() { return gender; }
+
+    public void setGender(String gender) { this.gender = gender; }
+
 
 }
