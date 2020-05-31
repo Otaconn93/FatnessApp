@@ -2,9 +2,7 @@ package com.mobilesysteme.fatnessapp.sqlObjects;
 
 import androidx.annotation.Nullable;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 public class EatenRecipe implements Eaten {
 
