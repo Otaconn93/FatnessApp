@@ -9,9 +9,10 @@ public class SharedPreferenceUtils {
     private static final String FILE_NAME = "FatnessPreferences";
     private static final String USER_HEIGHT_KEY = "userHeight";
     private static final String USER_WEIGHT_KEY = "userWeight";
-    private static final String USER_AGE_KEY = "userAge";
+    private static final String USER_AGE_KEY = "userAge"; 
     private static final String USER_TARGETWEIGHT_KEY = "userTargetWeight";
     private static final String USER_DEADLINE_KEY = "userDeadline";
+    private static final String FIRST_LAUNCH_KEY = "firstLaunch";
 
     /**
      * extracts the users height from the SharedPreferences
@@ -67,7 +68,7 @@ public class SharedPreferenceUtils {
         return new Date(context.getSharedPreferences(FILE_NAME, 0)
                 .getLong(USER_DEADLINE_KEY, 0));
     }
-
+  
     /**
      * saves the users height to the SharedPreferences
      * @param context the ApplicationContext needed to access the SharedPreferences
@@ -109,6 +110,19 @@ public class SharedPreferenceUtils {
 
     /**
      * saves the users targeted weight to the SharedPreferences
+     * saves the status of the first activity launch to the SharedPreferences
+     * @param context the ApplicationContext needed to access the SharedPreferences
+     * @param newValue updated first launch value
+     */
+    public static void saveFirstLaunch(Context context, boolean newValue) {
+        context.getSharedPreferences(FILE_NAME, 0)
+                .edit()
+                .putBoolean(FIRST_LAUNCH_KEY, newValue)
+                .apply();
+    }
+
+    /**
+     * extracts the users height from the SharedPreferences
      * @param context the ApplicationContext needed to access the SharedPreferences
      * @param targetWeight the targeted weight of the user in kg
      */
@@ -131,6 +145,16 @@ public class SharedPreferenceUtils {
                 .edit()
                 .putLong(USER_DEADLINE_KEY, deadline.getTime())
                 .apply();
+    }
+
+    /**
+     *  extracts the status of the first app launch from the SharedPreferences
+     * @param context the ApplicationContext needed to access the SharedPreferences
+     * @return if the app is launched for the first time
+     */
+    public static boolean getFirstLaunch(Context context) {
+        return context.getSharedPreferences(FILE_NAME, 0)
+                .getBoolean(FIRST_LAUNCH_KEY, true);
     }
 
     /**
