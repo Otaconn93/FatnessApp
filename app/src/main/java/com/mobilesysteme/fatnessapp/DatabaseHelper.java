@@ -98,7 +98,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     // RECIPE_TABLE
-    private static final String RECIPE_TABLE_NAME = "food_group";
+    private static final String RECIPE_TABLE_NAME = "recipe";
 
     private static final String RECIPE_ID = "_id";
     private static final String RECIPE_ID_TYPE = SqlFieldType.INTEGER.toString();
@@ -106,21 +106,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String RECIPE_NAME = "name";
     private static final String RECIPE_NAME_TYPE = SqlFieldType.TEXT.toString();
 
-    private static final String RECIPE_DEFAULT_CALORIES = "default_calories";
-    private static final String RECIPE_DEFAULT_CALORIES_TYPE = SqlFieldType.INTEGER.toString();
-
     private static final String RECIPE_DESCRIPTION = "description";
     private static final String RECIPE_DESCRIPTION_TYPE = SqlFieldType.TEXT.toString();
 
     private static final String RECIPE_CREATE_TABLE = "CREATE TABLE " + RECIPE_TABLE_NAME + "("
             + RECIPE_ID + " " + RECIPE_ID_TYPE + " PRIMARY KEY AUTOINCREMENT, "
             + RECIPE_NAME + " " + RECIPE_NAME_TYPE + ", "
-            + RECIPE_DEFAULT_CALORIES + " " + RECIPE_DEFAULT_CALORIES_TYPE + ", "
             + RECIPE_DESCRIPTION + " " + RECIPE_DESCRIPTION_TYPE + ")";
 
 
     // RECIPEINGREDIENT_TABLE
-    private static final String RECIPEINGREDIENT_TABLE_NAME = "food_group";
+    private static final String RECIPEINGREDIENT_TABLE_NAME = "recipe_ingredient";
 
     private static final String RECIPEINGREDIENT_RECIPE_ID = "recipe_id";
     private static final String RECIPEINGREDIENT_RECIPE_ID_TYPE = SqlFieldType.INTEGER.toString();
@@ -131,7 +127,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String RECIPEINGREDIENT_INGREDIENT_QUANTITY = "ingredient_quantity";
     private static final String RECIPEINGREDIENT_INGREDIENT_QUANTITY_TYPE = SqlFieldType.INTEGER.toString();
 
-    private static final String RECIPEINGREDIENT_CREATE_TABLE = "CREATE TABLE " + RECIPE_TABLE_NAME + "("
+    private static final String RECIPEINGREDIENT_CREATE_TABLE = "CREATE TABLE " + RECIPEINGREDIENT_TABLE_NAME + "("
             + RECIPEINGREDIENT_RECIPE_ID + " " + RECIPEINGREDIENT_RECIPE_ID_TYPE + ", "
             + RECIPEINGREDIENT_INGREDIENT_ID + " " + RECIPEINGREDIENT_INGREDIENT_ID_TYPE + ", "
             + RECIPEINGREDIENT_INGREDIENT_QUANTITY + " " + RECIPEINGREDIENT_INGREDIENT_QUANTITY_TYPE + ", "
@@ -173,17 +169,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    public void refillDatabase() {
+
+        try(SQLiteDatabase db = this.getWritableDatabase()) {
+
+            dropTables(db);
+
+            createTables(db);
+
+            DatabaseContentHelperUtils.fillDatabase(this);
+        }
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
 
         try {
-            db.execSQL(UNIT_CREATE_TABLE);
-            db.execSQL(FOODGROUP_CREATE_TABLE);
-            db.execSQL(FOOD_CREATE_TABLE);
-            db.execSQL(RECIPE_CREATE_TABLE);
-            db.execSQL(RECIPEINGREDIENT_CREATE_TABLE);
-            db.execSQL(EATENFOOD_CREATE_TABLE_TYPE);
-            db.execSQL(EATENRECIPE_CREATE_TABLE_TYPE);
+            createTables(db);
         } catch (SQLException ex) {
             Log.e("DatabaseHelper", "Error creating tables", ex);
         }
@@ -192,6 +194,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        dropTables(db);
+
+        onCreate(db);
+    }
+
+    private void createTables(SQLiteDatabase db) {
+
+        db.execSQL(UNIT_CREATE_TABLE);
+        db.execSQL(FOODGROUP_CREATE_TABLE);
+        db.execSQL(FOOD_CREATE_TABLE);
+        db.execSQL(RECIPE_CREATE_TABLE);
+        db.execSQL(RECIPEINGREDIENT_CREATE_TABLE);
+        db.execSQL(EATENFOOD_CREATE_TABLE_TYPE);
+        db.execSQL(EATENRECIPE_CREATE_TABLE_TYPE);
+    }
+
+    private void dropTables(SQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS " + UNIT_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + FOODGROUP_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + FOOD_TABLE_NAME);
@@ -199,10 +218,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + RECIPEINGREDIENT_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + EATENFOOD_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + EATENRECIPE_TABLE_NAME);
-
-        DatabaseContentHelperUtils.fillDatabase(this);
-
-        onCreate(db);
     }
 
     public Unit getUnitById(int _id) {
@@ -568,11 +583,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return add(FOOD_TABLE_NAME, contentValues);
     }
 
-    public int addRecipe(String name, int default_calories, String description) {
+    public int addRecipe(String name, String description) {
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(RECIPE_NAME, name);
-        contentValues.put(RECIPE_DEFAULT_CALORIES, default_calories);
         contentValues.put(RECIPE_DESCRIPTION, description);
 
         return add(FOOD_TABLE_NAME, contentValues);
@@ -634,9 +648,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         update(query);
     }
 
-    public void updateRecipe(int _id, String name, int default_calories, String description) {
+    public void updateRecipe(int _id, String name, String description) {
 
-        String query = "UPDATE " + RECIPE_TABLE_NAME + " SET " + RECIPE_NAME + " = '" + name + "', " + RECIPE_DEFAULT_CALORIES + " = '" + default_calories + "', " + RECIPE_DESCRIPTION + " = '" + description + "' WHERE " + RECIPE_ID + " = '" + _id + "'";
+        String query = "UPDATE " + RECIPE_TABLE_NAME + " SET " + RECIPE_NAME + " = '" + name + "', " + RECIPE_DESCRIPTION + " = '" + description + "' WHERE " + RECIPE_ID + " = '" + _id + "'";
         update(query);
     }
 

@@ -12,6 +12,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class DashboardActivity extends AppCompatActivity {
 
+    private static DatabaseHelper databaseHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +21,9 @@ public class DashboardActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.dashToolbar);
         setSupportActionBar(toolbar);
+
+        databaseHelper = new DatabaseHelper(getApplicationContext());
+        databaseHelper.refillDatabase();
 
         setTitle("Fatness-App");
 
