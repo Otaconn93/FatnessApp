@@ -4,7 +4,7 @@
     android:background="@color/colorBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
 
     <TextView
@@ -84,7 +84,7 @@
 
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_confirmTargetWeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

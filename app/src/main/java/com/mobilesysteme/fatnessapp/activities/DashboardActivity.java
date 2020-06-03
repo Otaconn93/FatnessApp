@@ -1,4 +1,4 @@
-package com.mobilesysteme.fatnessapp;
+package com.mobilesysteme.fatnessapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.mobilesysteme.fatnessapp.DatabaseHelper;
+import com.mobilesysteme.fatnessapp.R;
+import com.mobilesysteme.fatnessapp.SharedPreferenceUtils;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -22,8 +25,7 @@ public class DashboardActivity extends AppCompatActivity {
         if(SharedPreferenceUtils.getFirstLaunch(this)) {
             Intent intent = new Intent(this, FirstLaunchActivity.class);
             startActivity(intent);
-            SharedPreferenceUtils.saveFirstLaunch(this, false);
-            DatabaseContentHelperUtils.fillDatabase(databaseHelper);
+            //DatabaseContentHelperUtils.fillDatabase(databaseHelper);
             finish();
         } else {
             init();

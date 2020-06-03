@@ -10,16 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".AddActivity"
-            android:parentActivityName=".DashboardActivity"
+            android:name=".activities.AddActivity"
+            android:parentActivityName=".activities.DashboardActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".FirstLaunchActivity"
+        <activity android:name=".activities.FirstLaunchActivity"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".FoodListActivity"
-            android:parentActivityName=".AddActivity"
+        <activity android:name=".activities.FoodListActivity"
+            android:parentActivityName=".activities.AddActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".DashboardActivity"
+            android:name=".activities.DashboardActivity"
             android:windowSoftInputMode="adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
