@@ -34,7 +34,7 @@ public class DashboardActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         databaseHelper = new DatabaseHelper(getApplicationContext());
-        //DatabaseContentHelperUtils.fillDatabase(databaseHelper);
+        // databaseHelper.refillDatabase();
     }
 
     private void openAddActivity() {
