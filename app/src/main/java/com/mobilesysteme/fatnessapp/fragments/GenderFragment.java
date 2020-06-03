@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +20,8 @@ import java.lang.reflect.InvocationTargetException;
 public class GenderFragment extends Fragment {
 
     Button confirmButton;
+    RadioGroup radioGroup;
+    RadioButton selectedGenderButton;
     OnFirstLaunchStepFinished finishListener;
 
     public GenderFragment(OnFirstLaunchStepFinished myFinishListener) {
@@ -29,18 +33,16 @@ public class GenderFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gender, container, false);
         confirmButton = view.findViewById(R.id.btn_confirmGender);
+        radioGroup = view.findViewById(R.id.rdgrp_gender);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int selectedId = radioGroup.getCheckedRadioButtonId();
+                selectedGenderButton = view.findViewById(selectedId);
+                // TODO Speicherung hier einfügen
                 try {
                     finishListener.onStepFinished();
-                } catch (java.lang.InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
+                } catch (java.lang.InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
                     e.printStackTrace();
                 }
             }
