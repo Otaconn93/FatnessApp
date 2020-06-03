@@ -755,6 +755,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return add(EATENRECIPE_TABLE_NAME, contentValues);
     }
 
+    public int addEatenToday(Eaten eaten, int quantity) {
+
+        Class classOfEaten = eaten.getClass();
+        if(EatenFood.class.equals(classOfEaten)) {
+
+            return addEatenFood(eaten.getId(), getConsumedCalories(eaten, quantity), new Date());
+        } else if(EatenRecipe.class.equals(classOfEaten)) {
+
+            return addEatenRecipe(eaten.getId(), getConsumedCalories(eaten, quantity), new Date());
+        } else {
+            
+            return -1;
+        }
+    }
+
+    private int getConsumedCalories(Eaten eaten, int quantity) {
+        return eaten.getCalories() / 100 * quantity;
+    }
+
     private int add(String tableName, ContentValues contentValues) {
 
         try(SQLiteDatabase db = this.getWritableDatabase()) {
