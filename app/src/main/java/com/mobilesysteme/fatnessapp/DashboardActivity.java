@@ -18,15 +18,11 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.dashToolbar);
-        setSupportActionBar(toolbar);
-
-        databaseHelper = new DatabaseHelper(getApplicationContext());
-        databaseHelper.refillDatabase();
-
+        init();
         setTitle("Fatness-App");
+    }
 
+    private void init() {
         FloatingActionButton fabAdd = findViewById(R.id.fabAdd);
         fabAdd.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -34,6 +30,11 @@ public class DashboardActivity extends AppCompatActivity {
                 openAddActivity();
             }
         });
+        Toolbar toolbar = (Toolbar) findViewById(R.id.dashToolbar);
+        setSupportActionBar(toolbar);
+
+        databaseHelper = new DatabaseHelper(getApplicationContext());
+        // databaseHelper.refillDatabase();
     }
 
     private void openAddActivity() {
