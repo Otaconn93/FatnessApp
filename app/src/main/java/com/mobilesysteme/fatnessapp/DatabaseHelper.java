@@ -169,6 +169,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     * drops and afterwards restarts and refills the Database
+     *
+     * recommended to use when u want to reset the database with its content
+     */
     public void refillDatabase() {
 
         try(SQLiteDatabase db = this.getWritableDatabase()) {
@@ -199,6 +204,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /**
+     * created all tables
+     * @param db the database to execute the command on
+     */
     private void createTables(SQLiteDatabase db) {
 
         db.execSQL(UNIT_CREATE_TABLE);
@@ -210,6 +219,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(EATENRECIPE_CREATE_TABLE_TYPE);
     }
 
+    /**
+     * takes a database and drops all defined tables
+     * @param db the database to execute the command on
+     */
     private void dropTables(SQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS " + UNIT_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + FOODGROUP_TABLE_NAME);
@@ -220,6 +233,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + EATENRECIPE_TABLE_NAME);
     }
 
+    /**
+     * returns a Unit by its id
+     * @param _id id of the searched Unit
+     * @return the Unit with the given id
+     */
     public Unit getUnitById(int _id) {
 
         String select = "SELECT * FROM " + UNIT_TABLE_NAME
@@ -237,6 +255,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * returns a FoodGroup by its id
+     * @param _id id of the searched FoodGroup
+     * @return the FoodGroup with the given id
+     */
     public FoodGroup getFoodGroupById(int _id) {
 
         String select = "SELECT * FROM " + FOODGROUP_TABLE_NAME
@@ -254,6 +277,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * returns a Food by its id
+     * @param _id id of the searched Food
+     * @return the Food with the given id
+     */
     public Food getFoodById(int _id) {
 
         String select = "SELECT * FROM " + FOOD_TABLE_NAME
@@ -271,6 +299,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * returns a Recipe by its id
+     * @param _id id of the searched Recipe
+     * @return the Recipe with the given id
+     */
     public Recipe getRecipeById(int _id) {
 
         String select = "SELECT * FROM " + RECIPE_TABLE_NAME
@@ -288,6 +321,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * returns a List of all ingredients used for a Recipe
+     * @param recipe_id id of the Recipe that u want to get the ingredients from
+     * @return a List of all the used ingredients as Food
+     */
     public List<Food> getIngredientsByRecipeId(int recipe_id) {
 
         String select = "SELECT " + RECIPEINGREDIENT_INGREDIENT_ID
@@ -311,6 +349,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * returns the entry for an EatenFood by the id
+     * @param _id id of the searched EatenFood
+     * @return the EatenFood with the given id
+     */
     public EatenFood getEatenFoodById(int _id) {
 
         String select = "SELECT * FROM " + EATENFOOD_TABLE_NAME
@@ -328,6 +371,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * returns the entry for an EatenRecipe by the id
+     * @param _id id of the searched EatenRecipe
+     * @return the EatenRecipe with the given id
+     */
     public EatenRecipe getEatenRecipeById(int _id) {
 
         String select = "SELECT * FROM " + EATENRECIPE_TABLE_NAME
@@ -345,6 +393,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * @param foodgroup_id the id of the FoodGroup
+     * @return a list of Food that are part of a specific FoodGroup
+     */
     public List<Food> getFoodByFoodGroupId(int foodgroup_id) {
 
         String select = "SELECT * FROM " + FOOD_TABLE_NAME
@@ -365,11 +417,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * @return all FoodGroups that have no other parent FoodGroup
+     */
     public List<FoodGroup> getRootFoodGroups() {
-
         return getChildFoodGroups(-1);
     }
 
+    /**
+     * @param parent_id the id of the parent FoodGroup
+     * @return all FoodGroups have a specific FoodGroup as Parent
+     */
     public List<FoodGroup> getChildFoodGroups(int parent_id) {
 
         String select = "SELECT * FROM " + FOODGROUP_TABLE_NAME
@@ -390,6 +448,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * @return a List of all EatenFood
+     */
     public List<EatenFood> getEatenFoods() {
 
         String select = "SELECT * FROM " + EATENFOOD_TABLE_NAME;
@@ -409,6 +470,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * @return a List of all EatenRecipes
+     */
     public List<EatenRecipe> getEatenRecipes() {
 
         String select = "SELECT * FROM " + EATENRECIPE_TABLE_NAME;
@@ -428,6 +492,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * @return a List of all EatenFood that where consumed today
+     */
     public List<EatenFood> getTodayEatenFoods() {
 
         String select = "SELECT * FROM " + EATENFOOD_TABLE_NAME
@@ -448,6 +515,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * @return a List of all EatenFood that where consumed today
+     */
     public List<EatenRecipe> getTodayEatenRecipes() {
 
         String select = "SELECT * FROM " + EATENRECIPE_TABLE_NAME
@@ -468,6 +538,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * @return a List of all EatenRecipes that where consumed today
+     */
     public int getTodayConsumedCalories() {
 
         String select = "SELECT Sum(" + EATEN_CALORIES + ") " +
@@ -553,6 +626,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return new EatenRecipe(_id, recipe_id, calories, DateUtils.getDateFromString(dateSting));
     }
 
+    /**
+     * adds a Unit to the Database
+     * @param name full name of the Unit
+     * @param token the token (also called acronym) of the Unit
+     * @return the id of the newly inserted Unit or -1 if it was not successful
+     */
     public int addUnit(String name, String token) {
 
         ContentValues contentValues = new ContentValues();
@@ -562,6 +641,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return add(UNIT_TABLE_NAME, contentValues);
     }
 
+    /**
+     * adds a FoodGroup to the Database
+     * @param parent_id the id of the parent FoodGroup or -1 if it has no parent FoodGroup
+     * @param name the name of the FoodGroup
+     * @return the id of the newly inserted FoodGroup or -1 if it was not successful
+     */
     public int addFoodGroup(int parent_id, String name) {
 
         ContentValues contentValues = new ContentValues();
@@ -571,6 +656,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return add(FOODGROUP_TABLE_NAME, contentValues);
     }
 
+    /**
+     * adds a Food to the Database
+     * @param group_id the id of the FoodGroup that it is part of
+     * @param name the name of the Food
+     * @param unit_id the id of the Unit in which it is measured in
+     * @param calories the kcal for 100g of the food
+     * @param default_quantity the default quantity for this food - most of the time the weight of one entity
+     * @return the id of the newly inserted Food or -1 if it was not successful
+     */
     public int addFood(int group_id, String name, int unit_id, int calories, int default_quantity) {
 
         ContentValues contentValues = new ContentValues();
@@ -583,6 +677,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return add(FOOD_TABLE_NAME, contentValues);
     }
 
+    /**
+     * adds a Recipe to the Database
+     * @param name the name of the Recipe
+     * @param description the description on how to make it
+     * @return the id of the newly inserted Recipe or -1 if it was not successful
+     */
     public int addRecipe(String name, String description) {
 
         ContentValues contentValues = new ContentValues();
@@ -592,6 +692,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return add(RECIPE_TABLE_NAME, contentValues);
     }
 
+    /**
+     * adds a RecipeIngredient to the Database
+     * @param recipe_id the id of the Recipe u want to add it to
+     * @param ingredient_id the id of the Food u want to add as ingredient
+     * @param ingredient_quantity defines how much gram is needed of this ingredient
+     * @return the id of the newly inserted RecipeIngredient or -1 if it was not successful
+     */
     public int addRecipeIngredient(int recipe_id, int ingredient_id, int ingredient_quantity) {
 
         ContentValues contentValues = new ContentValues();
@@ -602,6 +709,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return add(RECIPEINGREDIENT_TABLE_NAME, contentValues);
     }
 
+    /**
+     * adds multiple RecipeIngredients to the Database
+     * @param recipe_id the id of the Recipe u want to add it to
+     * @param ingredientWithQuantity a map of the addable ingredient ids as key with its quantities as values
+     */
     public void addRecipeIngredients(int recipe_id, Map<Integer, Integer> ingredientWithQuantity) {
 
         for (Map.Entry<Integer, Integer> entry : ingredientWithQuantity.entrySet()) {
@@ -609,6 +721,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * adds a EatenFood to the Database
+     * @param food_id the id of the Food u want to add as EatenFood
+     * @param calories the calories that where consumed with this Food and its quantity
+     * @param date the Date on which the Food was eaten
+     * @return the id of the newly inserted EatenFood or -1 if it was not successful
+     */
     public int addEatenFood(int food_id, int calories, Date date) {         // sag bescheid wenn du es anders haben willst
 
         ContentValues contentValues = new ContentValues();
@@ -619,6 +738,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return add(EATENFOOD_TABLE_NAME, contentValues);
     }
 
+    /**
+     * adds a EatenRecipe to the Database
+     * @param recipe_id the id of the Recipe u want to add as EatenRecipe
+     * @param calories the calories that where consumed with this Recipe and its quantity
+     * @param date the Date on which the Recipe was eaten
+     * @return the id of the newly inserted EatenRecipe or -1 if it was not successful
+     */
     public int addEatenRecipe(int recipe_id, int calories, Date date) {
 
         ContentValues contentValues = new ContentValues();
@@ -636,30 +762,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * updates one the FoodGroup with the given id
+     */
     public void updateFoodGroup(int _id, int parent_id, String name) {
 
         String query = "UPDATE " + FOODGROUP_TABLE_NAME + " SET " + FOODGROUP_PARENT_ID + " = '" + parent_id + "', " + FOODGROUP_NAME + " = '" + name + "' WHERE " + FOOD_ID + " = '" + _id + "'";
         update(query);
     }
 
+    /**
+     * updates one the Food with the given id
+     */
     public void updateFood(int _id, int group_id, String name, int unit_id, int calories, int default_quantity) {
 
         String query = "UPDATE " + FOOD_TABLE_NAME + " SET " + FOOD_GROUP_ID + " = '" + group_id + "', " + FOOD_NAME + " = '" + name + "', " + FOOD_UNIT_ID + " = '" + unit_id + "', " + FOOD_CALORIES + " = '" + calories + "', " + FOOD_DEFAULT_QUANTITY + " = '" + default_quantity + "' WHERE " + FOOD_ID + " = '" + _id + "'";
         update(query);
     }
 
+    /**
+     * updates one the Recipe with the given id
+     */
     public void updateRecipe(int _id, String name, String description) {
 
         String query = "UPDATE " + RECIPE_TABLE_NAME + " SET " + RECIPE_NAME + " = '" + name + "', " + RECIPE_DESCRIPTION + " = '" + description + "' WHERE " + RECIPE_ID + " = '" + _id + "'";
         update(query);
     }
 
+    /**
+     * updates one the EatenFood with the given id
+     */
     public void updateEatenFood(int _id, int food_id, int calories, Date date) {
 
         String query = "UPDATE " + EATENFOOD_TABLE_NAME + " SET " + EATEN_EATEN_ID + " = '" + food_id + "', " + EATEN_CALORIES + " = '" + calories + "', " + EATEN_DATE + " = '" + date + "' WHERE " + EATEN_ID + " = '" + _id + "'";
         update(query);
     }
 
+    /**
+     * updates one the EatenRecipe with the given id
+     */
     public void updateEatenRecipe(int _id, int recipe_id, int calories, Date date) {
 
         String query = "UPDATE " + EATENFOOD_TABLE_NAME + " SET " + EATEN_EATEN_ID + " = '" + recipe_id + "', " + EATEN_CALORIES + " = '" + calories + "', " + EATEN_DATE + " = '" + date + "' WHERE " + EATEN_ID + " = '" + _id + "'";
@@ -673,30 +814,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * delete one the Unit with the given id
+     */
     public boolean deleteUnitById(int _id) {
         return delete("DELETE FROM " + UNIT_TABLE_NAME + " WHERE " + UNIT_ID + " = '" + _id + "'");
     }
 
+    /**
+     * delete one the FoodGroup with the given id
+     */
     public boolean deleteFoodGroupById(int _id) {
         return delete("DELETE FROM " + FOODGROUP_TABLE_NAME + " WHERE " + FOODGROUP_ID + " = '" + _id + "'");
     }
 
+    /**
+     * delete one the Food with the given id
+     */
     public boolean deleteFoodById(int _id) {
         return delete("DELETE FROM " + FOOD_TABLE_NAME + " WHERE " + FOOD_ID + " = '" + _id + "'");
     }
 
+    /**
+     * delete one the Recipe with the given id
+     */
     public boolean deleteRecipeById(int _id) {
         return delete("DELETE FROM " + RECIPE_TABLE_NAME + " WHERE " + RECIPE_ID + " = '" + _id + "'");
     }
 
+    /**
+     * delete one the RecipeIngredient with the given id
+     */
     public boolean deleteRecipeIngredientsByRecipeId(int recipe_id) {
         return delete("DELETE FROM " + RECIPEINGREDIENT_TABLE_NAME + " WHERE " + RECIPEINGREDIENT_RECIPE_ID + " = '" + recipe_id + "'");
     }
 
+    /**
+     * delete one the EatenFood with the given id
+     */
     public boolean deleteEatenFoodById(int _id) {
         return delete("DELETE FROM " + EATENFOOD_TABLE_NAME + " WHERE " + EATEN_ID + " = '" + _id + "'");
     }
 
+    /**
+     * delete one the EatenRecipe with the given id
+     */
     public boolean deleteEatenRecipeById(int _id) {
         return delete("DELETE FROM " + EATENRECIPE_TABLE_NAME + " WHERE " + EATEN_ID + " = '" + _id + "'");
     }
