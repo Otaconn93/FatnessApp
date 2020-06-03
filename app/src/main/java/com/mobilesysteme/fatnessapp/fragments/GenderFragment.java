@@ -12,8 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.mobilesysteme.fatnessapp.Gender;
 import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
 import com.mobilesysteme.fatnessapp.R;
+import com.mobilesysteme.fatnessapp.SharedPreferenceUtils;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -21,7 +23,6 @@ public class GenderFragment extends Fragment {
 
     Button confirmButton;
     RadioGroup radioGroup;
-    RadioButton selectedGenderButton;
     OnFirstLaunchStepFinished finishListener;
 
     public GenderFragment(OnFirstLaunchStepFinished myFinishListener) {
@@ -38,8 +39,11 @@ public class GenderFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 int selectedId = radioGroup.getCheckedRadioButtonId();
-                selectedGenderButton = view.findViewById(selectedId);
-                // TODO Speicherung hier einfügen
+                if(selectedId == R.id.radio_male) {
+                    SharedPreferenceUtils.saveUserGender(GenderFragment.this.getContext(), Gender.MALE);
+                }else if(selectedId == R.id.radio_female) {
+                    SharedPreferenceUtils.saveUserGender(GenderFragment.this.getContext(), Gender.FEMALE);
+                }
                 try {
                     finishListener.onStepFinished();
                 } catch (java.lang.InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
