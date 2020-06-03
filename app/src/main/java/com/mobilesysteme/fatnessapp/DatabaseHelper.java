@@ -763,6 +763,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * updates one the Unit with the given id
+     */
+    public void updateUnit(int _id, String name, String token) {
+
+        String query = "UPDATE " + UNIT_TABLE_NAME + " SET " + UNIT_NAME + " = '" + name + "', " + UNIT_TOKEN + " = '" + token + "' WHERE " + UNIT_ID + " = '" + _id + "'";
+        update(query);
+    }
+
+    /**
      * updates one the FoodGroup with the given id
      */
     public void updateFoodGroup(int _id, int parent_id, String name) {
