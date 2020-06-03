@@ -28,7 +28,7 @@ import java.util.Stack;
 
 public class FirstLaunchActivity extends AppCompatActivity implements OnFirstLaunchStepFinished {
 
-    Queue<Class> fragmentQueue;
+    private Queue<Class> fragmentQueue; // queue which handles the order of fragments to load
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,21 +36,22 @@ public class FirstLaunchActivity extends AppCompatActivity implements OnFirstLau
         setContentView(R.layout.activity_firstlaunch);
         try {
             init();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Initializes the new FirstLaunchActivity. Sets up the fragment queue.
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     * @throws NoSuchMethodException
+     * @throws InvocationTargetException
+     */
     public void init() throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         fragmentQueue = new LinkedList<>();
 
-        // Order of First Launch Flow
+        // Order of First Launch Flow fragments
         fragmentQueue.add(GenderFragment.class);
         fragmentQueue.add(AgeFragment.class);
         fragmentQueue.add(HeightFragment.class);
@@ -61,6 +62,11 @@ public class FirstLaunchActivity extends AppCompatActivity implements OnFirstLau
         replaceFragment(new WelcomeFragment(this), false);
     }
 
+    /**
+     * Replaces the currently active fragment within the fragment container of FirstLaunchActivity
+     * @param fragment Instance of the new fragment to be displayed
+     * @param addToBackStack if the fragment should be added to the backstack
+     */
     public void replaceFragment(Fragment fragment, boolean addToBackStack) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -71,6 +77,9 @@ public class FirstLaunchActivity extends AppCompatActivity implements OnFirstLau
         fragmentTransaction.commit();
     }
 
+    /**
+     * Switch to new dashboard activity and close current activity
+     */
     public void openDashboardActivity() {
         SharedPreferenceUtils.saveFirstLaunch(this, false);
         Intent intent = new Intent(this, DashboardActivity.class);

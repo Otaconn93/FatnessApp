@@ -19,9 +19,9 @@ import java.lang.reflect.InvocationTargetException;
 
 public class HeightFragment extends Fragment {
 
-    Button confirmButton;
-    EditText heightNumber;
-    OnFirstLaunchStepFinished finishListener;
+    private Button confirmButton;
+    private EditText heightNumber;
+    private OnFirstLaunchStepFinished finishListener;
 
     public HeightFragment(OnFirstLaunchStepFinished myFinishListener) {
         finishListener = myFinishListener;

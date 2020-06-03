@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.mobilesysteme.fatnessapp.DateUtils;
 import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
 import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.SharedPreferenceUtils;
@@ -22,9 +23,9 @@ import java.util.Date;
 
 public class TimeGoalFragment extends Fragment {
 
-    Button confirmButton;
-    EditText timeGoalNumber;
-    OnFirstLaunchStepFinished finishListener;
+    private Button confirmButton;
+    private EditText timeGoalNumber;
+    private OnFirstLaunchStepFinished finishListener;
 
     public TimeGoalFragment(OnFirstLaunchStepFinished myFinishListener) {
         finishListener = myFinishListener;
@@ -36,17 +37,11 @@ public class TimeGoalFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_timegoal, container, false);
         confirmButton = view.findViewById(R.id.btn_confirmTimeGoal);
         timeGoalNumber = view.findViewById(R.id.edit_timeGoalNumber);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    Date date = sdf.parse(String.valueOf(timeGoalNumber.getText()));
-                    SharedPreferenceUtils.saveUserDeadline(TimeGoalFragment.this.getContext(), date);
-                } catch (ParseException e) {
-                    // TODO Handling für falsches Format
-                    e.printStackTrace();
-                }
+                Date date = DateUtils.getDateFromString(String.valueOf(timeGoalNumber.getText()));
+                SharedPreferenceUtils.saveUserDeadline(TimeGoalFragment.this.getContext(), date);
                 try {
                     finishListener.onStepFinished();
                 } catch (java.lang.InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {

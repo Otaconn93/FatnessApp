@@ -19,9 +19,9 @@ import java.lang.reflect.InvocationTargetException;
 
 public class AgeFragment extends Fragment {
 
-    Button confirmButton;
-    EditText ageNumber;
-    OnFirstLaunchStepFinished finishListener;
+    private Button confirmButton;
+    private EditText ageNumber;
+    private OnFirstLaunchStepFinished finishListener;
 
     public AgeFragment(OnFirstLaunchStepFinished myFinishListener) {
         finishListener = myFinishListener;

@@ -21,9 +21,9 @@ import java.lang.reflect.InvocationTargetException;
 
 public class GenderFragment extends Fragment {
 
-    Button confirmButton;
-    RadioGroup radioGroup;
-    OnFirstLaunchStepFinished finishListener;
+    private Button confirmButton;
+    private RadioGroup radioGroup;
+    private OnFirstLaunchStepFinished finishListener;
 
     public GenderFragment(OnFirstLaunchStepFinished myFinishListener) {
         finishListener = myFinishListener;

@@ -17,8 +17,8 @@ import java.lang.reflect.InvocationTargetException;
 
 public class WelcomeFragment extends Fragment {
 
-    Button confirmButton;
-    OnFirstLaunchStepFinished finishListener;
+    private Button confirmButton;
+    private OnFirstLaunchStepFinished finishListener;
 
     public WelcomeFragment(OnFirstLaunchStepFinished myFinishListener) {
         finishListener = myFinishListener;
@@ -34,13 +34,7 @@ public class WelcomeFragment extends Fragment {
             public void onClick(View v) {
                 try {
                     finishListener.onStepFinished();
-                } catch (java.lang.InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
+                } catch (java.lang.InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
                     e.printStackTrace();
                 }
             }

@@ -19,9 +19,9 @@ import java.lang.reflect.InvocationTargetException;
 
 public class TargetWeightFragment extends Fragment {
 
-    Button confirmButton;
-    EditText targetWeightNumber;
-    OnFirstLaunchStepFinished finishListener;
+    private Button confirmButton;
+    private EditText targetWeightNumber;
+    private OnFirstLaunchStepFinished finishListener;
 
     public TargetWeightFragment(OnFirstLaunchStepFinished myFinishListener) {
         finishListener = myFinishListener;
