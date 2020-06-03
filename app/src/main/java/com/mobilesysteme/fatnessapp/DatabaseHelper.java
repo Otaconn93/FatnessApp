@@ -589,7 +589,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(RECIPE_NAME, name);
         contentValues.put(RECIPE_DESCRIPTION, description);
 
-        return add(FOOD_TABLE_NAME, contentValues);
+        return add(RECIPE_TABLE_NAME, contentValues);
     }
 
     public int addRecipeIngredient(int recipe_id, int ingredient_id, int ingredient_quantity) {
@@ -599,7 +599,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(RECIPEINGREDIENT_INGREDIENT_ID, ingredient_id);
         contentValues.put(RECIPEINGREDIENT_INGREDIENT_QUANTITY, ingredient_quantity);
 
-        return add(FOOD_TABLE_NAME, contentValues);
+        return add(RECIPEINGREDIENT_TABLE_NAME, contentValues);
     }
 
     public void addRecipeIngredients(int recipe_id, Map<Integer, Integer> ingredientWithQuantity) {
@@ -609,7 +609,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public int addEatenFood(int food_id, int calories, Date date) {
+    public int addEatenFood(int food_id, int calories, Date date) {         // sag bescheid wenn du es anders haben willst
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(EATEN_EATEN_ID, food_id);
