@@ -3,5 +3,6 @@ package com.mobilesysteme.fatnessapp;
 public enum SqlFieldType {
 
     INTEGER,
-    TEXT
+    TEXT,
+    DATETIME
 }
