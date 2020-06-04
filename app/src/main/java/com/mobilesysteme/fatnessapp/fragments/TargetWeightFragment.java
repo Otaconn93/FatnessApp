@@ -38,11 +38,7 @@ public class TargetWeightFragment extends Fragment {
             public void onClick(View v) {
                 int weight = Integer.parseInt(String.valueOf(targetWeightNumber.getText()));
                 SharedPreferenceUtils.saveUserTargetWeight(TargetWeightFragment.this.getContext(), weight);
-                try {
-                    finishListener.onStepFinished();
-                } catch (java.lang.InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-                    e.printStackTrace();
-                }
+                finishListener.onStepFinished();
             }
         });
         return view;

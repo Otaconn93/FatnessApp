@@ -38,11 +38,7 @@ public class CurrentWeightFragment extends Fragment {
             public void onClick(View v) {
                 int weight = Integer.parseInt(String.valueOf(currentWeightNumber.getText()));
                 SharedPreferenceUtils.saveUserWeight(CurrentWeightFragment.this.getContext(), weight);
-                try {
-                    finishListener.onStepFinished();
-                } catch (java.lang.InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-                    e.printStackTrace();
-                }
+                finishListener.onStepFinished();
             }
         });
         return view;

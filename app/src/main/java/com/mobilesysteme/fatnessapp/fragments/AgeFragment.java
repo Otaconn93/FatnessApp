@@ -39,11 +39,7 @@ public class AgeFragment extends Fragment {
             public void onClick(View v) {
                 int age = Integer.parseInt(String.valueOf(ageNumber.getText()));
                 SharedPreferenceUtils.saveUserAge(AgeFragment.this.getContext(), age);
-                try {
-                    finishListener.onStepFinished();
-                } catch (java.lang.InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-                    e.printStackTrace();
-                }
+                finishListener.onStepFinished();
             }
         });
         return view;

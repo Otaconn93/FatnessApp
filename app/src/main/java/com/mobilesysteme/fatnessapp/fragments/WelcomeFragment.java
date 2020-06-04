@@ -32,11 +32,7 @@ public class WelcomeFragment extends Fragment {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    finishListener.onStepFinished();
-                } catch (java.lang.InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-                    e.printStackTrace();
-                }
+                finishListener.onStepFinished();
             }
         });
         return view;

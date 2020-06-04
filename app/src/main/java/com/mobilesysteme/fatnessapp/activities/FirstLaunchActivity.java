@@ -34,21 +34,13 @@ public class FirstLaunchActivity extends AppCompatActivity implements OnFirstLau
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firstlaunch);
-        try {
-            init();
-        } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
+        init();
     }
 
     /**
-     * Initializes the new FirstLaunchActivity. Sets up the fragment queue.
-     * @throws IllegalAccessException
-     * @throws InstantiationException
-     * @throws NoSuchMethodException
-     * @throws InvocationTargetException
+     * Initializes the new FirstLaunchActivity and sets up the fragment queue.
      */
-    public void init() throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+    public void init() {
         fragmentQueue = new LinkedList<>();
 
         // Order of First Launch Flow fragments
@@ -87,14 +79,22 @@ public class FirstLaunchActivity extends AppCompatActivity implements OnFirstLau
         finish();
     }
 
+    /**
+     * {@inheritDoc}
+     * Instantiates a new fragment from the class given by the fragmentQueue and loads it into the activity
+     */
     @Override
-    public void onStepFinished() throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        if(fragmentQueue.size() >= 1) {
-            Class nextFragment = fragmentQueue.poll();
-            Constructor constructor = nextFragment.getConstructor(OnFirstLaunchStepFinished.class);
-            replaceFragment((Fragment) constructor.newInstance(this), true);
-        } else {
-            openDashboardActivity();
+    public void onStepFinished() {
+        try {
+            if(fragmentQueue.size() >= 1) {
+                Class nextFragment = fragmentQueue.poll();
+                Constructor constructor = nextFragment.getConstructor(OnFirstLaunchStepFinished.class);
+                replaceFragment((Fragment) constructor.newInstance(this), true);
+            } else {
+                openDashboardActivity();
+            }
+        } catch (ReflectiveOperationException e) {
+            e.printStackTrace();
         }
     }
 }

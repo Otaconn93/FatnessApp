@@ -44,11 +44,7 @@ public class GenderFragment extends Fragment {
                 }else if(selectedId == R.id.radio_female) {
                     SharedPreferenceUtils.saveUserGender(GenderFragment.this.getContext(), Gender.FEMALE);
                 }
-                try {
-                    finishListener.onStepFinished();
-                } catch (java.lang.InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-                    e.printStackTrace();
-                }
+                finishListener.onStepFinished();
             }
         });
         return view;

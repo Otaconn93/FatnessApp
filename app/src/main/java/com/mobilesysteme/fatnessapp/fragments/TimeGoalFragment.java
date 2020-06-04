@@ -42,11 +42,7 @@ public class TimeGoalFragment extends Fragment {
             public void onClick(View v) {
                 Date date = DateUtils.getDateFromString(String.valueOf(timeGoalNumber.getText()));
                 SharedPreferenceUtils.saveUserDeadline(TimeGoalFragment.this.getContext(), date);
-                try {
-                    finishListener.onStepFinished();
-                } catch (java.lang.InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
-                    e.printStackTrace();
-                }
+                finishListener.onStepFinished();
             }
         });
         return view;

@@ -38,11 +38,7 @@ public class HeightFragment extends Fragment {
             public void onClick(View v) {
                 int height = Integer.parseInt(String.valueOf(heightNumber.getText()));
                 SharedPreferenceUtils.saveUserHeight(HeightFragment.this.getContext(), height);
-                try {
-                    finishListener.onStepFinished();
-                } catch (java.lang.InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-                    e.printStackTrace();
-                }
+                finishListener.onStepFinished();
             }
         });
         return view;
