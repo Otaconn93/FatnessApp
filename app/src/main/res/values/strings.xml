@@ -14,6 +14,15 @@
 
     <string name="home_second">Home Second</string>
 
+
+    <string name="kcal">KCAL LEFT/DAY</string>
+
+    <string name="alert">Weight Tracking Alert</string>
+
+    <string name="showmore">mehr anzeigen</string>
+    <string name="tagesliste">Tagesmahlzeiten</string>
+
     <string name="checked">Checked</string>
     <string name="unchecked">Unchecked</string>
+
 </resources>

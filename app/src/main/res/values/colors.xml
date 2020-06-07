@@ -2,8 +2,14 @@
 <resources>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorBackground">#2b2a5c</color>
+    <color name="colorBackground">#3C444D</color>
     <color name="textWhite">#FFFFFF</color>
     <color name="colorButton">#145e98</color>
     <color name="colorAccent">#000000</color>
+    <color name="barempty">#91D98C</color>
+    <color name="barfilling">#007A95</color>
+    <color name="cardview">#696363</color>
+    <color name="linechartbackground">#DCDCDC</color>
+    <color name="buttonOK">#9EDB7C</color>
+
 </resources>
