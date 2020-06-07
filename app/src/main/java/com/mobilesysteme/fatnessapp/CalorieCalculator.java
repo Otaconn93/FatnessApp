@@ -4,9 +4,12 @@ import android.content.Context;
 
 import com.mobilesysteme.fatnessapp.sqlObjects.EatenFood;
 
+import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class CalorieCalculator {
 
@@ -51,16 +54,30 @@ public class CalorieCalculator {
     }
 
     /**
+     *  Calculates extra Calories for weight goal per day.
+     *  1 kg = 7716.1791764707 Calories -> divided by number of days to deadline
+     *
+     * @return additionally Calories to reach weight Goal
+     */
+    private float calculateExtraCaloriesForWeightGoal(){
+        float extraCalories = (getWeightGoal() - getWeight()) * 7716.1791764707f;
+        Date today = new Date();
+        long diff = today.getTime() - getGoalDeadline().getTime();
+        long daysLeft =  TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+        return extraCalories / daysLeft;
+    }
+
+    /**
      * Actual Method to show on dashboard screen, how many calories the user has to consume.
      *
      * @return calories left for today
      */
     public int getDailyCaloriesLeft(){
 
-        float dailyCaories = calculateDailyCalories();
+        float dailyCaories = calculateDailyCalories() + calculateExtraCaloriesForWeightGoal();
         int lastCalories = 0;
-        for(int i=0; i<eatenFood.size()-1; i++){
-            lastCalories =+ eatenFood.get(i).getCalories();
+        for(int i=0; i<getEatenFood().size()-1; i++){
+            lastCalories =+ getEatenFood().get(i).getCalories();
         }
 
         return (int) (dailyCaories-lastCalories);
