@@ -11,6 +11,7 @@ import androidx.preference.EditTextPreference;
 import androidx.preference.PreferenceDataStore;
 import androidx.preference.PreferenceFragmentCompat;
 
+import com.mobilesysteme.fatnessapp.DateUtils;
 import com.mobilesysteme.fatnessapp.R;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -40,17 +41,30 @@ public class SettingsActivity extends AppCompatActivity {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
             DataStore dataStore = new DataStore();
-            bindPreference(dataStore, SharedPreferenceUtils.USER_WEIGHT_KEY, String.valueOf(SharedPreferenceUtils.getUserWeight(getContext())));
-            bindPreference(dataStore, SharedPreferenceUtils.USER_HEIGHT_KEY, String.valueOf(SharedPreferenceUtils.getUserHeight(getContext())));
-            bindPreference(dataStore, SharedPreferenceUtils.USER_AGE_KEY, String.valueOf(SharedPreferenceUtils.getUserAge(getContext())));
+            bindNumberPreference(dataStore, SharedPreferenceUtils.USER_HEIGHT_KEY, String.valueOf(SharedPreferenceUtils.getUserHeight(getContext())));
+            bindNumberPreference(dataStore, SharedPreferenceUtils.USER_WEIGHT_KEY, String.valueOf(SharedPreferenceUtils.getUserWeight(getContext())));
+            bindNumberPreference(dataStore, SharedPreferenceUtils.USER_AGE_KEY, String.valueOf(SharedPreferenceUtils.getUserAge(getContext())));
+            bindNumberPreference(dataStore, SharedPreferenceUtils.USER_TARGETWEIGHT_KEY, String.valueOf(SharedPreferenceUtils.getUserTargetWeight(getContext())));
+
+            bindDatePreference(dataStore, SharedPreferenceUtils.USER_DEADLINE_KEY, DateUtils.getDateAsString(SharedPreferenceUtils.getUserDeadline(getContext())));
         }
 
-        private void bindPreference(DataStore dataStore, String preferenceKey, String value) {
+        private void bindNumberPreference(DataStore dataStore, String preferenceKey, String value) {
 
             EditTextPreference weightPreference = findPreference(preferenceKey);
             if (weightPreference != null) {
                 weightPreference.setText(value);
                 weightPreference.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_NUMBER));
+                weightPreference.setPreferenceDataStore(dataStore);
+            }
+        }
+
+        private void bindDatePreference(DataStore dataStore, String preferenceKey, String value) {
+
+            EditTextPreference weightPreference = findPreference(preferenceKey);
+            if (weightPreference != null) {
+                weightPreference.setText(value);
+                weightPreference.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_DATETIME));
                 weightPreference.setPreferenceDataStore(dataStore);
             }
         }
@@ -66,16 +80,22 @@ public class SettingsActivity extends AppCompatActivity {
                     return null;
                 }
 
-                int value = -1;
+                Object value = -1;
                 switch (key) {
-                    case SharedPreferenceUtils.USER_WEIGHT_KEY:
-                        value = SharedPreferenceUtils.getUserWeight(context);
-                        break;
                     case SharedPreferenceUtils.USER_HEIGHT_KEY:
                         value = SharedPreferenceUtils.getUserHeight(context);
                         break;
+                    case SharedPreferenceUtils.USER_WEIGHT_KEY:
+                        value = SharedPreferenceUtils.getUserWeight(context);
+                        break;
                     case SharedPreferenceUtils.USER_AGE_KEY:
                         value = SharedPreferenceUtils.getUserAge(context);
+                        break;
+                    case SharedPreferenceUtils.USER_TARGETWEIGHT_KEY:
+                        value = SharedPreferenceUtils.getUserTargetWeight(context);
+                        break;
+                    case SharedPreferenceUtils.USER_DEADLINE_KEY:
+                        value = DateUtils.getDateAsString(SharedPreferenceUtils.getUserDeadline(context));
                         break;
                 }
 
@@ -91,59 +111,20 @@ public class SettingsActivity extends AppCompatActivity {
                 }
 
                 switch (key) {
-                    case SharedPreferenceUtils.USER_WEIGHT_KEY:
-                        SharedPreferenceUtils.saveUserWeight(context, Integer.valueOf(value));
-                        break;
                     case SharedPreferenceUtils.USER_HEIGHT_KEY:
                         SharedPreferenceUtils.saveUserHeight(context, Integer.valueOf(value));
+                        break;
+                    case SharedPreferenceUtils.USER_WEIGHT_KEY:
+                        SharedPreferenceUtils.saveUserWeight(context, Integer.valueOf(value));
                         break;
                     case SharedPreferenceUtils.USER_AGE_KEY:
                         SharedPreferenceUtils.saveUserAge(context, Integer.valueOf(value));
                         break;
-                }
-            }
-
-            @Override
-            public int getInt(String key, int defValue) {
-
-                Context context = getContext();
-                if (context == null) {
-                    return -1;
-                }
-
-                int value = -1;
-                switch (key) {
-                    case SharedPreferenceUtils.USER_WEIGHT_KEY:
-                        value = SharedPreferenceUtils.getUserWeight(context);
+                    case SharedPreferenceUtils.USER_TARGETWEIGHT_KEY:
+                        SharedPreferenceUtils.saveUserTargetWeight(context, Integer.valueOf(value));
                         break;
-                    case SharedPreferenceUtils.USER_HEIGHT_KEY:
-                        value = SharedPreferenceUtils.getUserHeight(context);
-                        break;
-                    case SharedPreferenceUtils.USER_AGE_KEY:
-                        value = SharedPreferenceUtils.getUserAge(context);
-                        break;
-                }
-
-                return value;
-            }
-
-            @Override
-            public void putInt(String key, int value) {
-
-                Context context = getContext();
-                if (context == null) {
-                    return;
-                }
-
-                switch (key) {
-                    case SharedPreferenceUtils.USER_WEIGHT_KEY:
-                        SharedPreferenceUtils.saveUserWeight(context, value);
-                        break;
-                    case SharedPreferenceUtils.USER_HEIGHT_KEY:
-                        SharedPreferenceUtils.saveUserHeight(context, value);
-                        break;
-                    case SharedPreferenceUtils.USER_AGE_KEY:
-                        SharedPreferenceUtils.saveUserAge(context, value);
+                    case SharedPreferenceUtils.USER_DEADLINE_KEY:
+                        SharedPreferenceUtils.saveUserDeadline(context, DateUtils.getDateFromString(value));
                         break;
                 }
             }

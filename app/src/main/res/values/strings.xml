@@ -19,9 +19,11 @@
     <string name="setting_user_category">Nutzer</string>
 
     <!-- Messages Preferences -->
-    <string name="user_weight">Your weight</string>
     <string name="user_height">Your height</string>
+    <string name="user_weight">Your weight</string>
     <string name="user_age">Your age</string>
+    <string name="user_target_weight">Your target weight</string>
+    <string name="user_deadline">Your deadline</string>
 
     <!-- Sync Preferences -->
     <string name="sync_title">Sync email periodically</string>

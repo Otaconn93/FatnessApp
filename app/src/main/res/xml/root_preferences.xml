@@ -3,18 +3,28 @@
     <PreferenceCategory app:title="@string/setting_user_category">
 
         <EditTextPreference
-            app:key="user_weight"
-            app:title="@string/user_weight"
-            app:useSimpleSummaryProvider="true" />
-
-        <EditTextPreference
-            app:key="user_height"
+            app:key="userHeight"
             app:title="@string/user_height"
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
-            app:key="user_age"
+            app:key="userWeight"
+            app:title="@string/user_weight"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="userAge"
             app:title="@string/user_age"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="userTargetWeight"
+            app:title="@string/user_target_weight"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="userDeadline"
+            app:title="@string/user_deadline"
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
