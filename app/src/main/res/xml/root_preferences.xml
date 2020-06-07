@@ -1,0 +1,22 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/setting_user_category">
+
+        <EditTextPreference
+            app:key="user_weight"
+            app:title="@string/user_weight"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="user_height"
+            app:title="@string/user_height"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="user_age"
+            app:title="@string/user_age"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
