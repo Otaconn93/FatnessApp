@@ -7,11 +7,14 @@ import java.util.Date;
 public class SharedPreferenceUtils {
 
     private static final String FILE_NAME = "FatnessPreferences";
+
     private static final String USER_HEIGHT_KEY = "userHeight";
     private static final String USER_WEIGHT_KEY = "userWeight";
     private static final String USER_AGE_KEY = "userAge"; 
+    private static final String USER_GENDER_KEY = "userGender";
     private static final String USER_TARGETWEIGHT_KEY = "userTargetWeight";
     private static final String USER_DEADLINE_KEY = "userDeadline";
+
     private static final String FIRST_LAUNCH_KEY = "firstLaunch";
 
     /**
@@ -45,6 +48,25 @@ public class SharedPreferenceUtils {
 
         return context.getSharedPreferences(FILE_NAME, 0)
                 .getInt(USER_AGE_KEY, 0);
+    }
+
+    /**
+     * extracts the users gender from the SharedPreferences
+     * @param context the ApplicationContext needed to access the SharedPreferences
+     * @return the gender of the user in years
+     */
+    public static Gender getUserGender(Context context) {
+
+        int genderId = context.getSharedPreferences(FILE_NAME, 0)
+                .getInt(USER_GENDER_KEY, 0);
+        for (Gender gender : Gender.values()) {
+
+            if(genderId == gender.getId()) {
+                return gender;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -105,6 +127,19 @@ public class SharedPreferenceUtils {
         context.getSharedPreferences(FILE_NAME, 0)
                 .edit()
                 .putInt(USER_AGE_KEY, ageInYears)
+                .apply();
+    }
+
+    /**
+     * saves the users gender to the SharedPreferences
+     * @param context the ApplicationContext needed to access the SharedPreferences
+     * @param gender the gender of the user
+     */
+    public static void saveUserGender(Context context, Gender gender) {
+
+        context.getSharedPreferences(FILE_NAME, 0)
+                .edit()
+                .putInt(USER_GENDER_KEY, gender.getId())
                 .apply();
     }
 
@@ -190,6 +225,18 @@ public class SharedPreferenceUtils {
         context.getSharedPreferences(FILE_NAME, 0)
                 .edit()
                 .remove(USER_AGE_KEY)
+                .apply();
+    }
+
+    /**
+     * removes the users age from the SharedPreferences
+     * @param context the ApplicationContext needed to access the SharedPreferences
+     */
+    public static void removeUserGender(Context context) {
+
+        context.getSharedPreferences(FILE_NAME, 0)
+                .edit()
+                .remove(USER_GENDER_KEY)
                 .apply();
     }
 
