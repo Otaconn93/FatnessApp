@@ -3,7 +3,16 @@ package com.mobilesysteme.fatnessapp;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -15,21 +24,27 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import lecho.lib.hellocharts.model.Axis;
-import lecho.lib.hellocharts.model.AxisValue;
-import lecho.lib.hellocharts.model.Line;
-import lecho.lib.hellocharts.model.LineChartData;
-import lecho.lib.hellocharts.model.PointValue;
-import lecho.lib.hellocharts.view.LineChartView;
 
 public class DashboardActivity extends AppCompatActivity {
-
+    private LineChart lineChart;
+    private LineData lineData;
+    private LineDataSet lineDataSet;
+    private ArrayList lineEntries;
     private static DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        lineChart = findViewById(R.id.lineChart);
+        getEntries();
+        lineDataSet = new LineDataSet(lineEntries, "");
+        lineData = new LineData(lineDataSet);
+        lineChart.setData(lineData);
+        lineDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        lineDataSet.setValueTextColor(Color.BLACK);
+        lineDataSet.setValueTextSize(18f);
         init();
         setTitle("Fatness-App");
     }
@@ -44,47 +59,13 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
-/*
-        LineChartView lineChartView = findViewById(R.id.chart);
-        String[] axisData= {"Mon","Die","Mit","Don","Fre","Sam","Son"};
-
-        int[] yAxisData = {50,20,15,30,20,60,15,40,45,10,90,18,14};
-
-        List yAxisValues = new ArrayList();
-        List axisValues = new ArrayList();
 
 
-        Line line = new Line(yAxisValues).setColor(Color.parseColor("#9C27B0"));
-
-        for(int i = 0; i < axisData.length; i++){
-            axisValues.add(i, new AxisValue(i).setLabel(axisData[i]));
-        }
-
-        for (int i = 0; i < yAxisData.length; i++){
-            yAxisValues.add(new PointValue(i, yAxisData[i]));
-        }
-
-        List lines = new ArrayList();
-        lines.add(line);
-        LineChartData data = new LineChartData();
-        data.setLines(lines);
-
-        lineChartView.setLineChartData(data);
-
-        Axis axis = new Axis();
-        axis.setValues(axisValues);
-        data.setAxisXBottom(axis);
-
-        Axis yAxis = new Axis();
-        data.setAxisYLeft(yAxis);
-*/
-
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.dashToolbar);
+        Toolbar toolbar = findViewById(R.id.dashToolbar);
         setSupportActionBar(toolbar);
 
         databaseHelper = new DatabaseHelper(getApplicationContext());
-        // databaseHelper.refillDatabase();
+         databaseHelper.refillDatabase();
 
     }
 
@@ -105,4 +86,16 @@ public class DashboardActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+    private void getEntries() {
+        lineEntries = new ArrayList<>();
+        lineEntries.add(new Entry(2f, 0));
+        lineEntries.add(new Entry(4f, 1));
+        lineEntries.add(new Entry(6f, 1));
+        lineEntries.add(new Entry(8f, 3));
+        lineEntries.add(new Entry(7f, 4));
+        lineEntries.add(new Entry(3f, 3));
+    }
+
 }
+

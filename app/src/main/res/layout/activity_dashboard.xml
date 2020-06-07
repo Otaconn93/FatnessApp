@@ -13,7 +13,7 @@
         android:id="@+id/dashToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="@color/colorButton"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 app:cardBackgroundColor="@color/cardview"
-                app:cardCornerRadius="60dp">
+                app:cardCornerRadius="60dp"
+                app:cardElevation="0.5dp">
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -95,11 +96,11 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/chart_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="274dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                app:cardBackgroundColor="@color/linechartbackground"
-                app:cardCornerRadius="60dp">
+                app:cardBackgroundColor="@color/textWhite"
+                app:cardElevation="0.5dp">
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -107,10 +108,14 @@
                     android:layout_height="match_parent">
 
 
-                    <lecho.lib.hellocharts.view.LineChartView
-                        android:id="@+id/chart"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/lineChart"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -125,7 +130,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 app:cardBackgroundColor="@color/cardview"
-                app:cardCornerRadius="15dp">
+                app:cardCornerRadius="10dp"
+                app:cardElevation="0.5dp">
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -154,7 +160,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 app:cardBackgroundColor="@color/cardview"
-                app:cardCornerRadius="30dp">
+                app:cardCornerRadius="30dp"
+                app:cardElevation="0.5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
