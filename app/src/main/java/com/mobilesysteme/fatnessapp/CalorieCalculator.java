@@ -4,9 +4,7 @@ import android.content.Context;
 
 import com.mobilesysteme.fatnessapp.sqlObjects.EatenFood;
 
-import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -20,7 +18,7 @@ public class CalorieCalculator {
     private float weightGoal = 88; // in kg
     private Date goalDeadline = new Date();
     private SharedPreferenceUtils spu = new SharedPreferenceUtils();
-    private List<EatenFood> eatenFood = new ArrayList<EatenFood>();
+    private List<EatenFood> eatenFood = new ArrayList<>();
     private DatabaseHelper dh;
 
     public CalorieCalculator(Context context) {
@@ -74,13 +72,13 @@ public class CalorieCalculator {
      */
     public int getDailyCaloriesLeft(){
 
-        float dailyCaories = calculateDailyCalories() + calculateExtraCaloriesForWeightGoal();
+        float dailyCalories = calculateDailyCalories() + calculateExtraCaloriesForWeightGoal();
         int lastCalories = 0;
         for(int i=0; i<getEatenFood().size()-1; i++){
             lastCalories =+ getEatenFood().get(i).getCalories();
         }
 
-        return (int) (dailyCaories-lastCalories);
+        return (int) (dailyCalories-lastCalories);
     }
 
     public float getHeight() {
