@@ -15,13 +15,10 @@ import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
 import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.SharedPreferenceUtils;
 
-import java.lang.reflect.InvocationTargetException;
-
 public class TargetWeightFragment extends Fragment {
 
-    private Button confirmButton;
     private EditText targetWeightNumber;
-    private OnFirstLaunchStepFinished finishListener;
+    private final OnFirstLaunchStepFinished finishListener;
 
     public TargetWeightFragment(OnFirstLaunchStepFinished myFinishListener) {
         finishListener = myFinishListener;
@@ -31,15 +28,12 @@ public class TargetWeightFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_targetweight, container, false);
-        confirmButton = view.findViewById(R.id.btn_confirmTargetWeight);
+        Button confirmButton = view.findViewById(R.id.btn_confirmTargetWeight);
         targetWeightNumber = view.findViewById(R.id.edit_targetWeightNumber);
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int weight = Integer.parseInt(String.valueOf(targetWeightNumber.getText()));
-                SharedPreferenceUtils.saveUserTargetWeight(TargetWeightFragment.this.getContext(), weight);
-                finishListener.onStepFinished();
-            }
+        confirmButton.setOnClickListener(v -> {
+            int weight = Integer.parseInt(String.valueOf(targetWeightNumber.getText()));
+            SharedPreferenceUtils.saveUserTargetWeight(TargetWeightFragment.this.getContext(), weight);
+            finishListener.onStepFinished();
         });
         return view;
     }

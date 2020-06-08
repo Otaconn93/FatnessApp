@@ -13,12 +13,9 @@ import androidx.fragment.app.Fragment;
 import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
 import com.mobilesysteme.fatnessapp.R;
 
-import java.lang.reflect.InvocationTargetException;
-
 public class WelcomeFragment extends Fragment {
 
-    private Button confirmButton;
-    private OnFirstLaunchStepFinished finishListener;
+    private final OnFirstLaunchStepFinished finishListener;
 
     public WelcomeFragment(OnFirstLaunchStepFinished myFinishListener) {
         finishListener = myFinishListener;
@@ -28,13 +25,8 @@ public class WelcomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_welcome, container, false);
-        confirmButton = view.findViewById(R.id.btn_confirmWelcome);
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finishListener.onStepFinished();
-            }
-        });
+        Button confirmButton = view.findViewById(R.id.btn_confirmWelcome);
+        confirmButton.setOnClickListener(v -> finishListener.onStepFinished());
         return view;
     }
 }

@@ -15,13 +15,10 @@ import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
 import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.SharedPreferenceUtils;
 
-import java.lang.reflect.InvocationTargetException;
-
 public class HeightFragment extends Fragment {
 
-    private Button confirmButton;
     private EditText heightNumber;
-    private OnFirstLaunchStepFinished finishListener;
+    private final OnFirstLaunchStepFinished finishListener;
 
     public HeightFragment(OnFirstLaunchStepFinished myFinishListener) {
         finishListener = myFinishListener;
@@ -31,15 +28,12 @@ public class HeightFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_height, container, false);
-        confirmButton = view.findViewById(R.id.btn_confirmHeight);
+        Button confirmButton = view.findViewById(R.id.btn_confirmHeight);
         heightNumber = view.findViewById(R.id.edit_heightNumber);
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int height = Integer.parseInt(String.valueOf(heightNumber.getText()));
-                SharedPreferenceUtils.saveUserHeight(HeightFragment.this.getContext(), height);
-                finishListener.onStepFinished();
-            }
+        confirmButton.setOnClickListener(v -> {
+            int height = Integer.parseInt(String.valueOf(heightNumber.getText()));
+            SharedPreferenceUtils.saveUserHeight(HeightFragment.this.getContext(), height);
+            finishListener.onStepFinished();
         });
         return view;
     }

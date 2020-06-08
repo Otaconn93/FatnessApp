@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
@@ -17,13 +16,10 @@ import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
 import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.SharedPreferenceUtils;
 
-import java.lang.reflect.InvocationTargetException;
-
 public class GenderFragment extends Fragment {
 
-    private Button confirmButton;
     private RadioGroup radioGroup;
-    private OnFirstLaunchStepFinished finishListener;
+    private final OnFirstLaunchStepFinished finishListener;
 
     public GenderFragment(OnFirstLaunchStepFinished myFinishListener) {
         finishListener = myFinishListener;
@@ -33,19 +29,16 @@ public class GenderFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gender, container, false);
-        confirmButton = view.findViewById(R.id.btn_confirmGender);
+        Button confirmButton = view.findViewById(R.id.btn_confirmGender);
         radioGroup = view.findViewById(R.id.rdgrp_gender);
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int selectedId = radioGroup.getCheckedRadioButtonId();
-                if(selectedId == R.id.radio_male) {
-                    SharedPreferenceUtils.saveUserGender(GenderFragment.this.getContext(), Gender.MALE);
-                }else if(selectedId == R.id.radio_female) {
-                    SharedPreferenceUtils.saveUserGender(GenderFragment.this.getContext(), Gender.FEMALE);
-                }
-                finishListener.onStepFinished();
+        confirmButton.setOnClickListener(v -> {
+            int selectedId = radioGroup.getCheckedRadioButtonId();
+            if(selectedId == R.id.radio_male) {
+                SharedPreferenceUtils.saveUserGender(GenderFragment.this.getContext(), Gender.MALE);
+            }else if(selectedId == R.id.radio_female) {
+                SharedPreferenceUtils.saveUserGender(GenderFragment.this.getContext(), Gender.FEMALE);
             }
+            finishListener.onStepFinished();
         });
         return view;
     }

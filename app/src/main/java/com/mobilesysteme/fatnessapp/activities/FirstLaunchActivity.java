@@ -21,10 +21,8 @@ import com.mobilesysteme.fatnessapp.fragments.TimeGoalFragment;
 import com.mobilesysteme.fatnessapp.fragments.WelcomeFragment;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Stack;
 
 public class FirstLaunchActivity extends AppCompatActivity implements OnFirstLaunchStepFinished {
 
