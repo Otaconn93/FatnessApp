@@ -1,5 +1,5 @@
 <resources>
-    <!-- -->
+    <!-- Dashboard -->
     <string name="app_name">Fatness App</string>
     <string name="title_activity_drawer">drawerActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -18,5 +18,18 @@
     <string name="tagesliste">Tagesmahlzeiten</string>
     <string name="checked">Checked</string>
     <string name="unchecked">Unchecked</string>
+    <!-- Gewicht Allgemein -->
+    <string name="inputweight">Gewicht eingeben</string>
+    <string name="weight">Gewicht</string>
+    <string name="kilogramm">KG</string>
+    <string name="pounds">LBS</string>
+    <!-- Aktuelles Gewicht -->
+    <string name="currentWeight">"Was ist Ihr aktuelles Gewicht?"</string>
+    <string name="guessWeight">Sie können auch Ihr Gewicht schätzen und es später bei den Einstellungen verändern</string>
+    <string name="weiter">Weiter</string>
+    <!-- Zielgewicht -->
+    <string name="desiredWeight">Was ist Ihr Wunsch Gewicht?</string>
+    <string name="gainWeight">Bitte gib an wie viel genau du Zunehmen willst, damit wir dir einen Plan erstellen können der möglichst effizient dafür sorgt, das du nix machst"</string>
+
 
 </resources>
