@@ -1,4 +1,4 @@
-package com.mobilesysteme.fatnessapp;
+package com.mobilesysteme.fatnessapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.mobilesysteme.fatnessapp.DatabaseHelper;
+import com.mobilesysteme.fatnessapp.R;
+import com.mobilesysteme.fatnessapp.SharedPreferenceUtils;
 import com.mobilesysteme.fatnessapp.preferences.SettingsActivity;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -22,11 +25,19 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        init();
-        setTitle("Fatness-App");
+        databaseHelper = new DatabaseHelper(getApplicationContext());
+        if(SharedPreferenceUtils.getFirstLaunch(this)) {
+            Intent intent = new Intent(this, FirstLaunchActivity.class);
+            startActivity(intent);
+            //DatabaseContentHelperUtils.fillDatabase(databaseHelper);
+            finish();
+        } else {
+            init();
+        }
     }
 
     private void init() {
+        setTitle("Fatness-App");
         FloatingActionButton fabAdd = findViewById(R.id.fabAdd);
         fabAdd.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -36,9 +47,6 @@ public class DashboardActivity extends AppCompatActivity {
         });
         Toolbar toolbar = (Toolbar) findViewById(R.id.dashToolbar);
         setSupportActionBar(toolbar);
-
-        databaseHelper = new DatabaseHelper(getApplicationContext());
-        // databaseHelper.refillDatabase();
     }
 
     @Override

@@ -1,26 +1,24 @@
-package com.mobilesysteme.fatnessapp;
+package com.mobilesysteme.fatnessapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mobilesysteme.fatnessapp.sqlObjects.Food;
+import com.mobilesysteme.fatnessapp.DatabaseHelper;
+import com.mobilesysteme.fatnessapp.OnFoodGroupClickListener;
+import com.mobilesysteme.fatnessapp.R;
+import com.mobilesysteme.fatnessapp.RootFoodGroupAdapter;
+import com.mobilesysteme.fatnessapp.SubFoodGroupAdapter;
+import com.mobilesysteme.fatnessapp.activities.FoodListActivity;
 import com.mobilesysteme.fatnessapp.sqlObjects.FoodGroup;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class AddActivity extends AppCompatActivity implements OnFoodGroupClickListener {
 

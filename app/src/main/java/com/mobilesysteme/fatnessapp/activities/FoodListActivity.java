@@ -1,4 +1,4 @@
-package com.mobilesysteme.fatnessapp;
+package com.mobilesysteme.fatnessapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.mobilesysteme.fatnessapp.DatabaseHelper;
+import com.mobilesysteme.fatnessapp.FoodListAdapter;
+import com.mobilesysteme.fatnessapp.OnFoodCheckListener;
+import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.sqlObjects.Food;
 import com.mobilesysteme.fatnessapp.sqlObjects.FoodGroup;
 

@@ -1,8 +1,11 @@
-package com.mobilesysteme.fatnessapp;
+package com.mobilesysteme.fatnessapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.mobilesysteme.fatnessapp.DatabaseHelper;
+import com.mobilesysteme.fatnessapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
