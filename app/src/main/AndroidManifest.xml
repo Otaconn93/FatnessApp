@@ -9,18 +9,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
+
         <activity
             android:name=".activities.AddActivity"
             android:parentActivityName=".activities.DashboardActivity"
             android:windowSoftInputMode="adjustResize" />
+
         <activity
             android:name=".preferences.SettingsActivity"
+            android:parentActivityName=".activities.DashboardActivity"
             android:label="@string/title_activity_settings"/>
+
         <activity android:name=".activities.FirstLaunchActivity"
             android:windowSoftInputMode="adjustResize"/>
+
         <activity android:name=".activities.FoodListActivity"
             android:parentActivityName=".activities.AddActivity"
             android:windowSoftInputMode="adjustResize" />
+
         <activity
             android:name=".activities.DashboardActivity"
             android:windowSoftInputMode="adjustResize" >

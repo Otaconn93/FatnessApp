@@ -27,7 +27,7 @@ public class SettingsActivity extends AppCompatActivity {
                 .replace(R.id.settings, new SettingsFragment())
                 .commit();
 
-        ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();                                                // TODO replace with ToolBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }

@@ -14,8 +14,8 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mobilesysteme.fatnessapp.DatabaseHelper;
 import com.mobilesysteme.fatnessapp.R;
-import com.mobilesysteme.fatnessapp.SharedPreferenceUtils;
 import com.mobilesysteme.fatnessapp.preferences.SettingsActivity;
+import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
 
 public class DashboardActivity extends AppCompatActivity {
 

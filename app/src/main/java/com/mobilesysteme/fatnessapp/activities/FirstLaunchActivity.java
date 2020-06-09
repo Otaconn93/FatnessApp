@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
-import com.mobilesysteme.fatnessapp.SharedPreferenceUtils;
 import com.mobilesysteme.fatnessapp.fragments.AgeFragment;
 import com.mobilesysteme.fatnessapp.fragments.CurrentWeightFragment;
 import com.mobilesysteme.fatnessapp.R;
@@ -19,6 +18,7 @@ import com.mobilesysteme.fatnessapp.fragments.HeightFragment;
 import com.mobilesysteme.fatnessapp.fragments.TargetWeightFragment;
 import com.mobilesysteme.fatnessapp.fragments.TimeGoalFragment;
 import com.mobilesysteme.fatnessapp.fragments.WelcomeFragment;
+import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
 
 import java.lang.reflect.Constructor;
 import java.util.LinkedList;
