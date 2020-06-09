@@ -613,7 +613,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int calories = cursor.getInt(cursor.getColumnIndex(EATEN_CALORIES));
         String dateSting = cursor.getString(cursor.getColumnIndex(EATEN_DATE));
 
-        return new EatenFood(_id, food_id, calories, DateUtils.getDateFromString(dateSting));
+        return new EatenFood(_id, food_id, calories, DateUtils.getSqlDateFromString(dateSting));
     }
 
     private EatenRecipe buildEatenRecipe(Cursor cursor) {
@@ -623,7 +623,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int calories = cursor.getInt(cursor.getColumnIndex(EATEN_CALORIES));
         String dateSting = cursor.getString(cursor.getColumnIndex(EATEN_DATE));
 
-        return new EatenRecipe(_id, recipe_id, calories, DateUtils.getDateFromString(dateSting));
+        return new EatenRecipe(_id, recipe_id, calories, DateUtils.getSqlDateFromString(dateSting));
     }
 
     /**
@@ -733,7 +733,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(EATEN_EATEN_ID, food_id);
         contentValues.put(EATEN_CALORIES, calories);
-        contentValues.put(EATEN_DATE, DateUtils.getDateAsString(date));
+        contentValues.put(EATEN_DATE, DateUtils.getSqlDateAsString(date));
 
         return add(EATENFOOD_TABLE_NAME, contentValues);
     }
@@ -750,7 +750,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(EATEN_EATEN_ID, recipe_id);
         contentValues.put(EATEN_CALORIES, calories);
-        contentValues.put(EATEN_DATE, DateUtils.getDateAsString(date));
+        contentValues.put(EATEN_DATE, DateUtils.getSqlDateAsString(date));
 
         return add(EATENRECIPE_TABLE_NAME, contentValues);
     }
