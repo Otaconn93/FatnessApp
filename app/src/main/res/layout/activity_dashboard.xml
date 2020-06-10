@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
-    tools:context=".MainActivity">
+    android:background="@color/welcome2"
+    tools:context=".activities.MainActivity">
 
 
     <!--Keine Buttons, Kartei Karten deutlicher hervorheben-->
@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:cardBackgroundColor="@color/cardview"
+                app:cardBackgroundColor="@color/color3"
                 app:cardCornerRadius="60dp"
                 app:cardElevation="0.5dp">
 
@@ -56,10 +56,11 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="50dp"
+                        android:fontFamily="@font/bernierregularfont"
                         android:text="@string/kcal"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        android:textColor="@color/textWhite"
-                        android:textSize="14sp"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -130,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                app:cardBackgroundColor="@color/cardview"
+                app:cardBackgroundColor="@color/color3"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="0.5dp">
 
@@ -144,9 +145,11 @@
                         android:id="@+id/textView4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/bernierregularfont"
                         android:text="@string/alert"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                         android:textColor="@color/textWhite"
+                        android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -160,7 +163,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                app:cardBackgroundColor="@color/cardview"
+                app:cardBackgroundColor="@color/color3"
                 app:cardCornerRadius="30dp"
                 app:cardElevation="0.5dp">
 
@@ -174,9 +177,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
+                        android:fontFamily="@font/bernierregularfont"
                         android:text="@string/tagesliste"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                         android:textColor="@color/textWhite"
+                        android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -202,7 +207,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
-                        android:backgroundTint="@color/colorButton"
+                        android:backgroundTint="@color/buttonbackground"
                         android:text="@string/showmore"
                         android:textColor="@color/textWhite"
                         app:layout_constraintBottom_toBottomOf="parent"

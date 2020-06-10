@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/colorBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@color/welcome2"
+    tools:context=".activities.MainActivity">
 
 
     <TextView
@@ -15,10 +15,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:fontFamily="@font/bananasfont"
         android:text="@string/desiredWeight"
         android:textAlignment="textStart"
-        android:textColor="@color/textWhite"
-        android:textSize="40sp"
+        android:textColor="@color/colorAccent"
+        android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,11 +31,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/plainTextIdle"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="100dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="260dp"
         android:text="@string/weight"
-        android:textColor="@color/textWhite"
+        android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/plainTextIdle" />
@@ -48,78 +47,47 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="66dp"
+        android:fontFamily="sans-serif"
         android:text="@string/gainWeight"
-        android:textColor="@color/textWhite"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frageNachAktuellemGewicht" />
 
     <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
+        android:id="@+id/edit_targetWeightNumber"
+        android:layout_width="123dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/plainTextGewicht"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="70dp"
         android:layout_marginTop="32dp"
         android:autofillHints="Bitte geben Sie ihr Gewicht ein"
-        android:backgroundTint="@color/textWhite"
+        android:backgroundTint="@color/colorAccent"
         android:hint="@string/inputweight"
         android:inputType="number"
-        android:textColor="@color/textWhite"
-        app:layout_constraintEnd_toStartOf="@+id/buttonlb"
+        android:textColor="@color/colorAccent"
+        android:textColorHint="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/plainTextGewicht" />
 
-    <Button
-        android:id="@+id/buttonkg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="@color/colorButton"
-        android:text="@string/kilogramm"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/textWhite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonlb"
-        app:layout_constraintTop_toBottomOf="@+id/plainTextGewicht" />
 
     <Button
-        android:id="@+id/buttonlb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:backgroundTint="@color/colorButton"
-        android:text="@string/pounds"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/textWhite"
-        app:layout_constraintEnd_toStartOf="@+id/buttonkg"
-        app:layout_constraintStart_toEndOf="@+id/editText"
-        app:layout_constraintTop_toBottomOf="@+id/plainTextGewicht" />
-
-    <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_confirmTargetWeight"
+        style="@style/AppTheme.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="253dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="70dp"
-        android:background="@drawable/roundedbutton"
-        android:backgroundTint="@color/colorButton"
-        android:text="@string/weiter"
-        android:textColor="@color/textWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonkg" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_targetWeightNumber" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

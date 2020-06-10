@@ -6,8 +6,5 @@
     android:useLevel="true"
     >
 <stroke android:color="@color/colorAccent" android:width="2dp"/>
-    <gradient
-        android:startColor="@color/gradient_start"
-        android:endColor="@color/gradient_end"
-        android:angle="-270"/>
+    <solid android:color="@color/textWhite" />
 </shape>

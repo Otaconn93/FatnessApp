@@ -1,6 +1,7 @@
 <resources>
     <!-- Dashboard -->
     <string name="app_name">Fatness App</string>
+    <string name="app_logo">App Logo</string>
     <string name="title_activity_drawer">drawerActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -19,8 +20,8 @@
     <string name="checked">Checked</string>
     <string name="unchecked">Unchecked</string>
     <!-- Gewicht Allgemein -->
-    <string name="inputweight">Gewicht eingeben</string>
-    <string name="weight">Gewicht</string>
+    <string name="inputweight">Eingabe...</string>
+    <string name="weight">Bitte gib dein Gewicht in kg an</string>
     <string name="kilogramm">KG</string>
     <string name="pounds">LBS</string>
     <!-- Aktuelles Gewicht -->
@@ -29,7 +30,18 @@
     <string name="weiter">Weiter</string>
     <!-- Zielgewicht -->
     <string name="desiredWeight">Was ist Ihr Wunsch Gewicht?</string>
-    <string name="gainWeight">Bitte gib an wie viel genau du Zunehmen willst, damit wir dir einen Plan erstellen können der möglichst effizient dafür sorgt, das du nix machst"</string>
-
+    <string name="gainWeight">Bitte gib an wie viel genau du Zunehmen willst, damit wir dir einen Plan erstellen können."</string>
+    <!-- Welcome Screen -->
+    <string name="healthy">HEALTHY</string>
+    <string name="fatness">FATNESS</string>
+    <!-- Geschlecht wählen -->
+    <string name="gender">Bitte wähle dein Geschlecht</string>
+    <string name="mann">männlich</string>
+    <string name="frau">weiblich</string>
+    <!-- Körpergröße -->
+    <string name="height">Wie groß bist du?</string>
+    <!-- Alter -->
+    <string name="age">Wie alt bist du?</string>
+    <string name="ageinput">Bitte gib hier dein Alter an</string>
 
 </resources>
