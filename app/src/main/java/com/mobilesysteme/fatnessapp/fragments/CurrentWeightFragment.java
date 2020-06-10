@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
 import com.mobilesysteme.fatnessapp.R;
-import com.mobilesysteme.fatnessapp.SharedPreferenceUtils;
+import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
 
 public class CurrentWeightFragment extends Fragment {
 

@@ -2,6 +2,7 @@ package com.mobilesysteme.fatnessapp;
 
 import android.content.Context;
 
+import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
 import com.mobilesysteme.fatnessapp.sqlObjects.EatenFood;
 
 import java.util.ArrayList;
