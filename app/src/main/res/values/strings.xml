@@ -40,8 +40,13 @@
     <string name="frau">weiblich</string>
     <!-- Körpergröße -->
     <string name="height">Wie groß bist du?</string>
+    <string name="height2">Bitte gib deine Größe in cm ein:</string>
+    <string name="heightautofill">Größe eingeben</string>
     <!-- Alter -->
     <string name="age">Wie alt bist du?</string>
     <string name="ageinput">Bitte gib hier dein Alter an</string>
 
+    <!-- Avatar Description -->
+    <string name="maleAvatar">male Avatar</string>
+    <string name="femaleAvatar">female Avatar</string>
 </resources>
