@@ -2,16 +2,20 @@ package com.mobilesysteme.fatnessapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mobilesysteme.fatnessapp.DatabaseHelper;
 import com.mobilesysteme.fatnessapp.R;
-import com.mobilesysteme.fatnessapp.SharedPreferenceUtils;
+import com.mobilesysteme.fatnessapp.preferences.SettingsActivity;
+import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -43,6 +47,24 @@ public class DashboardActivity extends AppCompatActivity {
         });
         Toolbar toolbar = (Toolbar) findViewById(R.id.dashToolbar);
         setSupportActionBar(toolbar);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.open_settings:
+                startActivity(new Intent(this.getApplicationContext(), SettingsActivity.class));
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void openAddActivity() {

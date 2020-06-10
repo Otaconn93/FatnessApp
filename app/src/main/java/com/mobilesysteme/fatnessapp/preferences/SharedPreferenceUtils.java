@@ -1,6 +1,8 @@
-package com.mobilesysteme.fatnessapp;
+package com.mobilesysteme.fatnessapp.preferences;
 
 import android.content.Context;
+
+import com.mobilesysteme.fatnessapp.Gender;
 
 import java.util.Date;
 
@@ -8,12 +10,12 @@ public class SharedPreferenceUtils {
 
     private static final String FILE_NAME = "FatnessPreferences";
 
-    private static final String USER_HEIGHT_KEY = "userHeight";
-    private static final String USER_WEIGHT_KEY = "userWeight";
-    private static final String USER_AGE_KEY = "userAge"; 
-    private static final String USER_GENDER_KEY = "userGender";
-    private static final String USER_TARGETWEIGHT_KEY = "userTargetWeight";
-    private static final String USER_DEADLINE_KEY = "userDeadline";
+    static final String USER_HEIGHT_KEY = "userHeight";
+    static final String USER_WEIGHT_KEY = "userWeight";
+    static final String USER_AGE_KEY = "userAge";
+    static final String USER_GENDER_KEY = "userGender";
+    static final String USER_TARGETWEIGHT_KEY = "userTargetWeight";
+    static final String USER_DEADLINE_KEY = "userDeadline";
 
     private static final String FIRST_LAUNCH_KEY = "firstLaunch";
 
