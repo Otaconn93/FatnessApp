@@ -8,7 +8,6 @@
     tools:context=".activities.MainActivity">
 
 
-    <!--Keine Buttons, Kartei Karten deutlicher hervorheben-->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/dashToolbar"
         android:layout_width="match_parent"
@@ -89,6 +88,17 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:text="Calories Here"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/progressBarEmpty"
+                        app:layout_constraintStart_toStartOf="@+id/progressBarEmpty"
+                        app:layout_constraintTop_toTopOf="@+id/progressBarEmpty" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

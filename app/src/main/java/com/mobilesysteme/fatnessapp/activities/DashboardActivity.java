@@ -95,12 +95,6 @@ public class DashboardActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
-        return true;
-    }
-
 
     private void openSettings() {
         Intent intent = new Intent(this, MySettingsActivity.class);

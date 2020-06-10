@@ -64,8 +64,10 @@
     <!-- Alter -->
     <string name="age">Wie alt bist du?</string>
     <string name="ageinput">Bitte gib hier dein Alter an</string>
-
     <!-- Avatar Description -->
     <string name="maleAvatar">male Avatar</string>
     <string name="femaleAvatar">female Avatar</string>
+    <!-- Zeitziel -->
+    <string name="timegoal">Bitte gib an, bis wann du das Ziel erreichen willst.</string>
+    <string name="calendar">SET DATE</string>
 </resources>
