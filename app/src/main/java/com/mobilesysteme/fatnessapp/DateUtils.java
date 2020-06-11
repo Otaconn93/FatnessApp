@@ -1,5 +1,7 @@
 package com.mobilesysteme.fatnessapp;
 
+import android.widget.DatePicker;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,5 +39,22 @@ public abstract class DateUtils {
 
     public static String getSqlDateAsString(Date date) {
         return sqlDateFormat.format(date);
+    }
+
+    /**
+     * extracts a Date from the given DatePicker
+     * @return the Date matching the picke Date within the DatePicker
+     */
+    public static Date getDateFromDatePicker(DatePicker datePicker) {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append(datePicker.getDayOfMonth())
+                .append(".")
+                .append(datePicker.getMonth() + 1)
+                .append(".")
+                .append(datePicker.getYear());
+
+        return DateUtils.getDateFromString(stringBuilder.toString());
     }
 }
