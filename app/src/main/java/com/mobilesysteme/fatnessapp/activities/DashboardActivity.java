@@ -10,20 +10,14 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import android.view.View;
-import android.widget.Button;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mobilesysteme.fatnessapp.DatabaseHelper;
-import com.mobilesysteme.fatnessapp.MySettingsActivity;
 import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.preferences.SettingsActivity;
 import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
-
 import java.util.ArrayList;
 
 
@@ -94,13 +88,6 @@ public class DashboardActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddActivity.class);
         startActivity(intent);
     }
-
-
-    private void openSettings() {
-        Intent intent = new Intent(this, MySettingsActivity.class);
-        startActivity(intent);
-    }
-
 
     private void getEntries() {
         lineEntries = new ArrayList<>();

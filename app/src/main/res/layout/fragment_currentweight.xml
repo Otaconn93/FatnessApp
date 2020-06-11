@@ -19,7 +19,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:fontFamily="@font/bananasfont"
+        android:fontFamily="@font/bernierregularfont"
         android:text="@string/currentWeight"
         android:textAlignment="textStart"
         android:textColor="@color/colorAccent"
