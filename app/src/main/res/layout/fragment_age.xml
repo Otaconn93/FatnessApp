@@ -23,16 +23,17 @@
         android:id="@+id/edit_ageNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autofillHints="@string/ageinput"
         android:ems="10"
-        android:textColorHint="@color/colorAccent"
+        android:fontFamily="@font/bernierregularfont"
         android:hint="@string/ageinput"
         android:inputType="number"
         android:textColor="@color/colorAccent"
+        android:textColorHint="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:autofillHints="@string/ageinput" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button style="@style/AppTheme.Button"
         android:id="@+id/btn_confirmAge"

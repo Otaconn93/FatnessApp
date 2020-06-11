@@ -61,6 +61,7 @@
     <string name="height">Wie groß bist du?</string>
     <string name="height2">Bitte gib deine Größe in cm ein:</string>
     <string name="heightautofill">Größe eingeben</string>
+    <string name="heightImage">Height Image</string>
     <!-- Alter -->
     <string name="age">Wie alt bist du?</string>
     <string name="ageinput">Bitte gib hier dein Alter an</string>
