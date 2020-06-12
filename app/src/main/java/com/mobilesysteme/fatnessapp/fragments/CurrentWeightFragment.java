@@ -32,7 +32,7 @@ public class CurrentWeightFragment extends Fragment {
         currentWeightNumber = view.findViewById(R.id.edit_currentWeightNumber);
         confirmButton.setOnClickListener(v -> {
             int weight = Integer.parseInt(String.valueOf(currentWeightNumber.getText()));
-            SharedPreferenceUtils.saveUserWeight(CurrentWeightFragment.this.getContext(), weight);
+            SharedPreferenceUtils.saveUserWeightNow(CurrentWeightFragment.this.getContext(), weight);
             finishListener.onStepFinished();
         });
         return view;
