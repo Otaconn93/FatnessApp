@@ -27,6 +27,7 @@
     <string name="user_height">Change your height</string>
     <string name="user_weight">Change your weight</string>
     <string name="user_age">Change your age</string>
+    <string name="user_gender">Change your gender</string>
     <string name="user_target_weight">Change your target weight</string>
     <string name="user_deadline">Change your deadline</string>
 
