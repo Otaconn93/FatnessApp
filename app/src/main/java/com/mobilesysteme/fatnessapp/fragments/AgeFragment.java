@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,10 +32,20 @@ public class AgeFragment extends Fragment {
         Button confirmButton = view.findViewById(R.id.btn_confirmAge);
         ageNumber = view.findViewById(R.id.edit_ageNumber);
 
+        // On-Confirm operation
         confirmButton.setOnClickListener(v -> {
-            int age = Integer.parseInt(String.valueOf(ageNumber.getText()));
-            SharedPreferenceUtils.saveUserAge(AgeFragment.this.getContext(), age);
-            finishListener.onStepFinished();
+            String stringAge = ageNumber.getText().toString();
+            if(!stringAge.matches("")) {
+                int age = Integer.parseInt(stringAge);
+                SharedPreferenceUtils.saveUserAge(AgeFragment.this.getContext(), age);
+                finishListener.onStepFinished();
+            } else {
+                Toast.makeText(
+                        AgeFragment.this.getContext(),
+                        R.string.error_number,
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
         });
         return view;
     }
