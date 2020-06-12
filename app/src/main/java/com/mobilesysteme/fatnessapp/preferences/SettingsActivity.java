@@ -65,11 +65,11 @@ public class SettingsActivity extends AppCompatActivity {
 
         private void bindNumberPreference(DataStore dataStore, String preferenceKey, Integer value) {
 
-            EditTextPreference weightPreference = findPreference(preferenceKey);
-            if (weightPreference != null) {
-                weightPreference.setText(String.valueOf(value));
-                weightPreference.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_NUMBER));
-                weightPreference.setPreferenceDataStore(dataStore);
+            EditTextPreference preference = findPreference(preferenceKey);
+            if (preference != null) {
+                preference.setText(String.valueOf(value));
+                preference.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_NUMBER));
+                preference.setPreferenceDataStore(dataStore);
             }
         }
 
