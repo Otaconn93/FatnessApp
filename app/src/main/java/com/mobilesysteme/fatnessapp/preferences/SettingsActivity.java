@@ -8,10 +8,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.EditTextPreference;
+import androidx.preference.ListPreference;
 import androidx.preference.PreferenceDataStore;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.mobilesysteme.fatnessapp.DateUtils;
+import com.mobilesysteme.fatnessapp.Gender;
 import com.mobilesysteme.fatnessapp.R;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -44,28 +46,40 @@ public class SettingsActivity extends AppCompatActivity {
             bindNumberPreference(dataStore, SharedPreferenceUtils.USER_HEIGHT_KEY, String.valueOf(SharedPreferenceUtils.getUserHeight(getContext())));
             bindNumberPreference(dataStore, SharedPreferenceUtils.USER_WEIGHT_KEY, String.valueOf(SharedPreferenceUtils.getUserWeight(getContext())));
             bindNumberPreference(dataStore, SharedPreferenceUtils.USER_AGE_KEY, String.valueOf(SharedPreferenceUtils.getUserAge(getContext())));
+            bindListPreferences(dataStore, SharedPreferenceUtils.USER_GENDER_KEY, SharedPreferenceUtils.getUserGender(getContext()));
             bindNumberPreference(dataStore, SharedPreferenceUtils.USER_TARGETWEIGHT_KEY, String.valueOf(SharedPreferenceUtils.getUserTargetWeight(getContext())));
-
             bindDatePreference(dataStore, SharedPreferenceUtils.USER_DEADLINE_KEY, DateUtils.getDateAsString(SharedPreferenceUtils.getUserDeadline(getContext())));
+        }
+
+        private void bindListPreferences(DataStore dataStore, String preferenceKey, Gender gender) {
+
+            ListPreference preference = findPreference(preferenceKey);
+            if (preference != null) {
+
+                preference.setValue(String.valueOf(gender.getId()));
+                preference.setEntries(Gender.getTexts());
+                preference.setEntryValues(Gender.getIds());
+                preference.setPreferenceDataStore(dataStore);
+            }
         }
 
         private void bindNumberPreference(DataStore dataStore, String preferenceKey, String value) {
 
-            EditTextPreference weightPreference = findPreference(preferenceKey);
-            if (weightPreference != null) {
-                weightPreference.setText(value);
-                weightPreference.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_NUMBER));
-                weightPreference.setPreferenceDataStore(dataStore);
+            EditTextPreference preference = findPreference(preferenceKey);
+            if (preference != null) {
+                preference.setText(value);
+                preference.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_NUMBER));
+                preference.setPreferenceDataStore(dataStore);
             }
         }
 
         private void bindDatePreference(DataStore dataStore, String preferenceKey, String value) {
 
-            EditTextPreference weightPreference = findPreference(preferenceKey);
-            if (weightPreference != null) {
-                weightPreference.setText(value);
-                weightPreference.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_DATETIME));
-                weightPreference.setPreferenceDataStore(dataStore);
+            EditTextPreference preference = findPreference(preferenceKey);
+            if (preference != null) {
+                preference.setText(value);
+                preference.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_DATETIME));
+                preference.setPreferenceDataStore(dataStore);
             }
         }
 
@@ -90,6 +104,9 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                     case SharedPreferenceUtils.USER_AGE_KEY:
                         value = SharedPreferenceUtils.getUserAge(context);
+                        break;
+                    case SharedPreferenceUtils.USER_GENDER_KEY:
+                        value = SharedPreferenceUtils.getUserGender(context);
                         break;
                     case SharedPreferenceUtils.USER_TARGETWEIGHT_KEY:
                         value = SharedPreferenceUtils.getUserTargetWeight(context);
@@ -119,6 +136,9 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                     case SharedPreferenceUtils.USER_AGE_KEY:
                         SharedPreferenceUtils.saveUserAge(context, Integer.valueOf(value));
+                        break;
+                    case SharedPreferenceUtils.USER_GENDER_KEY:
+                        SharedPreferenceUtils.saveUserGender(context, Gender.findGenderById(Integer.valueOf(value)));
                         break;
                     case SharedPreferenceUtils.USER_TARGETWEIGHT_KEY:
                         SharedPreferenceUtils.saveUserTargetWeight(context, Integer.valueOf(value));
