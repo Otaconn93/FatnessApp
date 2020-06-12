@@ -1,5 +1,7 @@
 <resources>
+    <!-- Dashboard -->
     <string name="app_name">Fatness App</string>
+    <string name="app_logo">App Logo</string>
     <string name="title_activity_drawer">drawerActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -7,31 +9,66 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
+    <string name="kcal">KCAL LEFT/DAY</string>
+    <string name="alert">Weight Tracking Alert</string>
+    <string name="showmore">mehr anzeigen</string>
+    <string name="tagesliste">Tagesmahlzeiten</string>
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
-
     <string name="home_second">Home Second</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="settings">Settings</string>
 
     <!-- Preference Titles -->
     <string name="setting_user_category">Nutzer</string>
 
     <!-- Messages Preferences -->
-    <string name="user_height">Your height</string>
-    <string name="user_weight">Your weight</string>
-    <string name="user_age">Your age</string>
-    <string name="user_target_weight">Your target weight</string>
-    <string name="user_deadline">Your deadline</string>
+    <string name="user_height">Change your height</string>
+    <string name="user_weight">Change your weight</string>
+    <string name="user_age">Change your age</string>
+    <string name="user_target_weight">Change your target weight</string>
+    <string name="user_deadline">Change your deadline</string>
 
     <!-- Sync Preferences -->
     <string name="sync_title">Sync email periodically</string>
     <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails</string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
     <string name="checked">Checked</string>
     <string name="unchecked">Unchecked</string>
+    <!-- Gewicht Allgemein -->
+    <string name="inputweight">Eingabe...</string>
+    <string name="weight">Bitte gib dein Gewicht in kg an</string>
+    <string name="kilogramm">KG</string>
+    <string name="pounds">LBS</string>
+    <!-- Aktuelles Gewicht -->
+    <string name="currentWeight">"Was ist Ihr aktuelles Gewicht?"</string>
+    <string name="guessWeight">Sie können auch Ihr Gewicht schätzen und es später bei den Einstellungen verändern</string>
+    <string name="weiter">Weiter</string>
+    <!-- Zielgewicht -->
+    <string name="desiredWeight">Was ist Ihr Wunsch Gewicht?</string>
+    <string name="gainWeight">Bitte gib an wie viel genau du Zunehmen willst, damit wir dir einen Plan erstellen können."</string>
+    <!-- Welcome Screen -->
+    <string name="healthy">HEALTHY</string>
+    <string name="fatness">FATNESS</string>
+    <!-- Geschlecht wählen -->
+    <string name="gender">Bitte wähle dein Geschlecht</string>
+    <string name="mann">männlich</string>
+    <string name="frau">weiblich</string>
+    <!-- Körpergröße -->
+    <string name="height">Wie groß bist du?</string>
+    <string name="height2">Bitte gib deine Größe in cm ein:</string>
+    <string name="heightautofill">Größe eingeben</string>
+    <string name="heightImage">Height Image</string>
+    <!-- Alter -->
+    <string name="age">Wie alt bist du?</string>
+    <string name="ageinput">Bitte gib hier dein Alter an</string>
+    <!-- Avatar Description -->
+    <string name="maleAvatar">male Avatar</string>
+    <string name="femaleAvatar">female Avatar</string>
+    <!-- Zeitziel -->
+    <string name="timegoal">Bitte gib an, bis wann du das Ziel erreichen willst.</string>
+    <string name="calendar">SET DATE</string>
 </resources>

@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
+    <!-- <color name="colorPrimary">#6200EE</color>-->
+    <color name="colorPrimary">#859dff</color>
     <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorBackground">#2b2a5c</color>
+    <color name="colorBackground">#3C444D</color>
     <color name="textWhite">#FFFFFF</color>
-    <color name="colorButton">#145e98</color>
+    <color name="colorButton">#6200EE</color>
     <color name="colorAccent">#000000</color>
+    <color name="barempty">#8da0b5</color>
+    <color name="barfilling">#f85a00</color>
+    <!--<color name="buttonbackground">#002f95</color>-->
+    <color name="buttonbackground">#859dff</color>
+    <color name="cardview">#696363</color>
+    <color name="linechartbackground">#DCDCDC</color>
+    <color name="buttonOK">#8bee00</color>
+    <color name="button">#007a95</color>
+    <color name="welcome">#ffde59</color>
+    <color name="color1">#ff7171</color>
+    <color name="color2">#ff914d</color>
+    <color name="welcome2">#ffe785</color>
+    <color name="color3">#ffaa85</color>
+    <color name="welcome3">#c4fdb2</color>
+    <color name="color4">#65c9e2</color>
+
+
 </resources>
