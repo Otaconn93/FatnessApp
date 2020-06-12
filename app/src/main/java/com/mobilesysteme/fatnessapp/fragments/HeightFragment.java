@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,10 +31,21 @@ public class HeightFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_height, container, false);
         Button confirmButton = view.findViewById(R.id.btn_confirmHeight);
         heightNumber = view.findViewById(R.id.edit_heightNumber);
+
+        // On-Confirm operation
         confirmButton.setOnClickListener(v -> {
-            int height = Integer.parseInt(String.valueOf(heightNumber.getText()));
-            SharedPreferenceUtils.saveUserHeight(HeightFragment.this.getContext(), height);
-            finishListener.onStepFinished();
+            String stringHeight = heightNumber.getText().toString();
+            if(!stringHeight.matches("")) {
+                int height = Integer.parseInt(stringHeight);
+                SharedPreferenceUtils.saveUserHeight(HeightFragment.this.getContext(), height);
+                finishListener.onStepFinished();
+            } else {
+                Toast.makeText(
+                        HeightFragment.this.getContext(),
+                        R.string.error_number,
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
         });
         return view;
     }
