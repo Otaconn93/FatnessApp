@@ -17,6 +17,11 @@
             app:title="@string/user_age"
             app:useSimpleSummaryProvider="true" />
 
+        <ListPreference
+            app:key="userGender"
+            app:title="@string/user_gender"
+            app:useSimpleSummaryProvider="true" />
+
         <EditTextPreference
             app:key="userTargetWeight"
             app:title="@string/user_target_weight"
