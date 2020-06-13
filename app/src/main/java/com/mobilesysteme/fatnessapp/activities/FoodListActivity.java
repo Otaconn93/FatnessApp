@@ -1,31 +1,31 @@
 package com.mobilesysteme.fatnessapp.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.mobilesysteme.fatnessapp.DatabaseHelper;
 import com.mobilesysteme.fatnessapp.FoodListAdapter;
-import com.mobilesysteme.fatnessapp.OnFoodCheckListener;
+import com.mobilesysteme.fatnessapp.OnFoodAddListener;
 import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.sqlObjects.Food;
 import com.mobilesysteme.fatnessapp.sqlObjects.FoodGroup;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class FoodListActivity extends AppCompatActivity implements OnFoodCheckListener {
+public class FoodListActivity extends AppCompatActivity implements OnFoodAddListener {
 
     private static DatabaseHelper databaseHelper;
-    private List<Food> selectedItems;
+    private Map<Food, Integer> selectedItems;
     private int position;
 
     private RecyclerView foodListRecyclerView;
@@ -39,7 +39,7 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodCheckLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foodlist);
         databaseHelper = new DatabaseHelper(getApplicationContext());
-        selectedItems = new ArrayList<>();
+        selectedItems = new HashMap<Food, Integer>();
 
         position = getIntent().getIntExtra("POSITION", 0);
 
@@ -69,7 +69,7 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodCheckLi
 
     }
 
-    public List<Food> getRecursiveFoodList(int foodgroup_id) {
+    public Map<Food,Integer> getRecursiveFoodList(int foodgroup_id) {
         List<Food> resultSet = databaseHelper.getFoodByFoodGroupId(foodgroup_id);
         List<FoodGroup> childGroups = databaseHelper.getChildFoodGroups(foodgroup_id);
         if(childGroups.size() > 0) {
@@ -78,12 +78,16 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodCheckLi
                 resultSet.addAll(subResult);
             }
         }
-        return resultSet;
+        Map<Food, Integer> mapSet = new HashMap<>();
+        for (Food food : resultSet) {
+            mapSet.put(food,0);
+        }
+        return mapSet;
     }
 
     @Override
-    public void onFoodChecked(Food food) {
-        selectedItems.add(food);
+    public void onFoodAdd(Food food, int amount) {
+        selectedItems.put(food, amount);
     }
 
     @Override
@@ -93,6 +97,9 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodCheckLi
 
     public void confirmFood() {
         System.out.println(selectedItems);
+        for(Food food : selectedItems.keySet()){
+            databaseHelper.addEatenFood(food.getId(), selectedItems.get(food) * food.getDefaultQuantity(), new Date());
+        }
         finish();
     }
 }
