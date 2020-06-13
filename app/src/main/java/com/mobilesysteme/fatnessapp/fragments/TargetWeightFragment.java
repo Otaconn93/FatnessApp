@@ -16,6 +16,8 @@ import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
 import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
 
+import java.lang.annotation.Target;
+
 public class TargetWeightFragment extends Fragment {
 
     private EditText targetWeightNumber;
@@ -36,9 +38,19 @@ public class TargetWeightFragment extends Fragment {
         confirmButton.setOnClickListener(v -> {
             String stringWeight = targetWeightNumber.getText().toString();
             if(!stringWeight.matches("")) {
-                int weight = Integer.parseInt(String.valueOf(targetWeightNumber.getText()));
-                SharedPreferenceUtils.saveUserTargetWeight(TargetWeightFragment.this.getContext(), weight);
-                finishListener.onStepFinished();
+                int targetWeight = Integer.parseInt(String.valueOf(targetWeightNumber.getText()));
+                int currentWeight = SharedPreferenceUtils.getUserWeight(TargetWeightFragment.this.getContext());
+                if(targetWeight > currentWeight) {
+                    SharedPreferenceUtils.saveUserTargetWeight(TargetWeightFragment.this.getContext(), targetWeight);
+                    finishListener.onStepFinished();
+                } else {
+                    // Fehler für zu geringes Zielgewicht
+                    Toast.makeText(
+                            TargetWeightFragment.this.getContext(),
+                            R.string.error_weight,
+                            Toast.LENGTH_SHORT)
+                            .show();
+                }
             } else {
                 Toast.makeText(
                         TargetWeightFragment.this.getContext(),

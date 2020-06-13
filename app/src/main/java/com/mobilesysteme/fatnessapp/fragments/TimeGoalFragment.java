@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -27,8 +29,11 @@ public class TimeGoalFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_timegoal, container, false);
         Button confirmButton = view.findViewById(R.id.btn_confirmTimeGoal);
+        DatePicker datePicker = view.findViewById(R.id.edit_datePicker);
+        // set minimum date to one day in the future
+        datePicker.setMinDate(System.currentTimeMillis() + 86400000); // 86.400.000 milliseconds = one day
         confirmButton.setOnClickListener(v -> {
-            SharedPreferenceUtils.saveUserDeadline(TimeGoalFragment.this.getContext(), DateUtils.getDateFromDatePicker(view.findViewById(R.id.edit_datePicker)));
+            SharedPreferenceUtils.saveUserDeadline(TimeGoalFragment.this.getContext(), DateUtils.getDateFromDatePicker(datePicker));
             finishListener.onStepFinished();
         });
         return view;

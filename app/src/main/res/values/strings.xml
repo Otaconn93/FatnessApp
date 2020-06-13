@@ -85,4 +85,5 @@
     <!-- Input Fehlermeldungen -->
     <string name="error_number">Bitte gib eine Zahl ein.</string>
     <string name="error_gender">Bitte wähle dein Geschlecht.</string>
+    <string name="error_weight">Dein Zielgewicht kann nicht unter deinem aktuellen Gewicht liegen.</string>
 </resources>
