@@ -1,23 +1,15 @@
 package com.mobilesysteme.fatnessapp;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.mobilesysteme.fatnessapp.sqlObjects.Food;
-import com.mobilesysteme.fatnessapp.sqlObjects.FoodGroup;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 
@@ -61,14 +53,14 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
         final Button addBtn = holder.cv.findViewById(R.id.addBtn);
         addBtn.setOnClickListener(view -> {
             amountText.setText(Integer.toString(Integer.parseInt(amountText.getText().toString())+1));
-            currentCalories.setText(Integer.toString(Integer.parseInt(defaultValue.getText().toString().trim()) * Integer.parseInt(amountText.getText().toString())) + " g");
+            currentCalories.setText(Integer.parseInt(defaultValue.getText().toString().trim()) * Integer.parseInt(amountText.getText().toString()) + " g");
         });
 
         final Button rmBtn = holder.cv.findViewById(R.id.rmBtn);
         rmBtn.setOnClickListener(view -> {
             if(Integer.parseInt(amountText.getText().toString()) > 0){
                 amountText.setText(Integer.toString(Integer.parseInt(amountText.getText().toString())-1));
-                currentCalories.setText(Integer.toString(Integer.parseInt(defaultValue.getText().toString().trim()) * Integer.parseInt(amountText.getText().toString())) + " g");
+                currentCalories.setText(Integer.parseInt(defaultValue.getText().toString().trim()) * Integer.parseInt(amountText.getText().toString()) + " g");
             }else{
                 currentCalories.setText(currentFood.getDefaultQuantity() + " g");
             }
