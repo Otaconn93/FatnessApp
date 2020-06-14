@@ -28,7 +28,6 @@ public class TimeGoalFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_timegoal, container, false);
         Button confirmButton = view.findViewById(R.id.btn_confirmTimeGoal);
         confirmButton.setOnClickListener(v -> {
-
             SharedPreferenceUtils.saveUserDeadline(TimeGoalFragment.this.getContext(), DateUtils.getDateFromDatePicker(view.findViewById(R.id.edit_datePicker)));
             finishListener.onStepFinished();
         });
