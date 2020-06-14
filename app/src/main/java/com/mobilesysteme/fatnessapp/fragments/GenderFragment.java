@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,15 +35,23 @@ public class GenderFragment extends Fragment {
         Button confirmButton = view.findViewById(R.id.btn_confirmGender);
         radioGroup = view.findViewById(R.id.rdgrp_gender);
 
-
+        // On-Confirm operation
         confirmButton.setOnClickListener(v -> {
             int selectedId = radioGroup.getCheckedRadioButtonId();
-            if(selectedId == R.id.radio_male) {
-                SharedPreferenceUtils.saveUserGender(GenderFragment.this.getContext(), Gender.MALE);
-            }else if(selectedId == R.id.radio_female) {
-                SharedPreferenceUtils.saveUserGender(GenderFragment.this.getContext(), Gender.FEMALE);
+            if(selectedId >= 0) {
+                if (selectedId == R.id.radio_male) {
+                    SharedPreferenceUtils.saveUserGender(GenderFragment.this.getContext(), Gender.MALE);
+                } else if (selectedId == R.id.radio_female) {
+                    SharedPreferenceUtils.saveUserGender(GenderFragment.this.getContext(), Gender.FEMALE);
+                }
+                finishListener.onStepFinished();
+            } else {
+                Toast.makeText(
+                        GenderFragment.this.getContext(),
+                        R.string.error_gender,
+                        Toast.LENGTH_SHORT)
+                        .show();
             }
-            finishListener.onStepFinished();
         });
         return view;
     }
