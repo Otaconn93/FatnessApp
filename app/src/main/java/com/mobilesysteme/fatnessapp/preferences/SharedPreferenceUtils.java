@@ -2,9 +2,13 @@ package com.mobilesysteme.fatnessapp.preferences;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mobilesysteme.fatnessapp.Gender;
 
+import java.lang.reflect.Type;
 import java.util.Date;
+import java.util.TreeMap;
 
 public class SharedPreferenceUtils {
 
@@ -18,6 +22,8 @@ public class SharedPreferenceUtils {
     static final String USER_DEADLINE_KEY = "userDeadline";
 
     private static final String FIRST_LAUNCH_KEY = "firstLaunch";
+
+    private static final Gson GSON = new Gson();
 
     /**
      * extracts the users height from the SharedPreferences
@@ -35,10 +41,31 @@ public class SharedPreferenceUtils {
      * @param context the ApplicationContext needed to access the SharedPreferences
      * @return the weight of the user in kilogram
      */
-    public static int getUserWeight(Context context) {
+    public static Integer getUserWeight(Context context) {
 
-        return context.getSharedPreferences(FILE_NAME, 0)
-                .getInt(USER_WEIGHT_KEY, 0);
+        TreeMap<Long, Integer> userWeightHistory = getUserWeightHistory(context);
+        if (userWeightHistory.isEmpty()) {
+            return null;
+        }
+
+        return userWeightHistory.get(userWeightHistory.lastKey());
+    }
+
+    /**
+     * extracts the users weight history from the SharedPreferences
+     * @param context the ApplicationContext needed to access the SharedPreferences
+     * @return the TreeMap with the long value for date as key and the weight in kg
+     */
+    public static TreeMap<Long, Integer> getUserWeightHistory(Context context) {
+
+        String currentWeightHistoryJson = context.getSharedPreferences(FILE_NAME, 0)
+                .getString(USER_WEIGHT_KEY, null);
+        if (currentWeightHistoryJson == null) {
+            return new TreeMap<>();
+        }
+
+        Type type = new TypeToken<TreeMap<Long, Integer>>(){}.getType();
+        return GSON.fromJson(currentWeightHistoryJson, type);
     }
 
     /**
@@ -109,14 +136,31 @@ public class SharedPreferenceUtils {
     /**
      * saves the users weight to the SharedPreferences
      * @param context the ApplicationContext needed to access the SharedPreferences
+     * @param date the Date where the user had the given
      * @param weightInKilogram the weight of the user in kilogram
      */
-    public static void saveUserWeight(Context context, int weightInKilogram) {
+    public static void saveUserWeight(Context context, Date date, int weightInKilogram) {
+
+        TreeMap<Long, Integer> userWeightHistory = getUserWeightHistory(context);
+        if (userWeightHistory.isEmpty()) {
+            userWeightHistory = new TreeMap<>();
+        }
+
+        userWeightHistory.put(Long.valueOf(date.getTime()), weightInKilogram);
 
         context.getSharedPreferences(FILE_NAME, 0)
                 .edit()
-                .putInt(USER_WEIGHT_KEY, weightInKilogram)
+                .putString(USER_WEIGHT_KEY, GSON.toJson(userWeightHistory))
                 .apply();
+    }
+
+    /**
+     * saves the users weight to the SharedPreferences for right now
+     * @param context the ApplicationContext needed to access the SharedPreferences
+     * @param weightInKilogram the weight of the user in kilogram
+     */
+    public static void saveUserWeightNow(Context context, int weightInKilogram) {
+        saveUserWeight(context, new Date(), weightInKilogram);
     }
 
     /**
