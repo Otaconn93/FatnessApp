@@ -34,18 +34,9 @@ public class CurrentWeightFragment extends Fragment {
 
         // On-Confirm operation
         confirmButton.setOnClickListener(v -> {
-            String stringWeight = currentWeightNumber.getText().toString();
-            if(!stringWeight.matches("")) {
-                int weight = Integer.parseInt(stringWeight);
-                SharedPreferenceUtils.saveUserWeight(CurrentWeightFragment.this.getContext(), weight);
-                finishListener.onStepFinished();
-            } else {
-                Toast.makeText(
-                        CurrentWeightFragment.this.getContext(),
-                        R.string.error_number,
-                        Toast.LENGTH_SHORT)
-                        .show();
-            }
+            int weight = Integer.parseInt(String.valueOf(currentWeightNumber.getText()));
+            SharedPreferenceUtils.saveUserWeightNow(CurrentWeightFragment.this.getContext(), weight);
+            finishListener.onStepFinished();
         });
         return view;
     }
