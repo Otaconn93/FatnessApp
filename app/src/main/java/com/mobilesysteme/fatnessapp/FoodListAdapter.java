@@ -47,7 +47,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
         TextView amountText = holder.cv.findViewById(R.id.amount);
 
         name.setText(currentFood.getName());
-        currentCalories.setText(currentFood.getDefaultQuantity() + " g");
+        currentCalories.setText("");
         defaultValue.setText(Integer.toString(currentFood.getDefaultQuantity()));
 
         final Button addBtn = holder.cv.findViewById(R.id.addBtn);
@@ -62,7 +62,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
                 amountText.setText(Integer.toString(Integer.parseInt(amountText.getText().toString())-1));
                 currentCalories.setText(Integer.parseInt(defaultValue.getText().toString().trim()) * Integer.parseInt(amountText.getText().toString()) + " g");
             }else{
-                currentCalories.setText(currentFood.getDefaultQuantity() + " g");
+                currentCalories.setText("");
             }
         });
 

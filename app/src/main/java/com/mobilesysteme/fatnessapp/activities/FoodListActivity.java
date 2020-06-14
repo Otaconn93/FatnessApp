@@ -32,11 +32,9 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
     private Map<Food, Integer> allItems;
     private Map<Food, Integer> selectedItems;
     private int position;
-
     private RecyclerView foodListRecyclerView;
     private RecyclerView.LayoutManager linearLayoutManager;
     private FoodListAdapter foodListAdapter;
-
     private FloatingActionButton floatingActionButton;
 
     @Override
@@ -91,11 +89,6 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
     @Override
     public void onFoodAdd(Food food, int amount) {
         selectedItems.put(food, amount);
-    }
-
-    @Override
-    public void onFoodUnchecked(Food food) {
-        selectedItems.remove(food);
     }
 
     /**
