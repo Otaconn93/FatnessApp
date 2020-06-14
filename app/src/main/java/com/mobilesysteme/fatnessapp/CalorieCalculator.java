@@ -31,7 +31,6 @@ public class CalorieCalculator {
         setGender(spu.getUserGender(context));
 
         dh = new DatabaseHelper(context);
-
         setEatenFood(dh.getEatenFoods());
     }
 
@@ -59,9 +58,9 @@ public class CalorieCalculator {
      * @return additionally Calories to reach weight Goal
      */
     private float calculateExtraCaloriesForWeightGoal(){
-        float extraCalories = (getWeightGoal() - getWeight()) * 7716.1791764707f;
+        float extraCalories = (getWeightGoal() - getWeight()) * 7.7161791764707f;
         Date today = new Date();
-        long diff = today.getTime() - getGoalDeadline().getTime();
+        long diff = getGoalDeadline().getTime() - today.getTime() ;
         long daysLeft =  TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         return extraCalories / daysLeft;
     }
@@ -72,7 +71,6 @@ public class CalorieCalculator {
      * @return calories left for today
      */
     public int getDailyCaloriesLeft(){
-
         float dailyCalories = calculateDailyCalories() + calculateExtraCaloriesForWeightGoal();
         int lastCalories = 0;
         for(int i=0; i<getEatenFood().size()-1; i++){
@@ -80,6 +78,15 @@ public class CalorieCalculator {
         }
 
         return (int) (dailyCalories-lastCalories);
+    }
+
+    /**
+     * Calculates needed calories per day
+     *
+     * @return daily needed calories to reach goal
+     */
+    public int getDailyCalories(){
+        return (int) (calculateDailyCalories() + calculateExtraCaloriesForWeightGoal());
     }
 
     public float getHeight() {

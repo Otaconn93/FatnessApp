@@ -5,6 +5,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -14,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.mobilesysteme.fatnessapp.CalorieCalculator;
 import com.mobilesysteme.fatnessapp.DatabaseContentHelperUtils;
 import com.mobilesysteme.fatnessapp.DatabaseHelper;
 import com.mobilesysteme.fatnessapp.R;
@@ -26,14 +30,25 @@ public class DashboardActivity extends AppCompatActivity {
     private LineChart lineChart;
     private LineData lineData;
     private LineDataSet lineDataSet;
+    private TextView dailyCalories;
     private ArrayList lineEntries;
+    private ProgressBar progressBar;
     private static DatabaseHelper databaseHelper;
+    private CalorieCalculator calorieCalculator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        dailyCalories = findViewById(R.id.tv_dailyCalories);
+        progressBar = findViewById(R.id.progressBar);
+
+        calorieCalculator = new CalorieCalculator(this);
+        dailyCalories.setText(String.valueOf(calorieCalculator.getDailyCaloriesLeft()));
+        int progress = (int) (((float)(calorieCalculator.getDailyCalories()-calorieCalculator.getDailyCaloriesLeft())/calorieCalculator.getDailyCalories()) * 100);
+        progressBar.setProgress(progress);
 
         databaseHelper = new DatabaseHelper(getApplicationContext());
         if(SharedPreferenceUtils.getFirstLaunch(this)) {
