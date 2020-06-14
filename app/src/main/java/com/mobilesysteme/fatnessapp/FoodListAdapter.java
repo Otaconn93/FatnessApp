@@ -58,7 +58,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
 
         final Button rmBtn = holder.cv.findViewById(R.id.rmBtn);
         rmBtn.setOnClickListener(view -> {
-            if(Integer.parseInt(amountText.getText().toString()) > 0){
+            if(Integer.parseInt(amountText.getText().toString()) > 1){
                 amountText.setText(Integer.toString(Integer.parseInt(amountText.getText().toString())-1));
                 currentCalories.setText(Integer.parseInt(defaultValue.getText().toString().trim()) * Integer.parseInt(amountText.getText().toString()) + " g");
             }else{
