@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.mobilesysteme.fatnessapp.DatabaseContentHelperUtils;
 import com.mobilesysteme.fatnessapp.DatabaseHelper;
 import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.preferences.SettingsActivity;
@@ -38,7 +39,7 @@ public class DashboardActivity extends AppCompatActivity {
         if(SharedPreferenceUtils.getFirstLaunch(this)) {
             Intent intent = new Intent(this, FirstLaunchActivity.class);
             startActivity(intent);
-            //DatabaseContentHelperUtils.fillDatabase(databaseHelper);
+            DatabaseContentHelperUtils.fillDatabase(databaseHelper);
             finish();
         } else {
             init();
@@ -47,9 +48,8 @@ public class DashboardActivity extends AppCompatActivity {
 
     private void init() {
         createLinechart();
-        setTitle("Fatness-App");
+        setTitle("Healthy Fatness");
         FloatingActionButton fabAdd = findViewById(R.id.fabAdd);
-
         fabAdd.setOnClickListener(v -> openAddActivity());
         Toolbar toolbar = findViewById(R.id.dashToolbar);
         setSupportActionBar(toolbar);

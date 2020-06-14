@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,9 +31,11 @@ public class CurrentWeightFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_currentweight, container, false);
         Button confirmButton = view.findViewById(R.id.btn_confirmCurrentWeight);
         currentWeightNumber = view.findViewById(R.id.edit_currentWeightNumber);
+
+        // On-Confirm operation
         confirmButton.setOnClickListener(v -> {
             int weight = Integer.parseInt(String.valueOf(currentWeightNumber.getText()));
-            SharedPreferenceUtils.saveUserWeight(CurrentWeightFragment.this.getContext(), weight);
+            SharedPreferenceUtils.saveUserWeightNow(CurrentWeightFragment.this.getContext(), weight);
             finishListener.onStepFinished();
         });
         return view;

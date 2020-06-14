@@ -24,11 +24,12 @@
     <string name="setting_user_category">Nutzer</string>
 
     <!-- Messages Preferences -->
-    <string name="user_height">Change your height</string>
-    <string name="user_weight">Change your weight</string>
-    <string name="user_age">Change your age</string>
-    <string name="user_target_weight">Change your target weight</string>
-    <string name="user_deadline">Change your deadline</string>
+    <string name="user_height">Körpergröße anpassen</string>
+    <string name="user_weight">Aktuelles Gewicht anpassen</string>
+    <string name="user_age">Alter anpassen</string>
+    <string name="user_gender">Geschlecht anpassen</string>
+    <string name="user_target_weight">Zielgewicht anpassen</string>
+    <string name="user_deadline">Deadline anpassen</string>
 
     <!-- Sync Preferences -->
     <string name="sync_title">Sync email periodically</string>
@@ -38,37 +39,50 @@
 
     <string name="checked">Checked</string>
     <string name="unchecked">Unchecked</string>
+
     <!-- Gewicht Allgemein -->
     <string name="inputweight">Eingabe...</string>
     <string name="weight">Bitte gib dein Gewicht in kg an</string>
     <string name="kilogramm">KG</string>
     <string name="pounds">LBS</string>
+
     <!-- Aktuelles Gewicht -->
     <string name="currentWeight">"Was ist Ihr aktuelles Gewicht?"</string>
     <string name="guessWeight">Sie können auch Ihr Gewicht schätzen und es später bei den Einstellungen verändern</string>
     <string name="weiter">Weiter</string>
+
     <!-- Zielgewicht -->
     <string name="desiredWeight">Was ist Ihr Wunsch Gewicht?</string>
     <string name="gainWeight">Bitte gib an wie viel genau du Zunehmen willst, damit wir dir einen Plan erstellen können."</string>
+
     <!-- Welcome Screen -->
     <string name="healthy">HEALTHY</string>
     <string name="fatness">FATNESS</string>
+
     <!-- Geschlecht wählen -->
     <string name="gender">Bitte wähle dein Geschlecht</string>
     <string name="mann">männlich</string>
     <string name="frau">weiblich</string>
+
     <!-- Körpergröße -->
     <string name="height">Wie groß bist du?</string>
     <string name="height2">Bitte gib deine Größe in cm ein:</string>
     <string name="heightautofill">Größe eingeben</string>
     <string name="heightImage">Height Image</string>
+
     <!-- Alter -->
     <string name="age">Wie alt bist du?</string>
     <string name="ageinput">Bitte gib hier dein Alter an</string>
+
     <!-- Avatar Description -->
     <string name="maleAvatar">male Avatar</string>
     <string name="femaleAvatar">female Avatar</string>
+
     <!-- Zeitziel -->
     <string name="timegoal">Bitte gib an, bis wann du das Ziel erreichen willst.</string>
     <string name="calendar">SET DATE</string>
+
+    <!-- Input Fehlermeldungen -->
+    <string name="error_number">Bitte gib eine Zahl ein.</string>
+    <string name="error_gender">Bitte wähle dein Geschlecht.</string>
 </resources>
