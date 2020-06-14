@@ -154,7 +154,9 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
                         Food currentFood = new ArrayList<>(getAllItems().keySet()).get(i);
 
                         if (Integer.parseInt(defaultValue.getText().toString()) != currentFood.getDefaultQuantity()) {
-                            databaseHelper.getFoodById(currentFood.getId()).setDefault_quantity(Integer.parseInt(String.valueOf(defaultValue.getText())));
+                            databaseHelper.updateFood(currentFood.getId(), currentFood.getGroupId(),
+                                    currentFood.getName(), currentFood.getUnitId(), currentFood.getCalories(),
+                                    Integer.parseInt(String.valueOf(defaultValue.getText())));
                         }
                     }
                     finish();
