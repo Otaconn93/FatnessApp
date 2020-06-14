@@ -31,7 +31,7 @@ public class CalorieCalculator {
         setGender(spu.getUserGender(context));
 
         dh = new DatabaseHelper(context);
-        setEatenFood(dh.getEatenFoods());
+        setEatenFood(dh.getTodayEatenFoods());
     }
 
     /**
@@ -73,8 +73,9 @@ public class CalorieCalculator {
     public int getDailyCaloriesLeft(){
         float dailyCalories = calculateDailyCalories() + calculateExtraCaloriesForWeightGoal();
         int lastCalories = 0;
-        for(int i=0; i<getEatenFood().size()-1; i++){
-            lastCalories =+ getEatenFood().get(i).getCalories();
+
+        for(int i=0; i<dh.getTodayEatenFoods().size()-1; i++){
+            lastCalories =+ dh.getTodayEatenFoods().get(i).getCalories();
         }
 
         return (int) (dailyCalories-lastCalories);

@@ -115,5 +115,13 @@ public class DashboardActivity extends AppCompatActivity {
         lineEntries.add(new Entry(3f, 3));
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        dailyCalories.setText(String.valueOf(calorieCalculator.getDailyCaloriesLeft()));
+        int progress = (int) (((float)(calorieCalculator.getDailyCalories()-calorieCalculator.getDailyCaloriesLeft())/calorieCalculator.getDailyCalories()) * 100);
+        progressBar.setProgress(progress);
+    }
+
 }
 
