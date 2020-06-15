@@ -96,14 +96,13 @@ public class FoodListActivity extends AppCompatActivity {
                 onDefaultChange = true;
             }
 
-            if (!amount.getText().toString().equals("0")) {
+            if (!"0".equals(amount.getText().toString())) {
                 int calories = Integer.parseInt((String) currentCalories.getText().toString().replace(" g", ""));
                 selectedItems.put(currentFood, calories);
             }
         }
 
         for (Food food : selectedItems.keySet()) {
-            System.out.println(food.getName() + " " + food.getDefaultQuantity() + " " + selectedItems.get(food));
             databaseHelper.addEatenFood(food.getId(), selectedItems.get(food), new Date());
         }
         if (onDefaultChange) {
