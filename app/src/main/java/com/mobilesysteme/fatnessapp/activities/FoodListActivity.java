@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mobilesysteme.fatnessapp.DatabaseHelper;
 import com.mobilesysteme.fatnessapp.FoodListAdapter;
-import com.mobilesysteme.fatnessapp.OnFoodAddListener;
 import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.sqlObjects.Food;
 import com.mobilesysteme.fatnessapp.sqlObjects.FoodGroup;
@@ -26,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FoodListActivity extends AppCompatActivity implements OnFoodAddListener {
+public class FoodListActivity extends AppCompatActivity {
 
     private static DatabaseHelper databaseHelper;
     private Map<Food, Integer> allItems;
@@ -61,7 +60,7 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
         linearLayoutManager = new LinearLayoutManager(this);
         foodListRecyclerView.setLayoutManager(linearLayoutManager);
         // add adapter
-        foodListAdapter = new FoodListAdapter(getAllItems(), this);
+        foodListAdapter = new FoodListAdapter(getAllItems());
         foodListRecyclerView.setAdapter(foodListAdapter);
 
         // Setup Floating Action Button
@@ -84,11 +83,6 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
             mapSet.put(food, 0);
         }
         return mapSet;
-    }
-
-    @Override
-    public void onFoodAdd(Food food, int amount) {
-        selectedItems.put(food, amount);
     }
 
     /**

@@ -15,7 +15,6 @@ import java.util.Map;
 
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodListViewHolder> {
     private Map<Food, Integer> dataset;
-    private OnFoodAddListener listener;
 
     public static class FoodListViewHolder extends RecyclerView.ViewHolder {
         public CardView cv;
@@ -25,9 +24,8 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
         }
     }
 
-    public FoodListAdapter(Map<Food, Integer> myDataset, OnFoodAddListener myListener) {
+    public FoodListAdapter(Map<Food, Integer> myDataset) {
         dataset = myDataset;
-        listener = myListener;
     }
 
     @NonNull
@@ -68,7 +66,6 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
                 }
             }
         });
-
     }
 
     @Override
