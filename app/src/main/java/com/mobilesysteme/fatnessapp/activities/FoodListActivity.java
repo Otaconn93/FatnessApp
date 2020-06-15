@@ -93,8 +93,8 @@ public class FoodListActivity extends AppCompatActivity {
         for (int i = 0; i < foodListRecyclerView.getChildCount(); i++) {
             ViewGroup childGroup = (ViewGroup) foodListRecyclerView.getChildAt(i);
             TextView currentCalories = childGroup.findViewById(R.id.tv_details);
-            TextView amount = childGroup.findViewById(R.id.amount);
-            EditText defaultValue = childGroup.findViewById(R.id.defaultValue);
+            TextView amount = childGroup.findViewById(R.id.tv_foodAmount);
+            EditText defaultValue = childGroup.findViewById(R.id.ev_defaultValue);
             Food currentFood = new ArrayList<>(getAllItems().keySet()).get(i);
 
             if (Integer.parseInt(defaultValue.getText().toString()) != currentFood.getDefaultQuantity()) {
@@ -137,7 +137,7 @@ public class FoodListActivity extends AppCompatActivity {
                     //Yes button clicked
                     for (int i = 0; i < foodListRecyclerView.getChildCount(); i++) {
                         ViewGroup childGroup = (ViewGroup) foodListRecyclerView.getChildAt(i);
-                        EditText defaultValue = childGroup.findViewById(R.id.defaultValue);
+                        EditText defaultValue = childGroup.findViewById(R.id.ev_defaultValue);
                         Food currentFood = new ArrayList<>(getAllItems().keySet()).get(i);
 
                         if (Integer.parseInt(defaultValue.getText().toString()) != currentFood.getDefaultQuantity()) {
