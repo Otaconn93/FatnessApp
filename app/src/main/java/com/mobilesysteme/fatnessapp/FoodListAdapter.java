@@ -51,7 +51,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
         final Button addBtn = holder.cv.findViewById(R.id.btn_addFood);
         addBtn.setOnClickListener(view -> {
             amountText.setText(Integer.toString(getAmount(amountText)+1));
-            currentCalories.setText(String.format("%d g", getCalorieSum(defaultValue,amountText)));
+            currentCalories.setText(displayCaloriesWithGramm(defaultValue,amountText));
         });
 
         final Button rmBtn = holder.cv.findViewById(R.id.btn_rmFood);
@@ -59,9 +59,8 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
             if(getAmount(amountText) > 0){
 
                 amountText.setText(String.valueOf(getAmount(amountText)-1));
-                int caloriesSum = getCalorieSum(defaultValue,amountText);
-                if(caloriesSum>0) {
-                    currentCalories.setText(String.format("%d g", caloriesSum));
+                if(getCalorieSum(defaultValue,amountText)>0) {
+                    currentCalories.setText(displayCaloriesWithGramm(defaultValue,amountText));
                 }else{
                     currentCalories.setText("");
                 }
@@ -94,6 +93,17 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
      */
     private int getAmount(TextView amountText){
         return Integer.parseInt(amountText.getText().toString());
+    }
+
+    /**
+     * Calculates calories and creates String to display on screen
+     *
+     * @param defaultValue input field for default calories
+     * @param amountText text field with amount counter
+     * @return formatted calorie text with g unit
+     */
+    private String displayCaloriesWithGramm(EditText defaultValue, TextView amountText){
+        return String.format("%d g", getCalorieSum(defaultValue,amountText));
     }
 
 }
