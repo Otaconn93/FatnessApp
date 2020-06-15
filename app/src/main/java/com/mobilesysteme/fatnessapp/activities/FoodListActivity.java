@@ -19,7 +19,6 @@ import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.sqlObjects.Food;
 import com.mobilesysteme.fatnessapp.sqlObjects.FoodGroup;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +27,7 @@ import java.util.Map;
 public class FoodListActivity extends AppCompatActivity {
 
     private static DatabaseHelper databaseHelper;
-    private Map<Food, Integer> allItems;
+    private List<Food> allItems;
     private Map<Food, Integer> selectedItems;
     private int position;
     private RecyclerView foodListRecyclerView;
@@ -69,7 +68,7 @@ public class FoodListActivity extends AppCompatActivity {
 
     }
 
-    public Map<Food, Integer> getRecursiveFoodList(int foodgroup_id) {
+    public List<Food> getRecursiveFoodList(int foodgroup_id) {
         List<Food> resultSet = databaseHelper.getFoodByFoodGroupId(foodgroup_id);
         List<FoodGroup> childGroups = databaseHelper.getChildFoodGroups(foodgroup_id);
         if (childGroups.size() > 0) {
@@ -78,11 +77,7 @@ public class FoodListActivity extends AppCompatActivity {
                 resultSet.addAll(subResult);
             }
         }
-        Map<Food, Integer> mapSet = new HashMap<>();
-        for (Food food : resultSet) {
-            mapSet.put(food, 0);
-        }
-        return mapSet;
+        return resultSet;
     }
 
     /**
@@ -95,7 +90,7 @@ public class FoodListActivity extends AppCompatActivity {
             TextView currentCalories = childGroup.findViewById(R.id.tv_details);
             TextView amount = childGroup.findViewById(R.id.tv_foodAmount);
             EditText defaultValue = childGroup.findViewById(R.id.ev_defaultValue);
-            Food currentFood = new ArrayList<>(getAllItems().keySet()).get(i);
+            Food currentFood = getAllItems().get(i);
 
             if (Integer.parseInt(defaultValue.getText().toString()) != currentFood.getDefaultQuantity()) {
                 onDefaultChange = true;
@@ -119,11 +114,11 @@ public class FoodListActivity extends AppCompatActivity {
     }
 
 
-    public Map<Food, Integer> getAllItems() {
+    public List<Food> getAllItems() {
         return allItems;
     }
 
-    public void setAllItems(Map<Food, Integer> allItems) {
+    public void setAllItems(List<Food> allItems) {
         this.allItems = allItems;
     }
 
@@ -138,7 +133,7 @@ public class FoodListActivity extends AppCompatActivity {
                     for (int i = 0; i < foodListRecyclerView.getChildCount(); i++) {
                         ViewGroup childGroup = (ViewGroup) foodListRecyclerView.getChildAt(i);
                         EditText defaultValue = childGroup.findViewById(R.id.ev_defaultValue);
-                        Food currentFood = new ArrayList<>(getAllItems().keySet()).get(i);
+                        Food currentFood = getAllItems().get(i);
 
                         if (Integer.parseInt(defaultValue.getText().toString()) != currentFood.getDefaultQuantity()) {
                             databaseHelper.updateFood(currentFood.getId(), currentFood.getGroupId(),

@@ -9,12 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.mobilesysteme.fatnessapp.sqlObjects.Food;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.List;
 
 
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodListViewHolder> {
-    private Map<Food, Integer> dataset;
+    private List<Food> dataset;
 
     public static class FoodListViewHolder extends RecyclerView.ViewHolder {
         public CardView cv;
@@ -24,7 +23,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
         }
     }
 
-    public FoodListAdapter(Map<Food, Integer> myDataset) {
+    public FoodListAdapter(List<Food> myDataset) {
         dataset = myDataset;
     }
 
@@ -38,7 +37,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
 
     @Override
     public void onBindViewHolder(@NonNull final FoodListViewHolder holder, final int position) {
-        final Food currentFood = new ArrayList<>(dataset.keySet()).get(position);
+        final Food currentFood = dataset.get(position);
         TextView name = holder.cv.findViewById(R.id.tv_name);
         TextView currentCalories = holder.cv.findViewById(R.id.tv_details);
         EditText defaultValue = holder.cv.findViewById(R.id.ev_defaultValue);
