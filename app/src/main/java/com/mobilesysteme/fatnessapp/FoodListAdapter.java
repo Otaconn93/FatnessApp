@@ -14,6 +14,7 @@ import java.util.List;
 
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodListViewHolder> {
     private List<Food> dataset;
+    private OnFoodAddListener listener;
 
     public static class FoodListViewHolder extends RecyclerView.ViewHolder {
         public CardView cv;
@@ -23,8 +24,9 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
         }
     }
 
-    public FoodListAdapter(List<Food> myDataset) {
+    public FoodListAdapter(List<Food> myDataset, OnFoodAddListener listener) {
         dataset = myDataset;
+        this.listener = listener;
     }
 
     @NonNull
@@ -47,10 +49,13 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
         currentCalories.setText("");
         defaultValue.setText(Integer.toString(currentFood.getDefaultQuantity()));
 
+        defaultValue.addTextChangedListener(new DefaultValueTextWatcher(currentFood, listener));
+
         final Button addBtn = holder.cv.findViewById(R.id.btn_addFood);
         addBtn.setOnClickListener(view -> {
             amountText.setText(Integer.toString(getAmount(amountText)+1));
             currentCalories.setText(displayCaloriesWithGramm(defaultValue,amountText));
+            listener.addFood(currentFood,getCalorieSum(defaultValue,amountText));
         });
 
         final Button rmBtn = holder.cv.findViewById(R.id.btn_rmFood);
@@ -60,8 +65,10 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
                 amountText.setText(String.valueOf(getAmount(amountText)-1));
                 if(getCalorieSum(defaultValue,amountText)>0) {
                     currentCalories.setText(displayCaloriesWithGramm(defaultValue,amountText));
+                    listener.addFood(currentFood,getCalorieSum(defaultValue,amountText));
                 }else{
                     currentCalories.setText("");
+                    listener.rmFood(currentFood);
                 }
             }
         });
