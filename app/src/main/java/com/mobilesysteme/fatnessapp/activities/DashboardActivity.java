@@ -9,9 +9,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +25,13 @@ import com.mobilesysteme.fatnessapp.DatabaseHelper;
 import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.preferences.SettingsActivity;
 import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 
 public class DashboardActivity extends AppCompatActivity {
@@ -31,10 +39,12 @@ public class DashboardActivity extends AppCompatActivity {
     private LineData lineData;
     private LineDataSet lineDataSet;
     private TextView dailyCalories;
-    private ArrayList lineEntries;
+    private ArrayList<Entry> weigtEntries;
+    private ArrayList<String> weightDateEntries;
     private ProgressBar progressBar;
     private static DatabaseHelper databaseHelper;
     private CalorieCalculator calorieCalculator;
+    private SharedPreferenceUtils spu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +55,7 @@ public class DashboardActivity extends AppCompatActivity {
         dailyCalories = findViewById(R.id.tv_dailyCalories);
         progressBar = findViewById(R.id.progressBar);
 
+        spu = new SharedPreferenceUtils();
         calorieCalculator = new CalorieCalculator(this);
         dailyCalories.setText(String.valueOf(calorieCalculator.getDailyCaloriesLeft()));
         int progress = (int) (((float)(calorieCalculator.getDailyCalories()-calorieCalculator.getDailyCaloriesLeft())/calorieCalculator.getDailyCalories()) * 100);
@@ -71,12 +82,25 @@ public class DashboardActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
+    /**
+     * Creates line chart to show last user weight inputs
+     */
     private void createLinechart() {
+        weigtEntries = new ArrayList<>();
+        weightDateEntries = new ArrayList<>();
         lineChart = findViewById(R.id.lineChart);
         getEntries();
-        lineDataSet = new LineDataSet(lineEntries, "");
+        lineDataSet = new LineDataSet(weigtEntries, "");
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(true);
+        xAxis.setGranularity(1f);
+        xAxis.setCenterAxisLabels(false);
+        xAxis.setEnabled(true);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(weightDateEntries));
         lineData = new LineData(lineDataSet);
         lineChart.setData(lineData);
+        lineChart.invalidate();
         lineDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
         lineDataSet.setValueTextColor(Color.BLACK);
         lineDataSet.setValueTextSize(18f);
@@ -105,14 +129,20 @@ public class DashboardActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Put user weight entries into line chart lists
+     */
     private void getEntries() {
-        lineEntries = new ArrayList<>();
-        lineEntries.add(new Entry(2f, 0));
-        lineEntries.add(new Entry(4f, 1));
-        lineEntries.add(new Entry(6f, 1));
-        lineEntries.add(new Entry(8f, 3));
-        lineEntries.add(new Entry(7f, 4));
-        lineEntries.add(new Entry(3f, 3));
+        TreeMap userWeightEntries = spu.getUserWeightHistory(this);
+        Set<Map.Entry<Long, Integer>> userEntriesSet =  userWeightEntries.entrySet();
+        int i = 0;
+        for(Map.Entry<Long, Integer> history : userEntriesSet){
+            weigtEntries.add(new Entry(i, history.getValue()));
+            Date date = new Date(history.getKey());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.", Locale.GERMANY);
+            weightDateEntries.add(sdf.format(date));
+            i++;
+        }
     }
 
     @Override
