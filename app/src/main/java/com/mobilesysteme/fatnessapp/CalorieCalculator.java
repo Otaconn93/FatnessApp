@@ -76,7 +76,7 @@ public class CalorieCalculator {
         float dailyCalories = calculateDailyCalories() + calculateExtraCaloriesForWeightGoal();
         int lastCalories = 0;
         for(int i=0; i<getEatenFood().size()-1; i++){
-            lastCalories =+ getEatenFood().get(i).getCalories();
+            lastCalories =+ getEatenFood().get(i).getCaloriesPer100g();
         }
 
         return (int) (dailyCalories-lastCalories);

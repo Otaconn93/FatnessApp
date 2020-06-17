@@ -12,7 +12,15 @@ public interface Eaten {
 
     int getEatenId();
 
-    int getCalories();
+    /**
+     * @return the calories for 100g of the Eaten
+     */
+    int getCaloriesPer100g();
+
+    /**
+     * @return the calories for a specific amount in g of the Eaten
+     */
+    double getCaloriesForAmount(int amount);
 
     Date getDate();
 }

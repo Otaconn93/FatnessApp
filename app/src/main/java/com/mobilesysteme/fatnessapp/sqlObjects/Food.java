@@ -46,8 +46,18 @@ public class Food {
         return unit_id;
     }
 
-    public int getCalories() {
+    /**
+     * @return the calories for 100g of the Food
+     */
+    public int getCaloriesPer100g() {
         return calories;
+    }
+
+    /**
+     * @return the calories for a specific amount in g of the Food
+     */
+    public double getCaloriesForAmount(int amount) {
+        return Integer.valueOf(calories).doubleValue() / 100 * amount;
     }
 
     public int getDefaultQuantity() {
