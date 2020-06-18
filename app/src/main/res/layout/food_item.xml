@@ -11,15 +11,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <Button
+            android:id="@+id/btn_addFood"
+            android:layout_width="48dp"
+            android:layout_height="58dp"
+            android:text="+"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/tv_foodAmount"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/bernierregularfont"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/colorAccent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Food Name" />
@@ -35,13 +45,44 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_name"
             tools:text="Food Details" />
 
-        <CheckBox
-            android:id="@+id/cb_food"
+        <Button
+            android:id="@+id/btn_rmFood"
+            android:layout_width="48dp"
+            android:layout_height="58dp"
+            android:onClick="rmItem"
+            android:text="-"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_foodAmount"
+            app:layout_constraintHorizontal_bias="0.967"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_foodAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:text="0"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.84"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/ev_defaultValue"
+            android:layout_width="56dp"
+            android:layout_height="46dp"
+            android:ems="10"
+            android:inputType="phone"
+            android:text="200"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/btn_addFood"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.482" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
