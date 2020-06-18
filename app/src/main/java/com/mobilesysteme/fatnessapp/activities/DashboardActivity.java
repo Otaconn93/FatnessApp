@@ -20,14 +20,12 @@ import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.preferences.SettingsActivity;
 import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class DashboardActivity extends AppCompatActivity {
-    private LineChart lineChart;
-    private LineData lineData;
-    private LineDataSet lineDataSet;
-    private ArrayList lineEntries;
-    private static DatabaseHelper databaseHelper;
+
+    private List<Entry> lineEntries;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,35 +33,44 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        databaseHelper = new DatabaseHelper(getApplicationContext());
+        DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
         if(SharedPreferenceUtils.getFirstLaunch(this)) {
+
             Intent intent = new Intent(this, FirstLaunchActivity.class);
             startActivity(intent);
             DatabaseContentHelperUtils.fillDatabase(databaseHelper);
             finish();
         } else {
+
             init();
         }
     }
 
     private void init() {
-        createLinechart();
+
         setTitle("Healthy Fatness");
-        FloatingActionButton fabAdd = findViewById(R.id.fabAdd);
-        fabAdd.setOnClickListener(v -> openAddActivity());
+
         Toolbar toolbar = findViewById(R.id.dashToolbar);
         setSupportActionBar(toolbar);
+
+        FloatingActionButton fabAdd = findViewById(R.id.fabAdd);
+        fabAdd.setOnClickListener(v -> startActivity(new Intent(this, AddActivity.class)));
+
+        initLineChart();
     }
 
-    private void createLinechart() {
-        lineChart = findViewById(R.id.lineChart);
-        getEntries();
-        lineDataSet = new LineDataSet(lineEntries, "");
-        lineData = new LineData(lineDataSet);
-        lineChart.setData(lineData);
+    private void initLineChart() {
+
+        fillLineChartList();
+
+        LineDataSet lineDataSet = new LineDataSet(lineEntries, "");
         lineDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
         lineDataSet.setValueTextColor(Color.BLACK);
         lineDataSet.setValueTextSize(18f);
+
+        LineData lineData = new LineData(lineDataSet);
+        LineChart lineChart = findViewById(R.id.lineChart);
+        lineChart.setData(lineData);
     }
 
     @Override
@@ -84,13 +91,10 @@ public class DashboardActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void openAddActivity() {
-        Intent intent = new Intent(this, AddActivity.class);
-        startActivity(intent);
-    }
+    private void fillLineChartList() {
 
-    private void getEntries() {
         lineEntries = new ArrayList<>();
+
         lineEntries.add(new Entry(2f, 0));
         lineEntries.add(new Entry(4f, 1));
         lineEntries.add(new Entry(6f, 1));
