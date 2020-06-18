@@ -38,7 +38,7 @@ public class DashboardActivity extends AppCompatActivity {
 
             Intent intent = new Intent(this, FirstLaunchActivity.class);
             startActivity(intent);
-            DatabaseContentHelperUtils.fillDatabase(databaseHelper);
+            databaseHelper.refillDatabase();
             finish();
         } else {
 
