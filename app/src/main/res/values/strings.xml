@@ -24,12 +24,12 @@
     <string name="setting_user_category">Nutzer</string>
 
     <!-- Messages Preferences -->
-    <string name="user_height">Change your height</string>
-    <string name="user_weight">Change your weight</string>
-    <string name="user_age">Change your age</string>
-    <string name="user_gender">Change your gender</string>
-    <string name="user_target_weight">Change your target weight</string>
-    <string name="user_deadline">Change your deadline</string>
+    <string name="user_height">Körpergröße anpassen</string>
+    <string name="user_weight">Aktuelles Gewicht anpassen</string>
+    <string name="user_age">Alter anpassen</string>
+    <string name="user_gender">Geschlecht anpassen</string>
+    <string name="user_target_weight">Zielgewicht anpassen</string>
+    <string name="user_deadline">Deadline anpassen</string>
 
     <!-- Sync Preferences -->
     <string name="sync_title">Sync email periodically</string>
@@ -85,4 +85,5 @@
     <!-- Input Fehlermeldungen -->
     <string name="error_number">Bitte gib eine Zahl ein.</string>
     <string name="error_gender">Bitte wähle dein Geschlecht.</string>
+    <string name="error_weight">Dein Zielgewicht kann nicht unter deinem aktuellen Gewicht liegen.</string>
 </resources>

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/addBtn"
+            android:id="@+id/btn_addFood"
             android:layout_width="48dp"
             android:layout_height="58dp"
             android:text="+"
@@ -20,7 +20,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/amount"
+            app:layout_constraintStart_toEndOf="@+id/tv_foodAmount"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -46,20 +46,20 @@
             tools:text="Food Details" />
 
         <Button
-            android:id="@+id/rmBtn"
+            android:id="@+id/btn_rmFood"
             android:layout_width="48dp"
             android:layout_height="58dp"
             android:onClick="rmItem"
             android:text="-"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/amount"
+            app:layout_constraintEnd_toStartOf="@+id/tv_foodAmount"
             app:layout_constraintHorizontal_bias="0.967"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/amount"
+            android:id="@+id/tv_foodAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
@@ -71,15 +71,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/defaultValue"
+            android:id="@+id/ev_defaultValue"
             android:layout_width="56dp"
             android:layout_height="46dp"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="phone"
             android:text="200"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/addBtn"
+            app:layout_constraintEnd_toEndOf="@+id/btn_addFood"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

@@ -74,9 +74,8 @@ public class DashboardActivity extends AppCompatActivity {
 
     private void init() {
         createLinechart();
-        setTitle("Fatness-App");
+        setTitle("Healthy Fatness");
         FloatingActionButton fabAdd = findViewById(R.id.fabAdd);
-
         fabAdd.setOnClickListener(v -> openAddActivity());
         Toolbar toolbar = findViewById(R.id.dashToolbar);
         setSupportActionBar(toolbar);

@@ -3,9 +3,6 @@ package com.mobilesysteme.fatnessapp.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,7 +17,6 @@ import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.sqlObjects.Food;
 import com.mobilesysteme.fatnessapp.sqlObjects.FoodGroup;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -29,15 +25,14 @@ import java.util.Map;
 public class FoodListActivity extends AppCompatActivity implements OnFoodAddListener {
 
     private static DatabaseHelper databaseHelper;
-    private Map<Food, Integer> allItems;
+    private List<Food> allItems;
     private Map<Food, Integer> selectedItems;
     private int position;
-
     private RecyclerView foodListRecyclerView;
     private RecyclerView.LayoutManager linearLayoutManager;
     private FoodListAdapter foodListAdapter;
-
     private FloatingActionButton floatingActionButton;
+    private Map<Food, Integer> foodWithChangedDefaultValues;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +40,7 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
         setContentView(R.layout.activity_foodlist);
         databaseHelper = new DatabaseHelper(getApplicationContext());
         selectedItems = new HashMap<>();
+        foodWithChangedDefaultValues = new HashMap<>();
 
         position = getIntent().getIntExtra("POSITION", 0);
 
@@ -72,7 +68,7 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
 
     }
 
-    public Map<Food, Integer> getRecursiveFoodList(int foodgroup_id) {
+    public List<Food> getRecursiveFoodList(int foodgroup_id) {
         List<Food> resultSet = databaseHelper.getFoodByFoodGroupId(foodgroup_id);
         List<FoodGroup> childGroups = databaseHelper.getChildFoodGroups(foodgroup_id);
         if (childGroups.size() > 0) {
@@ -81,62 +77,29 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
                 resultSet.addAll(subResult);
             }
         }
-        Map<Food, Integer> mapSet = new HashMap<>();
-        for (Food food : resultSet) {
-            mapSet.put(food, 0);
-        }
-        return mapSet;
-    }
-
-    @Override
-    public void onFoodAdd(Food food, int amount) {
-        selectedItems.put(food, amount);
-    }
-
-    @Override
-    public void onFoodUnchecked(Food food) {
-        selectedItems.remove(food);
+        return resultSet;
     }
 
     /**
      * Saves all eaten food into EatenFood table and finish this activity
      */
     public void confirmFood() {
-        boolean onDefaultChange = false;
-        for (int i = 0; i < foodListRecyclerView.getChildCount(); i++) {
-            ViewGroup childGroup = (ViewGroup) foodListRecyclerView.getChildAt(i);
-            TextView currentCalories = childGroup.findViewById(R.id.tv_details);
-            TextView amount = childGroup.findViewById(R.id.amount);
-            EditText defaultValue = childGroup.findViewById(R.id.defaultValue);
-            Food currentFood = new ArrayList<>(getAllItems().keySet()).get(i);
-
-            if (Integer.parseInt(defaultValue.getText().toString()) != currentFood.getDefaultQuantity()) {
-                onDefaultChange = true;
-            }
-
-            if (!amount.getText().toString().equals("0")) {
-                int calories = Integer.parseInt((String) currentCalories.getText().toString().replace(" g", ""));
-                selectedItems.put(currentFood, calories);
-            }
-        }
-
-        for (Food food : selectedItems.keySet()) {
-            System.out.println(food.getName() + " " + food.getDefaultQuantity() + " " + selectedItems.get(food));
+        for(Food food : selectedItems.keySet()){
             databaseHelper.addEatenFood(food.getId(), selectedItems.get(food), new Date());
         }
-        if (onDefaultChange) {
+        if(foodWithChangedDefaultValues.size()>0){
             getChangeDefaultDialogAnswer();
-        } else {
+        }else{
             finish();
         }
+
     }
 
-
-    public Map<Food, Integer> getAllItems() {
+    public List<Food> getAllItems() {
         return allItems;
     }
 
-    public void setAllItems(Map<Food, Integer> allItems) {
+    public void setAllItems(List<Food> allItems) {
         this.allItems = allItems;
     }
 
@@ -148,14 +111,10 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
             switch (which) {
                 case DialogInterface.BUTTON_POSITIVE:
                     //Yes button clicked
-                    for (int i = 0; i < foodListRecyclerView.getChildCount(); i++) {
-                        ViewGroup childGroup = (ViewGroup) foodListRecyclerView.getChildAt(i);
-                        EditText defaultValue = childGroup.findViewById(R.id.defaultValue);
-                        Food currentFood = new ArrayList<>(getAllItems().keySet()).get(i);
-
-                        if (Integer.parseInt(defaultValue.getText().toString()) != currentFood.getDefaultQuantity()) {
-                            databaseHelper.getFoodById(currentFood.getId()).setDefault_quantity(Integer.parseInt(String.valueOf(defaultValue.getText())));
-                        }
+                    for(Food food : foodWithChangedDefaultValues.keySet()){
+                        databaseHelper.updateFood(food.getId(), food.getGroupId(),
+                                food.getName(), food.getUnitId(), food.getCalories(),
+                                foodWithChangedDefaultValues.get(food));
                     }
                     finish();
                     break;
@@ -165,7 +124,6 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
                     break;
             }
         };
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Sollen die veränderten Standard Werte der Nahrungsmittel gespeichert werden?").setPositiveButton("Ja", dialogClickListener)
                 .setNegativeButton("Nein", dialogClickListener);
@@ -173,4 +131,26 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
         builder.show();
     }
 
+    @Override
+    public void addFood(Food food, int caloriesSum) {
+        if(!selectedItems.containsKey(food)) {
+            selectedItems.put(food, caloriesSum);
+        }else{
+            selectedItems.replace(food,caloriesSum);
+        }
+    }
+
+    @Override
+    public void rmFood(Food food) {
+        selectedItems.remove(food);
+    }
+
+    @Override
+    public void isDefaultChanged(Food food, int changedValue) {
+        if(!foodWithChangedDefaultValues.containsKey(food)) {
+            foodWithChangedDefaultValues.put(food, changedValue);
+        }else{
+            foodWithChangedDefaultValues.replace(food,changedValue);
+        }
+    }
 }

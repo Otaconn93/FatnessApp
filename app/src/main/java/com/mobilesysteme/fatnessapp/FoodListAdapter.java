@@ -9,12 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.mobilesysteme.fatnessapp.sqlObjects.Food;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.List;
 
 
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodListViewHolder> {
-    private Map<Food, Integer> dataset;
+    private List<Food> dataset;
     private OnFoodAddListener listener;
 
     public static class FoodListViewHolder extends RecyclerView.ViewHolder {
@@ -25,9 +24,9 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
         }
     }
 
-    public FoodListAdapter(Map<Food, Integer> myDataset, OnFoodAddListener myListener) {
+    public FoodListAdapter(List<Food> myDataset, OnFoodAddListener listener) {
         dataset = myDataset;
-        listener = myListener;
+        this.listener = listener;
     }
 
     @NonNull
@@ -40,33 +39,39 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
 
     @Override
     public void onBindViewHolder(@NonNull final FoodListViewHolder holder, final int position) {
-        final Food currentFood = new ArrayList<>(dataset.keySet()).get(position);
+        final Food currentFood = dataset.get(position);
         TextView name = holder.cv.findViewById(R.id.tv_name);
         TextView currentCalories = holder.cv.findViewById(R.id.tv_details);
-        EditText defaultValue = holder.cv.findViewById(R.id.defaultValue);
-        TextView amountText = holder.cv.findViewById(R.id.amount);
+        EditText defaultValue = holder.cv.findViewById(R.id.ev_defaultValue);
+        TextView amountText = holder.cv.findViewById(R.id.tv_foodAmount);
 
         name.setText(currentFood.getName());
-        currentCalories.setText(currentFood.getDefaultQuantity() + " g");
+        currentCalories.setText("");
         defaultValue.setText(Integer.toString(currentFood.getDefaultQuantity()));
 
-        final Button addBtn = holder.cv.findViewById(R.id.addBtn);
+        defaultValue.addTextChangedListener(new DefaultValueTextWatcher(currentFood, listener));
+
+        final Button addBtn = holder.cv.findViewById(R.id.btn_addFood);
         addBtn.setOnClickListener(view -> {
-            amountText.setText(Integer.toString(Integer.parseInt(amountText.getText().toString())+1));
-            currentCalories.setText(Integer.parseInt(defaultValue.getText().toString().trim()) * Integer.parseInt(amountText.getText().toString()) + " g");
+            amountText.setText(Integer.toString(getAmount(amountText)+1));
+            currentCalories.setText(displayCaloriesWithGramm(defaultValue,amountText));
+            listener.addFood(currentFood,getCalorieSum(defaultValue,amountText));
         });
 
-        final Button rmBtn = holder.cv.findViewById(R.id.rmBtn);
+        final Button rmBtn = holder.cv.findViewById(R.id.btn_rmFood);
         rmBtn.setOnClickListener(view -> {
-            if(Integer.parseInt(amountText.getText().toString()) > 0){
-                amountText.setText(Integer.toString(Integer.parseInt(amountText.getText().toString())-1));
-                currentCalories.setText(Integer.parseInt(defaultValue.getText().toString().trim()) * Integer.parseInt(amountText.getText().toString()) + " g");
-            }else{
-                currentCalories.setText(currentFood.getDefaultQuantity() + " g");
+            if(getAmount(amountText) > 0){
+
+                amountText.setText(String.valueOf(getAmount(amountText)-1));
+                if(getCalorieSum(defaultValue,amountText)>0) {
+                    currentCalories.setText(displayCaloriesWithGramm(defaultValue,amountText));
+                    listener.addFood(currentFood,getCalorieSum(defaultValue,amountText));
+                }else{
+                    currentCalories.setText("");
+                    listener.rmFood(currentFood);
+                }
             }
         });
-
-
     }
 
     @Override
@@ -74,5 +79,37 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
         return dataset.size();
     }
 
+    /**
+     * Calculates total calories per selected food
+     *
+     * @param defaultValue input field for default calories
+     * @param amountText text field with amount counter
+     * @return multiplication product of default calories and amount
+     */
+    private int getCalorieSum(EditText defaultValue, TextView amountText){
+        int sum = Integer.parseInt(defaultValue.getText().toString().trim()) * Integer.parseInt(amountText.getText().toString());
+        return sum;
+    }
+
+    /**
+     *  Get the current displayed amount
+     *
+      * @param amountText text field with amount counter
+     * @return number within textview
+     */
+    private int getAmount(TextView amountText){
+        return Integer.parseInt(amountText.getText().toString());
+    }
+
+    /**
+     * Calculates calories and creates String to display on screen
+     *
+     * @param defaultValue input field for default calories
+     * @param amountText text field with amount counter
+     * @return formatted calorie text with g unit
+     */
+    private String displayCaloriesWithGramm(EditText defaultValue, TextView amountText){
+        return String.format("%d g", getCalorieSum(defaultValue,amountText));
+    }
 
 }

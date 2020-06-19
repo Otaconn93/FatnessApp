@@ -1,4 +1,4 @@
-# 🥓 Fatness-App
+# 🥓 Healthy Fatness
 Ein Studentenprojekt für den Kurs "Mobile Systeme".
 
 ## Team 
