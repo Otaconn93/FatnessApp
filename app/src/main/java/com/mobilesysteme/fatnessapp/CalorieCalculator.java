@@ -25,7 +25,7 @@ public class CalorieCalculator {
     public CalorieCalculator(Context context) {
         setHeight(spu.getUserHeight(context));
         setAge(spu.getUserAge(context));
-        setWeight(spu.getUserWeight(context));
+        setWeight(spu.getUserWeight(context).intValue());
         setWeightGoal(spu.getUserTargetWeight(context));
         setGoalDeadline(spu.getUserDeadline(context));
         setGender(spu.getUserGender(context));
@@ -74,8 +74,9 @@ public class CalorieCalculator {
         float dailyCalories = calculateDailyCalories() + calculateExtraCaloriesForWeightGoal();
         int lastCalories = 0;
 
-        for(int i=0; i<dh.getTodayEatenFoods().size()-1; i++){
-            lastCalories =+ dh.getTodayEatenFoods().get(i).getCalories();
+        for(int i=0; i<getEatenFood().size()-1; i++){
+            lastCalories = lastCalories + getEatenFood().get(i).getCalories();
+            System.out.println(getEatenFood().get(i).getCalories());
         }
 
         return (int) (dailyCalories-lastCalories);

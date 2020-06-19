@@ -139,7 +139,7 @@ public class DashboardActivity extends AppCompatActivity {
         Set<Map.Entry<Long, Integer>> userEntriesSet =  userWeightEntries.entrySet();
         int i = 0;
         for(Map.Entry<Long, Integer> history : userEntriesSet){
-            weigtEntries.add(new Entry(i, history.getValue()));
+            weigtEntries.add(new Entry(i, history.getValue().intValue()));
             Date date = new Date(history.getKey());
             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.", Locale.GERMANY);
             weightDateEntries.add(sdf.format(date));
@@ -150,9 +150,18 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        dailyCalories.setText(String.valueOf(calorieCalculator.getDailyCaloriesLeft()));
-        int progress = (int) (((float)(calorieCalculator.getDailyCalories()-calorieCalculator.getDailyCaloriesLeft())/calorieCalculator.getDailyCalories()) * 100);
-        progressBar.setProgress(progress);
+        calorieCalculator = new CalorieCalculator(this);
+        int caloriesLeft = calorieCalculator.getDailyCaloriesLeft();
+        if(caloriesLeft >= 0){
+            dailyCalories.setText(String.valueOf(caloriesLeft));
+            int progress = (int) (((float)(calorieCalculator.getDailyCalories()-calorieCalculator.getDailyCaloriesLeft())/calorieCalculator.getDailyCalories()) * 100);
+            progressBar.setProgress(progress);
+        }else{
+            dailyCalories.setText("0");
+            progressBar.setProgress(100);
+        }
+
+        initLineChart();
     }
 
 }
