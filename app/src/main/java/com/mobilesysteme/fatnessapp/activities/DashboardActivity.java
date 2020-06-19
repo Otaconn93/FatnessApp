@@ -20,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mobilesysteme.fatnessapp.CalorieCalculator;
-import com.mobilesysteme.fatnessapp.DatabaseContentHelperUtils;
 import com.mobilesysteme.fatnessapp.DatabaseHelper;
 import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.preferences.SettingsActivity;
@@ -32,6 +31,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.List;
 
 
 public class DashboardActivity extends AppCompatActivity {
@@ -39,8 +39,8 @@ public class DashboardActivity extends AppCompatActivity {
     private LineData lineData;
     private LineDataSet lineDataSet;
     private TextView dailyCalories;
-    private ArrayList<Entry> weigtEntries;
-    private ArrayList<String> weightDateEntries;
+    private List<Entry> weigtEntries;
+    private List<String> weightDateEntries;
     private ProgressBar progressBar;
     private static DatabaseHelper databaseHelper;
     private CalorieCalculator calorieCalculator;
@@ -61,11 +61,11 @@ public class DashboardActivity extends AppCompatActivity {
         int progress = (int) (((float)(calorieCalculator.getDailyCalories()-calorieCalculator.getDailyCaloriesLeft())/calorieCalculator.getDailyCalories()) * 100);
         progressBar.setProgress(progress);
 
-        databaseHelper = new DatabaseHelper(getApplicationContext());
+        DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
         if(SharedPreferenceUtils.getFirstLaunch(this)) {
             Intent intent = new Intent(this, FirstLaunchActivity.class);
             startActivity(intent);
-            DatabaseContentHelperUtils.fillDatabase(databaseHelper);
+            databaseHelper.refillDatabase();
             finish();
         } else {
             init();
@@ -73,22 +73,26 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void init() {
-        createLinechart();
+
         setTitle("Healthy Fatness");
-        FloatingActionButton fabAdd = findViewById(R.id.fabAdd);
-        fabAdd.setOnClickListener(v -> openAddActivity());
+
         Toolbar toolbar = findViewById(R.id.dashToolbar);
         setSupportActionBar(toolbar);
+
+        FloatingActionButton fabAdd = findViewById(R.id.fabAdd);
+        fabAdd.setOnClickListener(v -> startActivity(new Intent(this, AddActivity.class)));
+
+        initLineChart();
     }
 
     /**
      * Creates line chart to show last user weight inputs
      */
-    private void createLinechart() {
+    private void initLineChart() {
         weigtEntries = new ArrayList<>();
         weightDateEntries = new ArrayList<>();
         lineChart = findViewById(R.id.lineChart);
-        getEntries();
+        fillLineChartList();
         lineDataSet = new LineDataSet(weigtEntries, "");
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -103,6 +107,10 @@ public class DashboardActivity extends AppCompatActivity {
         lineDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
         lineDataSet.setValueTextColor(Color.BLACK);
         lineDataSet.setValueTextSize(18f);
+
+        LineData lineData = new LineData(lineDataSet);
+        LineChart lineChart = findViewById(R.id.lineChart);
+        lineChart.setData(lineData);
     }
 
     @Override
@@ -123,15 +131,10 @@ public class DashboardActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void openAddActivity() {
-        Intent intent = new Intent(this, AddActivity.class);
-        startActivity(intent);
-    }
-
     /**
      * Put user weight entries into line chart lists
      */
-    private void getEntries() {
+    private void fillLineChartList() {
         TreeMap userWeightEntries = spu.getUserWeightHistory(this);
         Set<Map.Entry<Long, Integer>> userEntriesSet =  userWeightEntries.entrySet();
         int i = 0;

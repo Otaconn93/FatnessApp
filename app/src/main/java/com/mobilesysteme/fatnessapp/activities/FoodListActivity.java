@@ -27,48 +27,57 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
     private static DatabaseHelper databaseHelper;
     private List<Food> allItems;
     private Map<Food, Integer> selectedItems;
-    private int position;
-    private RecyclerView foodListRecyclerView;
-    private RecyclerView.LayoutManager linearLayoutManager;
-    private FoodListAdapter foodListAdapter;
-    private FloatingActionButton floatingActionButton;
     private Map<Food, Integer> foodWithChangedDefaultValues;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foodlist);
+
+        initToolbar();
+
         databaseHelper = new DatabaseHelper(getApplicationContext());
         selectedItems = new HashMap<>();
         foodWithChangedDefaultValues = new HashMap<>();
 
-        position = getIntent().getIntExtra("POSITION", 0);
+        setAllItems(getRecursiveFoodList(getIntent().getIntExtra("POSITION", 0)));
 
-        // Setup toolbar and activity title
+        // Create RecyclerView with List Elements for Sub Food Groups
+        RecyclerView foodListRecyclerView = findViewById(R.id.rv_FoodList);
+        initLayoutManager(foodListRecyclerView);
+        initFoodListAdapter(foodListRecyclerView);
+        initFloatingActionButton();
+    }
+
+    private void initLayoutManager(RecyclerView foodListRecyclerView) {
+        RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        foodListRecyclerView.setLayoutManager(linearLayoutManager);
+    }
+
+    private void initFoodListAdapter(RecyclerView foodListRecyclerView) {
+        FoodListAdapter foodListAdapter = new FoodListAdapter(getAllItems(), this);
+        foodListRecyclerView.setAdapter(foodListAdapter);
+    }
+
+    private void initFloatingActionButton() {
+        FloatingActionButton floatingActionButton = findViewById(R.id.fab_confirmFood);
+        floatingActionButton.setOnClickListener(view -> confirmFood());
+    }
+
+    /**
+     * Setup toolbar and activity title
+     */
+    private void initToolbar() {
+
         Toolbar toolbar = findViewById(R.id.foodlist_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Nahrungsmittel hinzufügen");
-
-        // Create RecyclerView with List Elements for Sub Food Groups
-        foodListRecyclerView = findViewById(R.id.rv_FoodList);
-
-        setAllItems(getRecursiveFoodList(position));
-
-        //Setup layout manager
-        linearLayoutManager = new LinearLayoutManager(this);
-        foodListRecyclerView.setLayoutManager(linearLayoutManager);
-        // add adapter
-        foodListAdapter = new FoodListAdapter(getAllItems(), this);
-        foodListRecyclerView.setAdapter(foodListAdapter);
-
-        // Setup Floating Action Button
-        floatingActionButton = findViewById(R.id.fab_confirmFood);
-        floatingActionButton.setOnClickListener(view -> confirmFood());
-
     }
 
     public List<Food> getRecursiveFoodList(int foodgroup_id) {
+
         List<Food> resultSet = databaseHelper.getFoodByFoodGroupId(foodgroup_id);
         List<FoodGroup> childGroups = databaseHelper.getChildFoodGroups(foodgroup_id);
         if (childGroups.size() > 0) {
@@ -84,6 +93,7 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
      * Saves all eaten food into EatenFood table and finish this activity
      */
     public void confirmFood() {
+
         for(Food food : selectedItems.keySet()){
             databaseHelper.addEatenFood(food.getId(), selectedItems.get(food), new Date());
         }
@@ -107,6 +117,7 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
      * Open an alert dialog, which asks the user to store default value changes into the database
      */
     private void getChangeDefaultDialogAnswer() {
+
         DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
             switch (which) {
                 case DialogInterface.BUTTON_POSITIVE:
@@ -133,6 +144,7 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
 
     @Override
     public void addFood(Food food, int caloriesSum) {
+
         if(!selectedItems.containsKey(food)) {
             selectedItems.put(food, caloriesSum);
         }else{
@@ -147,6 +159,7 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
 
     @Override
     public void isDefaultChanged(Food food, int changedValue) {
+
         if(!foodWithChangedDefaultValues.containsKey(food)) {
             foodWithChangedDefaultValues.put(food, changedValue);
         }else{
