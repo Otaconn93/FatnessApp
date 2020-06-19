@@ -6,8 +6,6 @@
 
     <!-- Dashboard -->
     <string name="kcal">KCAL ÜBRIG/TAG</string>
-    <string name="show_recipes">Rezepte auswählen</string>
-    <string name="recipe_list">Rezepte</string>
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
