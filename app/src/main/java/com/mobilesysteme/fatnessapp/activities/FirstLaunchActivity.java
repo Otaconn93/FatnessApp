@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
@@ -39,17 +38,25 @@ public class FirstLaunchActivity extends AppCompatActivity implements OnFirstLau
      * Initializes the new FirstLaunchActivity and sets up the fragment queue.
      */
     public void init() {
+
+        initFirstLaunchFlow();
+
+        replaceFragment(new WelcomeFragment(this), false);
+    }
+
+    /**
+     * initializes the Queue with the order of the first launch flow Fragments
+     */
+    private void initFirstLaunchFlow() {
+
         fragmentQueue = new LinkedList<>();
 
-        // Order of First Launch Flow fragments
         fragmentQueue.add(GenderFragment.class);
         fragmentQueue.add(AgeFragment.class);
         fragmentQueue.add(HeightFragment.class);
         fragmentQueue.add(CurrentWeightFragment.class);
         fragmentQueue.add(TargetWeightFragment.class);
         fragmentQueue.add(TimeGoalFragment.class);
-
-        replaceFragment(new WelcomeFragment(this), false);
     }
 
     /**
@@ -58,8 +65,8 @@ public class FirstLaunchActivity extends AppCompatActivity implements OnFirstLau
      * @param addToBackStack if the fragment should be added to the backstack
      */
     public void replaceFragment(Fragment fragment, boolean addToBackStack) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.firstlaunchFragmentContainer, fragment);
         if (addToBackStack) {
             fragmentTransaction.addToBackStack(fragment.toString());
@@ -71,9 +78,9 @@ public class FirstLaunchActivity extends AppCompatActivity implements OnFirstLau
      * Switch to new dashboard activity and close current activity
      */
     public void openDashboardActivity() {
+
         SharedPreferenceUtils.saveFirstLaunch(this, false);
-        Intent intent = new Intent(this, DashboardActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(this, DashboardActivity.class));
         finish();
     }
 
