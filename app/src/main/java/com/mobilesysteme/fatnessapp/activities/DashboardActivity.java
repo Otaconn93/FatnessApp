@@ -1,5 +1,7 @@
 package com.mobilesysteme.fatnessapp.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -24,6 +26,8 @@ import com.mobilesysteme.fatnessapp.DatabaseHelper;
 import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.preferences.SettingsActivity;
 import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -65,6 +69,10 @@ public class DashboardActivity extends AppCompatActivity {
         } else {
 
             init();
+        }
+
+        if(checkLastWeightDateOutdated()){
+            createDialogForWeightUpdate();
         }
     }
 
@@ -134,7 +142,7 @@ public class DashboardActivity extends AppCompatActivity {
         for(Map.Entry<Long, Integer> history : userEntriesSet){
             weigtEntries.add(new Entry(i, history.getValue().intValue()));
             Date date = new Date(history.getKey());
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.", Locale.GERMANY);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
             weightDateEntries.add(sdf.format(date));
             i++;
         }
@@ -155,6 +163,43 @@ public class DashboardActivity extends AppCompatActivity {
         }
 
         initLineChart();
+    }
+
+    /**
+     * @return true if last weight is older than one week
+     */
+    private boolean checkLastWeightDateOutdated(){
+        Date lastEntry = new Date();
+        Date today = new Date();
+        try {
+            lastEntry = new SimpleDateFormat("dd.MM.yyyy").parse(weightDateEntries.get(weightDateEntries.size()-1));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(lastEntry.getTime() < today.getTime()- 604800000){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Creates a dialog to update the current weight in settings
+     * @return dialog window with one button
+     */
+    private void createDialogForWeightUpdate() {
+
+        DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+            switch (which) {
+                case DialogInterface.BUTTON_POSITIVE:
+                    startActivity(new Intent(this.getApplicationContext(), SettingsActivity.class));
+                    finish();
+                    break;
+            }
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Deine letzte Gewichtsmessung liegt schon eine Woche zurück! Update jetzt dein Gewicht!").setPositiveButton("Zu den Settings", dialogClickListener);
+        builder.create();
+        builder.show();
     }
 
 }
