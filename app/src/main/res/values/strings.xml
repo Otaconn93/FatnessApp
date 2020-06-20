@@ -1,27 +1,22 @@
 <resources>
-    <!-- Dashboard -->
-    <string name="app_name">Fatness App</string>
+
+    <!-- Branding-->
+    <string name="app_name">Healthy Fatness</string>
     <string name="app_logo">App Logo</string>
-    <string name="title_activity_drawer">drawerActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
-    <string name="kcal">KCAL LEFT/DAY</string>
-    <string name="alert">Weight Tracking Alert</string>
-    <string name="showmore">mehr anzeigen</string>
-    <string name="tagesliste">Tagesmahlzeiten</string>
+
+    <!-- Dashboard -->
+    <string name="kcal">KCAL ÜBRIG/TAG</string>
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="home_second">Home Second</string>
+    <string name="action_settings">Settings</string>
     <string name="title_activity_settings">Settings</string>
-    <string name="settings">Settings</string>
+    <string name="settings">Einstellungen</string>
+
 
     <!-- Preference Titles -->
-    <string name="setting_user_category">Nutzer</string>
+    <string name="setting_user_category">Benutzereinstellungen</string>
 
     <!-- Messages Preferences -->
     <string name="user_height">Körpergröße anpassen</string>
@@ -36,12 +31,11 @@
     <string name="attachment_title">Download incoming attachments</string>
     <string name="attachment_summary_on">Automatically download attachments for incoming emails</string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
-
     <string name="checked">Checked</string>
     <string name="unchecked">Unchecked</string>
 
     <!-- Gewicht Allgemein -->
-    <string name="inputweight">Eingabe...</string>
+    <string name="inputweight">Eingabe…</string>
     <string name="weight">Bitte gib dein Gewicht in kg an</string>
     <string name="kilogramm">KG</string>
     <string name="pounds">LBS</string>
@@ -86,4 +80,21 @@
     <string name="error_number">Bitte gib eine Zahl ein.</string>
     <string name="error_gender">Bitte wähle dein Geschlecht.</string>
     <string name="error_weight">Dein Zielgewicht kann nicht unter deinem aktuellen Gewicht liegen.</string>
+
+    <!-- Food Items -->
+    <string name="empty">0</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="food_name">Food Name</string>
+    <string name="food_details">Food Details</string>
+    <string name="twohundred">200</string>
+    <string name="autofill_food">default value</string>
+
+    <!-- Miscellaneous -->
+    <string name="title_activity_drawer">drawerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
 </resources>

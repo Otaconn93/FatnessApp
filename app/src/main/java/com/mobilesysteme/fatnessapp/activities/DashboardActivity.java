@@ -5,6 +5,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -32,7 +35,6 @@ public class DashboardActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
         DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
         if(SharedPreferenceUtils.getFirstLaunch(this)) {
             Intent intent = new Intent(this, FirstLaunchActivity.class);
