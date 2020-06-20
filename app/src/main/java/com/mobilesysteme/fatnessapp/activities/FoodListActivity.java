@@ -1,8 +1,11 @@
 package com.mobilesysteme.fatnessapp.activities;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -29,6 +32,7 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
     private Map<Food, Integer> selectedItems;
     private Map<Food, Integer> foodWithChangedDefaultValues;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -45,6 +49,13 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
 
         // Create RecyclerView with List Elements for Sub Food Groups
         RecyclerView foodListRecyclerView = findViewById(R.id.rv_FoodList);
+        // Hide Keyboard when touched outside
+        foodListRecyclerView.setOnTouchListener((v, event) -> {
+            InputMethodManager input = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            input.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            return false;
+        });
+
         initLayoutManager(foodListRecyclerView);
         initFoodListAdapter(foodListRecyclerView);
         initFloatingActionButton();
