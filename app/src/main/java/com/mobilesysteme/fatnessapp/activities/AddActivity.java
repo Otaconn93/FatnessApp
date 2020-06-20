@@ -1,38 +1,18 @@
 package com.mobilesysteme.fatnessapp.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.mobilesysteme.fatnessapp.DatabaseHelper;
-import com.mobilesysteme.fatnessapp.OnFoodGroupClickListener;
 import com.mobilesysteme.fatnessapp.R;
-import com.mobilesysteme.fatnessapp.RootFoodGroupAdapter;
-import com.mobilesysteme.fatnessapp.SubFoodGroupAdapter;
 import com.mobilesysteme.fatnessapp.TabStatusAdapter;
-import com.mobilesysteme.fatnessapp.sqlObjects.FoodGroup;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AddActivity extends AppCompatActivity {
-
-    private DatabaseHelper databaseHelper;
-    private RecyclerView subFoodGroupRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,19 +20,20 @@ public class AddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        databaseHelper = new DatabaseHelper(getApplicationContext());
-        subFoodGroupRecyclerView = findViewById(R.id.rv_subFoodGroups);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         ViewPager2 viewPager = findViewById(R.id.pager);
 
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle("Nahrungsmittel hinzufügen");
+        setupToolbar(toolbar);
+        setupTabLayout(tabLayout, viewPager);
+    }
 
+    /**
+     * sets up the tabbed layout of the activity
+     * @param tabLayout TabLayout element of current view
+     * @param viewPager ViewPager2 element of current view
+     */
+    private void setupTabLayout(TabLayout tabLayout, ViewPager2 viewPager) {
         viewPager.setAdapter(new TabStatusAdapter(getSupportFragmentManager(), getLifecycle()));
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager, true, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
@@ -71,6 +52,18 @@ public class AddActivity extends AppCompatActivity {
             }
         });
         tabLayoutMediator.attach();
+    }
+
+    /**
+     * sets up toolbar and title
+     * @param toolbar Toolbar element of current view
+     */
+    private void setupToolbar(Toolbar toolbar) {
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Nahrungsmittel hinzufügen");
     }
 
 }
