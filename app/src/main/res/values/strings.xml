@@ -85,5 +85,17 @@
     <!-- Input Fehlermeldungen -->
     <string name="error_number">Bitte gib eine Zahl ein.</string>
     <string name="error_gender">Bitte wähle dein Geschlecht.</string>
-    <string name="error_weight">Dein Zielgewicht kann nicht unter deinem aktuellen Gewicht liegen.</string>
+
+    <string name="error_weight_to_low">Dein aktuelles Gewicht sollte wenigstens 2kg sein.</string>
+    <string name="error_weight_to_high">Dein aktuelles Gewicht sollte nicht höher als 500kg sein.</string>
+
+    <string name="error_weight_target_weight">Dein Zielgewicht kann nicht unter deinem aktuellen Gewicht liegen.</string>
+
+    <string name="error_targetweight_to_low">Dein Zielgewicht sollte wenigstens 5kg sein.</string>
+    <string name="error_targetweight_to_high">Dein Zielgewicht sollte nicht höher als 500kg sein.</string>
+
+    <string name="error_height_to_low">Du wirst wohl wenigstens 50cm groß sein.</string>
+    <string name="error_height_to_high">Du wirst wohl nicht höher als 300cm groß sein.</string>
+
+    <string name="error_age_to_high">Dein Alter wird wohl nicht höher als 150 sein.</string>
 </resources>

@@ -44,7 +44,7 @@ public class TargetWeightFragment extends Fragment {
                     finishListener.onStepFinished();
                 } else {
                     // Fehler für zu geringes Zielgewicht
-                    Toast.makeText(getContext(), R.string.error_weight, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.error_weight_target_weight, Toast.LENGTH_SHORT).show();
                 }
             } else {
 
