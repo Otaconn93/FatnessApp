@@ -3,8 +3,8 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/tryoutorange</item>
+        <item name="colorPrimaryDark">@color/barfilling</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorHint">@color/textWhite</item>
     </style>
@@ -19,7 +19,7 @@
         <item name="android:textColor">@color/textWhite</item>
         <item name="android:text">@string/weiter</item>
         <item name="background">@drawable/roundedbutton</item>
-        <item name="backgroundTint">@color/buttonbackground</item>
+        <item name="backgroundTint">@color/tryoutorange</item>
     </style>
 
 </resources>

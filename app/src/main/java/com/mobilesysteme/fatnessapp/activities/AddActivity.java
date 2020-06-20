@@ -92,7 +92,6 @@ public class AddActivity extends AppCompatActivity implements OnFoodGroupClickLi
             Intent intent = new Intent(getBaseContext(), FoodListActivity.class);
             intent.putExtra("POSITION", foodGroup.getId());
             startActivity(intent);
-            finish();
         }
     }
 }
