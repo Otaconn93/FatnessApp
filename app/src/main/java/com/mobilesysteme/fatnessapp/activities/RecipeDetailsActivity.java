@@ -1,4 +1,6 @@
 package com.mobilesysteme.fatnessapp.activities;
 
-public class RecipeDetailsActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class RecipeDetailsActivity extends AppCompatActivity {
 }

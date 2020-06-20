@@ -35,13 +35,11 @@ public class DashboardActivity extends AppCompatActivity {
 
         DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
         if(SharedPreferenceUtils.getFirstLaunch(this)) {
-
             Intent intent = new Intent(this, FirstLaunchActivity.class);
             startActivity(intent);
             databaseHelper.refillDatabase();
             finish();
         } else {
-
             init();
         }
     }
