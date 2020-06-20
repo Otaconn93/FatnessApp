@@ -35,16 +35,11 @@ import java.util.List;
 
 
 public class DashboardActivity extends AppCompatActivity {
-    private LineChart lineChart;
-    private LineData lineData;
-    private LineDataSet lineDataSet;
     private TextView dailyCalories;
     private List<Entry> weigtEntries;
     private List<String> weightDateEntries;
     private ProgressBar progressBar;
-    private static DatabaseHelper databaseHelper;
     private CalorieCalculator calorieCalculator;
-    private SharedPreferenceUtils spu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +50,6 @@ public class DashboardActivity extends AppCompatActivity {
         dailyCalories = findViewById(R.id.tv_dailyCalories);
         progressBar = findViewById(R.id.progressBar);
 
-        spu = new SharedPreferenceUtils();
         calorieCalculator = new CalorieCalculator(this);
         dailyCalories.setText(String.valueOf(calorieCalculator.getDailyCaloriesLeft()));
         int progress = (int) (((float)(calorieCalculator.getDailyCalories()-calorieCalculator.getDailyCaloriesLeft())/calorieCalculator.getDailyCalories()) * 100);
@@ -91,9 +85,9 @@ public class DashboardActivity extends AppCompatActivity {
     private void initLineChart() {
         weigtEntries = new ArrayList<>();
         weightDateEntries = new ArrayList<>();
-        lineChart = findViewById(R.id.lineChart);
+        LineChart lineChart = findViewById(R.id.lineChart);
         fillLineChartList();
-        lineDataSet = new LineDataSet(weigtEntries, "");
+        LineDataSet lineDataSet = new LineDataSet(weigtEntries, "");
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(true);
@@ -101,15 +95,12 @@ public class DashboardActivity extends AppCompatActivity {
         xAxis.setCenterAxisLabels(false);
         xAxis.setEnabled(true);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(weightDateEntries));
-        lineData = new LineData(lineDataSet);
+        LineData lineData = new LineData(lineDataSet);
         lineChart.setData(lineData);
         lineChart.invalidate();
         lineDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
         lineDataSet.setValueTextColor(Color.BLACK);
         lineDataSet.setValueTextSize(18f);
-
-        LineData lineData = new LineData(lineDataSet);
-        LineChart lineChart = findViewById(R.id.lineChart);
         lineChart.setData(lineData);
     }
 
@@ -135,7 +126,7 @@ public class DashboardActivity extends AppCompatActivity {
      * Put user weight entries into line chart lists
      */
     private void fillLineChartList() {
-        TreeMap userWeightEntries = spu.getUserWeightHistory(this);
+        TreeMap userWeightEntries = SharedPreferenceUtils.getUserWeightHistory(this);
         Set<Map.Entry<Long, Integer>> userEntriesSet =  userWeightEntries.entrySet();
         int i = 0;
         for(Map.Entry<Long, Integer> history : userEntriesSet){
