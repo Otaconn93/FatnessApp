@@ -56,7 +56,7 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
     }
 
     private void initFoodListAdapter(RecyclerView foodListRecyclerView) {
-        FoodListAdapter foodListAdapter = new FoodListAdapter(getAllItems(), this);
+        FoodListAdapter foodListAdapter = new FoodListAdapter(getAllItems(), this, getApplicationContext());
         foodListRecyclerView.setAdapter(foodListAdapter);
     }
 
@@ -102,7 +102,6 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
         }else{
             finish();
         }
-
     }
 
     public List<Food> getAllItems() {
@@ -143,12 +142,12 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
     }
 
     @Override
-    public void addFood(Food food, int caloriesSum) {
+    public void addFood(Food food, int unitSum) {
 
         if(!selectedItems.containsKey(food)) {
-            selectedItems.put(food, caloriesSum);
+            selectedItems.put(food, unitSum);
         }else{
-            selectedItems.replace(food,caloriesSum);
+            selectedItems.replace(food,unitSum);
         }
     }
 

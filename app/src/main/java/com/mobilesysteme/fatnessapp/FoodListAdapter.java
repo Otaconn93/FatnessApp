@@ -1,5 +1,6 @@
 package com.mobilesysteme.fatnessapp;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -9,12 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.mobilesysteme.fatnessapp.sqlObjects.Food;
+
 import java.util.List;
 
 
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodListViewHolder> {
     private List<Food> dataset;
     private OnFoodAddListener listener;
+    private final Context context;
 
     public static class FoodListViewHolder extends RecyclerView.ViewHolder {
         public CardView cv;
@@ -24,9 +27,10 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
         }
     }
 
-    public FoodListAdapter(List<Food> myDataset, OnFoodAddListener listener) {
+    public FoodListAdapter(List<Food> myDataset, OnFoodAddListener listener, Context context) {
         dataset = myDataset;
         this.listener = listener;
+        this.context = context;
     }
 
     @NonNull
@@ -49,13 +53,13 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
         currentCalories.setText("");
         defaultValue.setText(Integer.toString(currentFood.getDefaultQuantity()));
 
-        defaultValue.addTextChangedListener(new DefaultValueTextWatcher(currentFood, listener));
+        defaultValue.addTextChangedListener(new DefaultValueTextWatcher(currentFood, listener, context, defaultValue));
 
         final Button addBtn = holder.cv.findViewById(R.id.btn_addFood);
         addBtn.setOnClickListener(view -> {
             amountText.setText(Integer.toString(getAmount(amountText)+1));
-            currentCalories.setText(displayCaloriesWithGramm(defaultValue,amountText));
-            listener.addFood(currentFood,getCalorieSum(defaultValue,amountText));
+            currentCalories.setText(displayUnitWithGramm(defaultValue,amountText));
+            listener.addFood(currentFood,getUnitSum(defaultValue,amountText));
         });
 
         final Button rmBtn = holder.cv.findViewById(R.id.btn_rmFood);
@@ -63,9 +67,9 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
             if(getAmount(amountText) > 0){
 
                 amountText.setText(String.valueOf(getAmount(amountText)-1));
-                if(getCalorieSum(defaultValue,amountText)>0) {
-                    currentCalories.setText(displayCaloriesWithGramm(defaultValue,amountText));
-                    listener.addFood(currentFood,getCalorieSum(defaultValue,amountText));
+                if(getUnitSum(defaultValue,amountText)>0) {
+                    currentCalories.setText(displayUnitWithGramm(defaultValue,amountText));
+                    listener.addFood(currentFood,getUnitSum(defaultValue,amountText));
                 }else{
                     currentCalories.setText("");
                     listener.rmFood(currentFood);
@@ -86,7 +90,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
      * @param amountText text field with amount counter
      * @return multiplication product of default calories and amount
      */
-    private int getCalorieSum(EditText defaultValue, TextView amountText){
+    private int getUnitSum(EditText defaultValue, TextView amountText){
         int sum = Integer.parseInt(defaultValue.getText().toString().trim()) * Integer.parseInt(amountText.getText().toString());
         return sum;
     }
@@ -108,8 +112,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
      * @param amountText text field with amount counter
      * @return formatted calorie text with g unit
      */
-    private String displayCaloriesWithGramm(EditText defaultValue, TextView amountText){
-        return String.format("%d g", getCalorieSum(defaultValue,amountText));
+    private String displayUnitWithGramm(EditText defaultValue, TextView amountText){
+        return String.format("%d g", getUnitSum(defaultValue,amountText));
     }
-
 }
