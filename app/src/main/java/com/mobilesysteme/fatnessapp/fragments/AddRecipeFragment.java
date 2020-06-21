@@ -43,7 +43,7 @@ public class AddRecipeFragment extends Fragment implements OnRecipeClickListener
     }
 
     @Override
-    public void onRecipeClick(Recipe recipe, int position) {
+    public void onRecipeClick(Recipe recipe) {
         Intent intent = new Intent(getActivity().getBaseContext(), RecipeDetailsActivity.class);
         intent.putExtra(RECIPE_ID_KEY, recipe.getId());
         startActivity(intent);

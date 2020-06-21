@@ -11,8 +11,8 @@ import com.mobilesysteme.fatnessapp.fragments.AddRecipeFragment;
 
 public class TabStatusAdapter extends FragmentStateAdapter {
 
-    private AddFoodFragment addFoodFragment;
-    private AddRecipeFragment addRecipeFragment;
+    private final AddFoodFragment addFoodFragment;
+    private final AddRecipeFragment addRecipeFragment;
 
     public TabStatusAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
@@ -25,11 +25,10 @@ public class TabStatusAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
+            default:
                 return addFoodFragment;
             case 1:
                 return addRecipeFragment;
-            default:
-                return null;
         }
     }
 

@@ -35,20 +35,17 @@ public class AddActivity extends AppCompatActivity {
      */
     private void setupTabLayout(TabLayout tabLayout, ViewPager2 viewPager) {
         viewPager.setAdapter(new TabStatusAdapter(getSupportFragmentManager(), getLifecycle()));
-        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager, true, new TabLayoutMediator.TabConfigurationStrategy() {
-            @Override
-            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                switch (position) {
-                    case 0:
-                        tab.setText("Nahrungsmittel");
-                        break;
-                    case 1:
-                        tab.setText("Rezepte");
-                        break;
-                    default:
-                        tab.setText("empty");
-                        break;
-                }
+        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager, true, (tab, position) -> {
+            switch (position) {
+                case 0:
+                    tab.setText("Nahrungsmittel");
+                    break;
+                case 1:
+                    tab.setText("Rezepte");
+                    break;
+                default:
+                    tab.setText("empty");
+                    break;
             }
         });
         tabLayoutMediator.attach();

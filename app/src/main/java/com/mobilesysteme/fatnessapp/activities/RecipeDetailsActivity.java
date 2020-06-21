@@ -47,13 +47,9 @@ public class RecipeDetailsActivity extends AppCompatActivity {
      */
     private void setupFloatingActionButton(int totalCalories) {
         FloatingActionButton confirmButton = findViewById(R.id.fab_confirmRecipe);
-        int finalTotalCalories = totalCalories;
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                databaseHelper.addEatenRecipe(recipe.getId(), finalTotalCalories, new Date());
-                finish();
-            }
+        confirmButton.setOnClickListener(view -> {
+            databaseHelper.addEatenRecipe(recipe.getId(), totalCalories, new Date());
+            finish();
         });
     }
 
@@ -79,7 +75,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     private void makeIngredientList() {
         // TODO da die Datenbank nur Food und nicht RecipeIngredient zurückgibt, ist eine Verrechnung der rezeptbezogenen Mengen nicht möglich
         ListView ingredientView = findViewById(R.id.lv_ingredients);
-        ingredientView.setAdapter(new ArrayAdapter<Food>(this, R.layout.list_item, R.id.tv_ingredientName, ingredients));
+        ingredientView.setAdapter(new ArrayAdapter<>(this, R.layout.list_item, R.id.tv_ingredientName, ingredients));
     }
 
     /**
