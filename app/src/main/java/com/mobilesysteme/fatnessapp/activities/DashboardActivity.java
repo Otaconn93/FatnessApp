@@ -31,9 +31,6 @@ import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
 import java.util.List;
 
 
@@ -51,13 +48,7 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        dailyCalories = findViewById(R.id.tv_dailyCalories);
-        progressBar = findViewById(R.id.progressBar);
 
-        calorieCalculator = new CalorieCalculator(this);
-        dailyCalories.setText(String.valueOf(calorieCalculator.getDailyCaloriesLeft()));
-        int progress = (int) (((float)(calorieCalculator.getDailyCalories()-calorieCalculator.getDailyCaloriesLeft())/calorieCalculator.getDailyCalories()) * 100);
-        progressBar.setProgress(progress);
 
         DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
         if(SharedPreferenceUtils.getFirstLaunch(this)) {
@@ -71,15 +62,17 @@ public class DashboardActivity extends AppCompatActivity {
             init();
         }
 
-        if(checkLastWeightDateOutdated()){
-            createDialogForWeightUpdate();
-        }
     }
 
     private void init() {
 
         setTitle("Healthy Fatness");
-
+        calorieCalculator = new CalorieCalculator(this);
+        dailyCalories = findViewById(R.id.tv_dailyCalories);
+        progressBar = findViewById(R.id.progressBar);
+        dailyCalories.setText(String.valueOf(calorieCalculator.getDailyCaloriesLeft()));
+        int progress = (int) (((float)(calorieCalculator.getDailyCalories()-calorieCalculator.getDailyCaloriesLeft())/calorieCalculator.getDailyCalories()) * 100);
+        progressBar.setProgress(progress);
         Toolbar toolbar = findViewById(R.id.dashToolbar);
         setSupportActionBar(toolbar);
 
@@ -87,6 +80,10 @@ public class DashboardActivity extends AppCompatActivity {
         fabAdd.setOnClickListener(v -> startActivity(new Intent(this, AddActivity.class)));
 
         initLineChart();
+
+        if(checkLastWeightDateOutdated()){
+            createDialogForWeightUpdate();
+        }
     }
 
     /**
@@ -139,9 +136,9 @@ public class DashboardActivity extends AppCompatActivity {
         Map<Long, Integer> userWeightEntries = SharedPreferenceUtils.getUserWeightHistory(this);
 
         int i = 0;
-        for(Integer weight : userWeightEntries.values()){
-            weigtEntries.add(new Entry(i, weight.intValue()));
-            Date date = new Date(userWeightEntries.get(weight));
+        for(Long dateKey : userWeightEntries.keySet()){
+            weigtEntries.add(new Entry(i, userWeightEntries.get(dateKey).intValue()));
+            Date date = new Date(dateKey);
             weightDateEntries.add(DateUtils.getDateAsString(date));
             i++;
         }
