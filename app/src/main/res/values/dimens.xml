@@ -5,4 +5,40 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <!-- Custom margins -->
+    <dimen name="corner_radius">60dp</dimen>
+    <dimen name="card_elevation">0.5dp</dimen>
+    <dimen name="progress_bar_size">200dp</dimen>
+    <dimen name="linechart_size">270dp</dimen>
+    <dimen name="margin_one">1dp</dimen>
+    <dimen name="image_size">40dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_medium">12dp</dimen>
+    <dimen name="margin_normal">16dp</dimen>
+    <dimen name="margin_sizeable">20dp</dimen>
+    <dimen name="margin_big">24dp</dimen>
+    <dimen name="margin_bigger">32dp</dimen>
+    <dimen name="margin_biggest">50dp</dimen>
+    <dimen name="margin_zero">0dp</dimen>
+    <dimen name="margin_large">75dp</dimen>
+    <dimen name="margin_larger">80dp</dimen>
+    <dimen name="margin_largest">100dp</dimen>
+    <dimen name="margin_very_big">180dp</dimen>
+    <dimen name="margin_width_extra1">123dp</dimen>
+    <dimen name="radioGroup1">311dp</dimen>
+    <dimen name="radioGroup2">334dp</dimen>
+    <dimen name="radioButtonFemaleStart">200dp</dimen>
+    <dimen name="radioButtonFemaleTop">210dp</dimen>
+    <dimen name="foodItemButtonWidth">48dp</dimen>
+    <dimen name="foodItemButtonHeight">58dp</dimen>
+    <dimen name="foodItemEditWidth">56dp</dimen>
+    <dimen name="foodItemEditHeight">46dp</dimen>
+    <!-- Text Sizes -->
+    <dimen name="textSize_small">18sp</dimen>
+    <dimen name="textSize_normal">20sp</dimen>
+    <dimen name="textSize_medium">24sp</dimen>
+    <dimen name="textSize_sizeable">30sp</dimen>
+    <dimen name="textSize_big">32sp</dimen>
+    <dimen name="textSize_bigger">36sp</dimen>
+    <dimen name="textSize_biggest">50sp</dimen>
 </resources>
