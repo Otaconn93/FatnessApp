@@ -167,11 +167,9 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                     case SharedPreferenceUtils.USER_DEADLINE_KEY:
 
-                        if (!userAttributeHandler.handleSaveDeadline(DateUtils.getDateFromString(value))) {
-
-                            String deadline = DateUtils.getDateAsString(SharedPreferenceUtils.getUserDeadline(getContext()));
-                            ((EditTextPreference)findPreference(SharedPreferenceUtils.USER_DEADLINE_KEY)).setText(deadline);
-                        }
+                        userAttributeHandler.handleSaveDeadline(DateUtils.getDateFromString(value));
+                        String deadline = DateUtils.getDateAsString(SharedPreferenceUtils.getUserDeadline(getContext()));
+                        ((EditTextPreference)findPreference(SharedPreferenceUtils.USER_DEADLINE_KEY)).setText(deadline);
 
                         break;
                 }

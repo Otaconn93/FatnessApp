@@ -11,8 +11,9 @@ import java.util.Locale;
 public abstract class DateUtils {
 
     public static final long DAY_IN_MILLI_SECS = 86400000;
+    public static final long YEAR_IN_MILLI_SECS = 31536000000L;
 
-    private static final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+    private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
     private static final DateFormat sqlDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 
     public static Date getDateFromString(String date) {
@@ -60,9 +61,9 @@ public abstract class DateUtils {
         return DateUtils.getDateFromString(stringBuilder.toString());
     }
 
-    public static Date getNextDayMorning(Date date) {
+    public static Date getTodayMorning() {
 
-        long dateInMilliSecs = date.getTime();
-        return new Date(dateInMilliSecs + (DAY_IN_MILLI_SECS - dateInMilliSecs % DAY_IN_MILLI_SECS));
+        long dateInMilliSecs = new Date().getTime();
+        return new Date(dateInMilliSecs - dateInMilliSecs % DAY_IN_MILLI_SECS);
     }
 }

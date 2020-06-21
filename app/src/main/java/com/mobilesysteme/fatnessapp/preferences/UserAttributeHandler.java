@@ -112,9 +112,13 @@ public class UserAttributeHandler {
 
             Toast.makeText(context, R.string.error_deadline_wrong_format, Toast.LENGTH_LONG).show();
             return false;
-        } else if (date.getTime() < DateUtils.getNextDayMorning(new Date()).getTime()) {
+        } else if (date.getTime() < Long.sum(DateUtils.getTodayMorning().getTime(), DateUtils.DAY_IN_MILLI_SECS)) {
 
             Toast.makeText(context, R.string.error_deadline_before_tomorrow, Toast.LENGTH_LONG).show();
+            return false;
+        } else if (date.getTime() > (Long.sum(DateUtils.getTodayMorning().getTime(),DateUtils.YEAR_IN_MILLI_SECS * 10L))) {
+
+            Toast.makeText(context, R.string.error_deadline_to_high, Toast.LENGTH_LONG).show();
             return false;
         } else {
 

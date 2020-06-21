@@ -98,6 +98,7 @@
 
     <string name="error_deadline_wrong_format">Wir konnten deiner Eingabe keinen Zeitpunkt entnehmen. Bitte gib das Datum im Format dd.MM.yyyy ein.</string>
     <string name="error_deadline_before_tomorrow">Dein Zieldatum sollten frühstens morgen gesetzt sein.</string>
+    <string name="error_deadline_to_high">Meinst du nicht, dass du dir ein naheliegenderes Ziel setzen solltest?</string>
 
     <!-- Food Items -->
     <string name="empty">0</string>
