@@ -58,7 +58,6 @@ public class DashboardActivity extends AppCompatActivity {
             databaseHelper.refillDatabase();
             finish();
         } else {
-
             init();
         }
 
@@ -151,7 +150,7 @@ public class DashboardActivity extends AppCompatActivity {
         int caloriesLeft = calorieCalculator.getDailyCaloriesLeft();
         if(caloriesLeft >= 0){
             dailyCalories.setText(String.valueOf(caloriesLeft));
-            int progress = (int) ((calorieCalculator.getDailyCalories()-calorieCalculator.getDailyCaloriesLeft()/calorieCalculator.getDailyCalories()) * 100);
+            int progress = (int) ((float)((calorieCalculator.getDailyCalories()-calorieCalculator.getDailyCaloriesLeft())/calorieCalculator.getDailyCalories()) * 100);
             progressBar.setProgress(progress);
         }else{
             dailyCalories.setText("0");
