@@ -15,7 +15,7 @@
             android:id="@+id/btn_addFood"
             android:layout_width="48dp"
             android:layout_height="58dp"
-            android:text="+"
+            android:text="@string/plus"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -29,10 +29,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/bernierregular"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Food Name" />
+            tools:text="@string/food_name" />
 
         <TextView
             android:id="@+id/tv_details"
@@ -40,17 +41,18 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
+            android:fontFamily="@font/bernierregular"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_name"
-            tools:text="Food Details" />
+            tools:text="@string/food_details" />
 
         <Button
             android:id="@+id/btn_rmFood"
             android:layout_width="48dp"
             android:layout_height="58dp"
             android:onClick="rmItem"
-            android:text="-"
+            android:text="@string/minus"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tv_foodAmount"
@@ -62,7 +64,8 @@
             android:id="@+id/tv_foodAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
+            android:fontFamily="@font/bernierregular"
+            android:text="@string/empty"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -74,15 +77,22 @@
             android:id="@+id/ev_defaultValue"
             android:layout_width="56dp"
             android:layout_height="46dp"
+            android:autofillHints="@string/autofill_food"
             android:ems="10"
+            android:fontFamily="@font/bernierregular"
             android:inputType="phone"
-            android:text="200"
+            android:text="@string/twohundred"
+            android:imeOptions="actionDone"
+            android:focusableInTouchMode="true"
+            android:clickable="true"
+            android:focusable="true"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/btn_addFood"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.482" />
+            app:layout_constraintVertical_bias="0.482"
+            tools:ignore="LabelFor" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
