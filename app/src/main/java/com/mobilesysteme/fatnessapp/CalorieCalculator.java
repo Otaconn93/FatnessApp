@@ -18,12 +18,10 @@ public class CalorieCalculator {
     private Gender gender;
     private float weightGoal = 88; // in kg
     private Date goalDeadline;
-    private List<EatenFood> eatenFood;
     private DatabaseHelper dh;
 
     public CalorieCalculator(Context context) {
         goalDeadline = new Date();
-        eatenFood = new ArrayList<>();
         setHeight(SharedPreferenceUtils.getUserHeight(context));
         setAge(SharedPreferenceUtils.getUserAge(context));
         setWeight(SharedPreferenceUtils.getUserWeight(context).intValue());
@@ -32,7 +30,6 @@ public class CalorieCalculator {
         setGender(SharedPreferenceUtils.getUserGender(context));
 
         dh = new DatabaseHelper(context);
-        setEatenFood(dh.getTodayEatenFoods());
     }
 
     /**
@@ -74,9 +71,8 @@ public class CalorieCalculator {
     public int getDailyCaloriesLeft(){
         float dailyCalories = calculateDailyCalories() + calculateExtraCaloriesForWeightGoal();
         int lastCalories = 0;
-
-        for(int i=0; i<getEatenFood().size()-1; i++){
-            lastCalories = lastCalories + getEatenFood().get(i).getCalories();
+        for(int i=0; i<dh.getTodayEatenFoods().size()-1; i++){
+            lastCalories = lastCalories + dh.getTodayEatenFoods().get(i).getCalories();
         }
 
         return (int) (dailyCalories-lastCalories);
@@ -126,9 +122,5 @@ public class CalorieCalculator {
     public Date getGoalDeadline() { return goalDeadline; }
 
     public void setGoalDeadline(Date goalDeadline) { this.goalDeadline = goalDeadline; }
-
-    public List<EatenFood> getEatenFood() { return eatenFood; }
-
-    public void setEatenFood(List<EatenFood> eatenFood) { this.eatenFood = eatenFood; }
 
 }

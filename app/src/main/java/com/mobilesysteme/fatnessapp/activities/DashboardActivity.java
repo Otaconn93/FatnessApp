@@ -145,8 +145,7 @@ public class DashboardActivity extends AppCompatActivity {
         int caloriesLeft = calorieCalculator.getDailyCaloriesLeft();
         if(caloriesLeft >= 0){
             dailyCalories.setText(String.valueOf(caloriesLeft));
-            int progress = (int) ((float)((calorieCalculator.getDailyCalories()-calorieCalculator.getDailyCaloriesLeft())/calorieCalculator.getDailyCalories()) * 100);
-            progressBar.setProgress(progress);
+            int progress = (int) (((float)(calorieCalculator.getDailyCalories()-calorieCalculator.getDailyCaloriesLeft())/calorieCalculator.getDailyCalories()) * 100);            progressBar.setProgress(progress);
         }else{
             dailyCalories.setText("0");
             progressBar.setProgress(100);
