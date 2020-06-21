@@ -36,8 +36,9 @@ public class AgeFragment extends Fragment {
             String stringAge = ageNumber.getText().toString();
             if(!stringAge.matches("")) {
 
-                new UserAttributeHandler(getContext()).handleSaveAge(stringAge);
-                finishListener.onStepFinished();
+                if (new UserAttributeHandler(getContext()).handleSaveAge(stringAge)) {
+                    finishListener.onStepFinished();
+                }
             } else {
 
                 Toast.makeText(getContext(), R.string.error_number, Toast.LENGTH_SHORT).show();

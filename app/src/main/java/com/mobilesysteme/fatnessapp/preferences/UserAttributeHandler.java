@@ -19,7 +19,7 @@ public class UserAttributeHandler {
 
     public boolean handleSaveHeight(String value) {
 
-        int height = Integer.valueOf(value).intValue();
+        int height = Integer.parseInt(value);
         if (height < 50) {
 
             Toast.makeText(context, R.string.error_height_to_low, Toast.LENGTH_LONG).show();
@@ -37,11 +37,10 @@ public class UserAttributeHandler {
 
     public boolean handleSaveWeight(String value) {
 
-        int weight = Integer.valueOf(value).intValue();
-        if (weight > SharedPreferenceUtils.getUserTargetWeight(context)) {
+        int weight = Integer.parseInt(value);
+        if (weight >= SharedPreferenceUtils.getUserTargetWeight(context)) {
 
-            // TODO
-            Toast.makeText(context, "derp", Toast.LENGTH_LONG).show();
+            Toast.makeText(context,  R.string.error_weight_beyond_target_weight, Toast.LENGTH_LONG).show();
             return false;
         } else if (weight < 2) {
 
@@ -60,7 +59,7 @@ public class UserAttributeHandler {
 
     public boolean handleSaveAge(String value) {
 
-        int age = Integer.valueOf(value).intValue();
+        int age = Integer.parseInt(value);
         if (age > 150) {
 
             Toast.makeText(context, R.string.error_age_to_high, Toast.LENGTH_LONG).show();
@@ -73,16 +72,24 @@ public class UserAttributeHandler {
     }
 
     public boolean handleSaveGender(int value) {
-        SharedPreferenceUtils.saveUserGender(context, Gender.findGenderById(Integer.valueOf(value)));
+
+        Gender gender = Gender.findGenderById(value);
+        if (gender == null) {
+
+            Toast.makeText(context, R.string.error_no_gender_found, Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        SharedPreferenceUtils.saveUserGender(context, gender);
         return true;
     }
 
     public boolean handleSaveTargetWeight(String value) {
 
-        int targetWeight = Integer.valueOf(value).intValue();
+        int targetWeight = Integer.parseInt(value);
         if (targetWeight <= SharedPreferenceUtils.getUserWeight(context).intValue()) {
 
-            Toast.makeText(context, R.string.error_weight_target_weight, Toast.LENGTH_LONG).show();
+            Toast.makeText(context, R.string.error_target_weight_below_weight, Toast.LENGTH_LONG).show();
             return false;
         } else if (targetWeight < 5) {
 

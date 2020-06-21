@@ -36,8 +36,9 @@ public class HeightFragment extends Fragment {
             String stringHeight = heightNumber.getText().toString();
             if(!stringHeight.matches("")) {
 
-                new UserAttributeHandler(getContext()).handleSaveHeight(stringHeight);
-                finishListener.onStepFinished();
+                if (new UserAttributeHandler(getContext()).handleSaveHeight(stringHeight)) {
+                    finishListener.onStepFinished();
+                }
             } else {
 
                 Toast.makeText(getContext(), R.string.error_number, Toast.LENGTH_SHORT).show();
