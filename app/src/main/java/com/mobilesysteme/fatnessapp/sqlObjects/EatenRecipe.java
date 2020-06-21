@@ -39,13 +39,8 @@ public class EatenRecipe implements Eaten {
     }
 
     @Override
-    public int getCaloriesPer100g() {
+    public int getCalories() {
         return calories;
-    }
-
-    @Override
-    public double getCaloriesForAmount(int amount) {
-        return Integer.valueOf(calories).doubleValue() / 100 * amount;
     }
 
     @Override
