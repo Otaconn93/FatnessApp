@@ -96,16 +96,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:text="Calories Here"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/progressBarEmpty"
-                    app:layout_constraintStart_toStartOf="@+id/progressBarEmpty"
-                    app:layout_constraintTop_toTopOf="@+id/progressBarEmpty" />
+                    <TextView
+                        android:id="@+id/tv_dailyCalories"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:text="Calories"
+                        android:textSize="30sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/progressBarEmpty"
+                        app:layout_constraintStart_toStartOf="@+id/progressBarEmpty"
+                        app:layout_constraintTop_toTopOf="@+id/progressBarEmpty" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
