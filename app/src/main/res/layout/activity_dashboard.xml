@@ -22,9 +22,9 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,9 +34,9 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_small"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,8 +48,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             app:cardBackgroundColor="@color/color3"
-            app:cardCornerRadius="60dp"
-            app:cardElevation="0.5dp">
+            app:cardCornerRadius="@dimen/corner_radius"
+            app:cardElevation="@dimen/card_elevation">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,12 +61,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="@dimen/margin_biggest"
                     android:fontFamily="@font/bernierregularfont"
                     android:text="@string/kcal"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textColor="@color/colorAccent"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/textSize_small"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -75,8 +75,8 @@
                 <ProgressBar
                     android:id="@+id/progressBarEmpty"
                     style="?android:progressBarStyleHorizontal"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_width="@dimen/progress_bar_size"
+                    android:layout_height="@dimen/progress_bar_size"
                     android:progress="100"
                     android:progressDrawable="@drawable/circleempty"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -87,8 +87,8 @@
                 <ProgressBar
                     android:id="@+id/progressBar"
                     style="?android:progressBarStyleHorizontal"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_width="@dimen/progress_bar_size"
+                    android:layout_height="@dimen/progress_bar_size"
                     android:progress="12"
                     android:progressDrawable="@drawable/circle"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -100,9 +100,9 @@
                         android:id="@+id/tv_dailyCalories"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="@dimen/margin_normal"
                         android:text="Calories"
-                        android:textSize="30sp"
+                        android:textSize="@dimen/textSize_sizeable"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/progressBarEmpty"
                         app:layout_constraintStart_toStartOf="@+id/progressBarEmpty"
@@ -116,11 +116,11 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/chart_view"
             android:layout_width="match_parent"
-            android:layout_height="274dp"
+            android:layout_height="@dimen/linechart_size"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/margin_sizeable"
             app:cardBackgroundColor="@color/linechartbackground"
-            app:cardElevation="0.5dp">
+            app:cardElevation="@dimen/card_elevation">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -152,13 +152,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_margin="@dimen/margin_normal"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_small"
         android:backgroundTint="@color/tryoutorange"
         android:src="@drawable/sharp_add_white_48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:maxImageSize="40dp" />
+        app:maxImageSize="@dimen/image_size" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

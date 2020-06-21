@@ -19,11 +19,11 @@
     <string name="setting_user_category">Benutzereinstellungen</string>
 
     <!-- Messages Preferences -->
-    <string name="user_height">Körpergröße anpassen</string>
-    <string name="user_weight">Aktuelles Gewicht anpassen</string>
+    <string name="user_height">Körpergröße anpassen in cm</string>
+    <string name="user_weight">Aktuelles Gewicht anpassen in kg</string>
     <string name="user_age">Alter anpassen</string>
     <string name="user_gender">Geschlecht anpassen</string>
-    <string name="user_target_weight">Zielgewicht anpassen</string>
+    <string name="user_target_weight">Zielgewicht anpassen in kg</string>
     <string name="user_deadline">Deadline anpassen</string>
 
     <!-- Sync Preferences -->

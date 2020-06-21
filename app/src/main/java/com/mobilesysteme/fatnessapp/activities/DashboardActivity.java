@@ -49,7 +49,6 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
         DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
         if(SharedPreferenceUtils.getFirstLaunch(this)) {
-
             Intent intent = new Intent(this, FirstLaunchActivity.class);
             startActivity(intent);
             databaseHelper.refillDatabase();
