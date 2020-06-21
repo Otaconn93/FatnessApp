@@ -72,7 +72,7 @@ public class UserAttributeHandler {
         }
     }
 
-    public boolean handleSaveGender(String value) {
+    public boolean handleSaveGender(int value) {
         SharedPreferenceUtils.saveUserGender(context, Gender.findGenderById(Integer.valueOf(value)));
         return true;
     }
@@ -99,9 +99,8 @@ public class UserAttributeHandler {
         }
     }
 
-    public boolean handleSaveDeadline(String value) {
+    public boolean handleSaveDeadline(Date date) {
 
-        Date date = DateUtils.getDateFromString(value);
         if (date == null) {
 
             Toast.makeText(context, R.string.error_deadline_wrong_format, Toast.LENGTH_LONG).show();

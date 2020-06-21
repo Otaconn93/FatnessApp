@@ -144,7 +144,7 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                     case SharedPreferenceUtils.USER_GENDER_KEY:
 
-                        if (!userAttributeHandler.handleSaveGender(value)) {
+                        if (!userAttributeHandler.handleSaveGender(Integer.parseInt(value))) {
 
                             String genderId = String.valueOf(SharedPreferenceUtils.getUserGender(getContext()).getId());
                             ((ListPreference)findPreference(SharedPreferenceUtils.USER_GENDER_KEY)).setValue(genderId);
@@ -162,7 +162,7 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                     case SharedPreferenceUtils.USER_DEADLINE_KEY:
 
-                        if (!userAttributeHandler.handleSaveDeadline(value)) {
+                        if (!userAttributeHandler.handleSaveDeadline(DateUtils.getDateFromString(value))) {
 
                             String deadline = DateUtils.getDateAsString(SharedPreferenceUtils.getUserDeadline(getContext()));
                             ((EditTextPreference)findPreference(SharedPreferenceUtils.USER_DEADLINE_KEY)).setText(deadline);

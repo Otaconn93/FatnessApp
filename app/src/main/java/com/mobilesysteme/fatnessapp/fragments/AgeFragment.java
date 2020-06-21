@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
 import com.mobilesysteme.fatnessapp.R;
-import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
+import com.mobilesysteme.fatnessapp.preferences.UserAttributeHandler;
 
 public class AgeFragment extends Fragment {
 
@@ -36,7 +36,7 @@ public class AgeFragment extends Fragment {
             String stringAge = ageNumber.getText().toString();
             if(!stringAge.matches("")) {
 
-                SharedPreferenceUtils.saveUserAge(getContext(), Integer.parseInt(stringAge));
+                new UserAttributeHandler(getContext()).handleSaveAge(stringAge);
                 finishListener.onStepFinished();
             } else {
 

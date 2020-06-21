@@ -11,10 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.mobilesysteme.fatnessapp.Gender;
 import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
 import com.mobilesysteme.fatnessapp.R;
-import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
+import com.mobilesysteme.fatnessapp.preferences.UserAttributeHandler;
 
 public class GenderFragment extends Fragment {
 
@@ -36,14 +35,8 @@ public class GenderFragment extends Fragment {
 
             int selectedId = radioGroup.getCheckedRadioButtonId();
             if(selectedId >= 0) {
-                if (selectedId == R.id.radio_male) {
 
-                    SharedPreferenceUtils.saveUserGender(getContext(), Gender.MALE);
-                } else if (selectedId == R.id.radio_female) {
-
-                    SharedPreferenceUtils.saveUserGender(getContext(), Gender.FEMALE);
-                }
-
+                new UserAttributeHandler(getContext()).handleSaveGender(selectedId);
                 finishListener.onStepFinished();
             } else {
 
