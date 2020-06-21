@@ -59,7 +59,7 @@ public class CalorieCalculator {
      * @return additionally Calories to reach weight Goal
      */
     private float calculateExtraCaloriesForWeightGoal(){
-        float extraCalories = (getWeightGoal() - getWeight()) * 7.7161791764707f;
+        float extraCalories = (getWeightGoal() - getWeight()) * 7716.1791764707f;
         Date today = new Date();
         long diff = getGoalDeadline().getTime() - today.getTime() ;
         long daysLeft =  TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
