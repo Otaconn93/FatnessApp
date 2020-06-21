@@ -194,10 +194,16 @@ public class DashboardActivity extends AppCompatActivity {
                     startActivity(new Intent(this.getApplicationContext(), SettingsActivity.class));
                     finish();
                     break;
+                case DialogInterface.BUTTON_NEUTRAL:
+                    break;
+                case DialogInterface.BUTTON_NEGATIVE:
+                    SharedPreferenceUtils.saveUserWeightNow(this, SharedPreferenceUtils.getUserWeight(this));
+                    break;
             }
         };
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Deine letzte Gewichtsmessung liegt schon eine Woche zurück! Update jetzt dein Gewicht!").setPositiveButton("Zu den Settings", dialogClickListener);
+        builder.setMessage("Deine letzte Gewichtsmessung liegt schon eine Woche zurück! Update jetzt dein Gewicht!").setPositiveButton("Zu den Settings", dialogClickListener)
+        .setNegativeButton("Jetzt nicht",dialogClickListener).setNeutralButton("Mein Gewicht hat sich nicht geändert",dialogClickListener);
         builder.create();
         builder.show();
     }
