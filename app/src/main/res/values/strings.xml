@@ -98,4 +98,7 @@
     <string name="error_height_to_high">Du wirst wohl nicht höher als 300cm groß sein.</string>
 
     <string name="error_age_to_high">Dein Alter wird wohl nicht höher als 150 sein.</string>
+
+    <string name="error_deadline_wrong_format">Wir konnten deiner Eingabe keinen Zeitpunkt entnehmen. Bitte gib das Datum im Format dd.MM.yyyy ein.</string>
+    <string name="error_deadline_before_tomorrow">Dein Zieldatum sollten frühstens morgen gesetzt sein.</string>
 </resources>

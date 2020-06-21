@@ -1,9 +1,7 @@
 package com.mobilesysteme.fatnessapp.preferences;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.text.InputType;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,7 +33,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
-            DataStore dataStore = new DataStore(getContext());
+            DataStore dataStore = new DataStore();
             bindNumberPreference(dataStore, SharedPreferenceUtils.USER_HEIGHT_KEY, SharedPreferenceUtils.getUserHeight(getContext()));
             bindNumberPreference(dataStore, SharedPreferenceUtils.USER_WEIGHT_KEY, SharedPreferenceUtils.getUserWeight(getContext()));
             bindNumberPreference(dataStore, SharedPreferenceUtils.USER_AGE_KEY, SharedPreferenceUtils.getUserAge(getContext()));
@@ -78,10 +76,10 @@ public class SettingsActivity extends AppCompatActivity {
 
         public class DataStore extends PreferenceDataStore {
 
-            private Context context;
+            private UserAttributeHandler userAttributeHandler;
 
-            public DataStore(Context context) {
-                this.context = context;
+            public DataStore() {
+                this.userAttributeHandler = new UserAttributeHandler(getContext());
             }
 
             @Nullable
@@ -91,22 +89,22 @@ public class SettingsActivity extends AppCompatActivity {
                 Object value = -1;
                 switch (key) {
                     case SharedPreferenceUtils.USER_HEIGHT_KEY:
-                        value = SharedPreferenceUtils.getUserHeight(context);
+                        value = SharedPreferenceUtils.getUserHeight(getContext());
                         break;
                     case SharedPreferenceUtils.USER_WEIGHT_KEY:
-                        value = SharedPreferenceUtils.getUserWeight(context);
+                        value = SharedPreferenceUtils.getUserWeight(getContext());
                         break;
                     case SharedPreferenceUtils.USER_AGE_KEY:
-                        value = SharedPreferenceUtils.getUserAge(context);
+                        value = SharedPreferenceUtils.getUserAge(getContext());
                         break;
                     case SharedPreferenceUtils.USER_GENDER_KEY:
-                        value = SharedPreferenceUtils.getUserGender(context);
+                        value = SharedPreferenceUtils.getUserGender(getContext());
                         break;
                     case SharedPreferenceUtils.USER_TARGETWEIGHT_KEY:
-                        value = SharedPreferenceUtils.getUserTargetWeight(context);
+                        value = SharedPreferenceUtils.getUserTargetWeight(getContext());
                         break;
                     case SharedPreferenceUtils.USER_DEADLINE_KEY:
-                        value = DateUtils.getDateAsString(SharedPreferenceUtils.getUserDeadline(context));
+                        value = DateUtils.getDateAsString(SharedPreferenceUtils.getUserDeadline(getContext()));
                         break;
                 }
 
@@ -118,86 +116,59 @@ public class SettingsActivity extends AppCompatActivity {
 
                 switch (key) {
                     case SharedPreferenceUtils.USER_HEIGHT_KEY:
-                        handleHeight(value);
+
+                        if (!userAttributeHandler.handleSaveHeight(value)) {
+
+                            String height = String.valueOf(SharedPreferenceUtils.getUserHeight(getContext()));
+                            ((EditTextPreference)findPreference(SharedPreferenceUtils.USER_HEIGHT_KEY)).setText(height);
+                        }
+
                         break;
                     case SharedPreferenceUtils.USER_WEIGHT_KEY:
-                        handleWeight(value);
+
+                        if (!userAttributeHandler.handleSaveWeight(value)) {
+
+                            String weight = String.valueOf(SharedPreferenceUtils.getUserWeight(getContext()));
+                            ((EditTextPreference)findPreference(SharedPreferenceUtils.USER_WEIGHT_KEY)).setText(weight);
+                        }
+
                         break;
                     case SharedPreferenceUtils.USER_AGE_KEY:
-                        handleAge(value);
+
+                        if (!userAttributeHandler.handleSaveAge(value)) {
+
+                            String age = String.valueOf(SharedPreferenceUtils.getUserAge(getContext()));
+                            ((EditTextPreference)findPreference(SharedPreferenceUtils.USER_AGE_KEY)).setText(age);
+                        }
+
                         break;
                     case SharedPreferenceUtils.USER_GENDER_KEY:
-                        SharedPreferenceUtils.saveUserGender(context, Gender.findGenderById(Integer.valueOf(value)));
+
+                        if (!userAttributeHandler.handleSaveGender(value)) {
+
+                            String genderId = String.valueOf(SharedPreferenceUtils.getUserGender(getContext()).getId());
+                            ((ListPreference)findPreference(SharedPreferenceUtils.USER_GENDER_KEY)).setValue(genderId);
+                        }
+
                         break;
                     case SharedPreferenceUtils.USER_TARGETWEIGHT_KEY:
-                        handleTargetWeight(value);
+
+                        if (!userAttributeHandler.handleSaveTargetWeight(value)) {
+
+                            String targetWeight = String.valueOf(SharedPreferenceUtils.getUserTargetWeight(getContext()));
+                            ((EditTextPreference)findPreference(SharedPreferenceUtils.USER_TARGETWEIGHT_KEY)).setText(targetWeight);
+                        }
+
                         break;
                     case SharedPreferenceUtils.USER_DEADLINE_KEY:
-                        SharedPreferenceUtils.saveUserDeadline(context, DateUtils.getDateFromString(value));
+
+                        if (!userAttributeHandler.handleSaveDeadline(value)) {
+
+                            String deadline = DateUtils.getDateAsString(SharedPreferenceUtils.getUserDeadline(getContext()));
+                            ((EditTextPreference)findPreference(SharedPreferenceUtils.USER_DEADLINE_KEY)).setText(deadline);
+                        }
+
                         break;
-                }
-            }
-
-            private void handleHeight(String value) {
-
-                int height = Integer.valueOf(value).intValue();
-                if (height < 50) {
-
-                    Toast.makeText(getContext(), R.string.error_height_to_low, Toast.LENGTH_SHORT).show();
-                } else if(height > 300) {
-
-                    Toast.makeText(getContext(), R.string.error_height_to_high, Toast.LENGTH_SHORT).show();
-                } else {
-
-                    SharedPreferenceUtils.saveUserHeight(context, height);
-                }
-            }
-
-            private void handleWeight(String value) {
-
-                int weight = Integer.valueOf(value).intValue();
-                if (weight > SharedPreferenceUtils.getUserTargetWeight(context)) {
-
-                    // TODO
-                } else if (weight < 2) {
-
-                    Toast.makeText(getContext(), R.string.error_weight_to_low, Toast.LENGTH_SHORT).show();
-                } else if(weight > 500) {
-
-                    Toast.makeText(getContext(), R.string.error_weight_to_high, Toast.LENGTH_SHORT).show();
-                } else {
-
-                    SharedPreferenceUtils.saveUserHeight(context, weight);
-                }
-            }
-
-            private void handleTargetWeight(String value) {
-
-                int targetWeight = Integer.valueOf(value).intValue();
-                if (targetWeight <= SharedPreferenceUtils.getUserWeight(context).intValue()) {
-
-                    Toast.makeText(getContext(), R.string.error_weight_target_weight, Toast.LENGTH_SHORT).show();
-                } else if (targetWeight < 5) {
-
-                    Toast.makeText(getContext(), R.string.error_targetweight_to_low, Toast.LENGTH_SHORT).show();
-                } else if(targetWeight > 500) {
-
-                    Toast.makeText(getContext(), R.string.error_targetweight_to_high, Toast.LENGTH_SHORT).show();
-                } else {
-
-                    SharedPreferenceUtils.saveUserHeight(context, targetWeight);
-                }
-            }
-
-            private void handleAge(String value) {
-
-                int age = Integer.valueOf(value).intValue();
-                if (age > 150) {
-
-                    Toast.makeText(getContext(), R.string.error_age_to_high, Toast.LENGTH_SHORT).show();
-                } else {
-
-                    SharedPreferenceUtils.saveUserHeight(context, age);
                 }
             }
         }
