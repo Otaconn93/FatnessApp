@@ -95,7 +95,7 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
     public void confirmFood() {
 
         for(Food food : selectedItems.keySet()){
-            databaseHelper.addEatenFood(food.getId(), selectedItems.get(food), new Date());
+            databaseHelper.addEatenFood(food.getId(), calculateCaloriesPer100GToSumCalories(selectedItems.get(food),food), new Date());
         }
         if(foodWithChangedDefaultValues.size()>0){
             getChangeDefaultDialogAnswer();
@@ -142,12 +142,12 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
     }
 
     @Override
-    public void addFood(Food food, int unitSum) {
+    public void addFood(Food food, int calorieSum) {
 
         if(!selectedItems.containsKey(food)) {
-            selectedItems.put(food, unitSum);
+            selectedItems.put(food, calorieSum);
         }else{
-            selectedItems.replace(food,unitSum);
+            selectedItems.replace(food,calorieSum);
         }
     }
 
@@ -164,5 +164,16 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
         }else{
             foodWithChangedDefaultValues.replace(food,changedValue);
         }
+    }
+
+    /**
+     * Calculates calorie sum, because calories were saved per 100g in Food class
+     *
+     * @param gramsSum grams sum of selected food item
+     * @param food selected food
+     * @return calories sum of selected food item
+     */
+    private int calculateCaloriesPer100GToSumCalories(int gramsSum, Food food){
+        return gramsSum * food.getCalories() / 100;
     }
 }

@@ -45,12 +45,12 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
     public void onBindViewHolder(@NonNull final FoodListViewHolder holder, final int position) {
         final Food currentFood = dataset.get(position);
         TextView name = holder.cv.findViewById(R.id.tv_name);
-        TextView currentCalories = holder.cv.findViewById(R.id.tv_details);
+        TextView currentGrams = holder.cv.findViewById(R.id.tv_details);
         EditText defaultValue = holder.cv.findViewById(R.id.ev_defaultValue);
         TextView amountText = holder.cv.findViewById(R.id.tv_foodAmount);
 
         name.setText(currentFood.getName());
-        currentCalories.setText("");
+        currentGrams.setText("");
         defaultValue.setText(Integer.toString(currentFood.getDefaultQuantity()));
 
         defaultValue.addTextChangedListener(new DefaultValueTextWatcher(currentFood, listener, context, defaultValue));
@@ -58,7 +58,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
         final Button addBtn = holder.cv.findViewById(R.id.btn_addFood);
         addBtn.setOnClickListener(view -> {
             amountText.setText(Integer.toString(getAmount(amountText)+1));
-            currentCalories.setText(displayUnitWithGramm(defaultValue,amountText));
+            currentGrams.setText(displayUnitWithGramm(defaultValue,amountText));
             listener.addFood(currentFood,getUnitSum(defaultValue,amountText));
         });
 
@@ -68,10 +68,10 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
 
                 amountText.setText(String.valueOf(getAmount(amountText)-1));
                 if(getUnitSum(defaultValue,amountText)>0) {
-                    currentCalories.setText(displayUnitWithGramm(defaultValue,amountText));
+                    currentGrams.setText(displayUnitWithGramm(defaultValue,amountText));
                     listener.addFood(currentFood,getUnitSum(defaultValue,amountText));
                 }else{
-                    currentCalories.setText("");
+                    currentGrams.setText("");
                     listener.rmFood(currentFood);
                 }
             }
@@ -84,9 +84,9 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
     }
 
     /**
-     * Calculates total calories per selected food
+     * Calculates total grams per selected food
      *
-     * @param defaultValue input field for default calories
+     * @param defaultValue input field for default grams
      * @param amountText text field with amount counter
      * @return multiplication product of default calories and amount
      */
