@@ -17,18 +17,19 @@ public class CalorieCalculator {
     private float age = 25;
     private Gender gender;
     private float weightGoal = 88; // in kg
-    private Date goalDeadline = new Date();
-    private SharedPreferenceUtils spu = new SharedPreferenceUtils();
-    private List<EatenFood> eatenFood = new ArrayList<>();
+    private Date goalDeadline;
+    private List<EatenFood> eatenFood;
     private DatabaseHelper dh;
 
     public CalorieCalculator(Context context) {
-        setHeight(spu.getUserHeight(context));
-        setAge(spu.getUserAge(context));
-        setWeight(spu.getUserWeight(context).intValue());
-        setWeightGoal(spu.getUserTargetWeight(context));
-        setGoalDeadline(spu.getUserDeadline(context));
-        setGender(spu.getUserGender(context));
+        goalDeadline = new Date();
+        eatenFood = new ArrayList<>();
+        setHeight(SharedPreferenceUtils.getUserHeight(context));
+        setAge(SharedPreferenceUtils.getUserAge(context));
+        setWeight(SharedPreferenceUtils.getUserWeight(context).intValue());
+        setWeightGoal(SharedPreferenceUtils.getUserTargetWeight(context));
+        setGoalDeadline(SharedPreferenceUtils.getUserDeadline(context));
+        setGender(SharedPreferenceUtils.getUserGender(context));
 
         dh = new DatabaseHelper(context);
         setEatenFood(dh.getTodayEatenFoods());
@@ -44,9 +45,9 @@ public class CalorieCalculator {
      */
     private float calculateDailyCalories(){
         if(getGender().id == 0){
-            return (float) ((float) 655 + (9.6 * getWeight()) + (1.8 * getHeight()) - (4.7 * getAge()));
+            return (float) (655 + (9.6 * getWeight()) + (1.8 * getHeight()) - (4.7 * getAge()));
         }else if(getGender().id == 1){
-            return (float) ((float) 66 + (13.7 * getWeight()) + (5 * getHeight()) - (6.8 * getAge()));
+            return (float) (66 + (13.7 * getWeight()) + (5 * getHeight()) - (6.8 * getAge()));
         }
         return 0;
     }
@@ -76,7 +77,6 @@ public class CalorieCalculator {
 
         for(int i=0; i<getEatenFood().size()-1; i++){
             lastCalories = lastCalories + getEatenFood().get(i).getCalories();
-            System.out.println(getEatenFood().get(i).getCalories());
         }
 
         return (int) (dailyCalories-lastCalories);
