@@ -47,9 +47,6 @@ public class DashboardActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
-
-
         DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
         if(SharedPreferenceUtils.getFirstLaunch(this)) {
 
@@ -60,7 +57,6 @@ public class DashboardActivity extends AppCompatActivity {
         } else {
             init();
         }
-
     }
 
     private void init() {
@@ -79,7 +75,6 @@ public class DashboardActivity extends AppCompatActivity {
         fabAdd.setOnClickListener(v -> startActivity(new Intent(this, AddActivity.class)));
 
         initLineChart();
-
         if(checkLastWeightDateOutdated()){
             createDialogForWeightUpdate();
         }
