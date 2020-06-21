@@ -23,17 +23,16 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mobilesysteme.fatnessapp.CalorieCalculator;
 import com.mobilesysteme.fatnessapp.DatabaseHelper;
+import com.mobilesysteme.fatnessapp.DateUtils;
 import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.preferences.SettingsActivity;
 import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.List;
 
@@ -44,6 +43,7 @@ public class DashboardActivity extends AppCompatActivity {
     private List<String> weightDateEntries;
     private ProgressBar progressBar;
     private CalorieCalculator calorieCalculator;
+    private static final int weekInMs = 604800000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,14 +136,13 @@ public class DashboardActivity extends AppCompatActivity {
      * Put user weight entries into line chart lists
      */
     private void fillLineChartList() {
-        TreeMap userWeightEntries = SharedPreferenceUtils.getUserWeightHistory(this);
-        Set<Map.Entry<Long, Integer>> userEntriesSet =  userWeightEntries.entrySet();
+        Map<Long, Integer> userWeightEntries = SharedPreferenceUtils.getUserWeightHistory(this);
+
         int i = 0;
-        for(Map.Entry<Long, Integer> history : userEntriesSet){
-            weigtEntries.add(new Entry(i, history.getValue().intValue()));
-            Date date = new Date(history.getKey());
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
-            weightDateEntries.add(sdf.format(date));
+        for(Integer weight : userWeightEntries.values()){
+            weigtEntries.add(new Entry(i, weight.intValue()));
+            Date date = new Date(userWeightEntries.get(weight));
+            weightDateEntries.add(DateUtils.getDateAsString(date));
             i++;
         }
     }
@@ -155,7 +154,7 @@ public class DashboardActivity extends AppCompatActivity {
         int caloriesLeft = calorieCalculator.getDailyCaloriesLeft();
         if(caloriesLeft >= 0){
             dailyCalories.setText(String.valueOf(caloriesLeft));
-            int progress = (int) (((float)(calorieCalculator.getDailyCalories()-calorieCalculator.getDailyCaloriesLeft())/calorieCalculator.getDailyCalories()) * 100);
+            int progress = (int) ((calorieCalculator.getDailyCalories()-calorieCalculator.getDailyCaloriesLeft()/calorieCalculator.getDailyCalories()) * 100);
             progressBar.setProgress(progress);
         }else{
             dailyCalories.setText("0");
@@ -169,17 +168,9 @@ public class DashboardActivity extends AppCompatActivity {
      * @return true if last weight is older than one week
      */
     private boolean checkLastWeightDateOutdated(){
-        Date lastEntry = new Date();
         Date today = new Date();
-        try {
-            lastEntry = new SimpleDateFormat("dd.MM.yyyy").parse(weightDateEntries.get(weightDateEntries.size()-1));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        if(lastEntry.getTime() < today.getTime()- 604800000){
-            return true;
-        }
-        return false;
+        Date lastEntry = DateUtils.getDateFromString(weightDateEntries.get(weightDateEntries.size()-1));
+        return lastEntry.getTime() < today.getTime() - weekInMs;
     }
 
     /**
@@ -197,7 +188,7 @@ public class DashboardActivity extends AppCompatActivity {
                 case DialogInterface.BUTTON_NEUTRAL:
                     break;
                 case DialogInterface.BUTTON_NEGATIVE:
-                    SharedPreferenceUtils.saveUserWeightNow(this, SharedPreferenceUtils.getUserWeight(this));
+                    SharedPreferenceUtils.saveUserWeightNow(this, SharedPreferenceUtils.getUserWeight(this).intValue());
                     break;
             }
         };
