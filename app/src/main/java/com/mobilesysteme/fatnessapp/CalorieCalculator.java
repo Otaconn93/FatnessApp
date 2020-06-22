@@ -25,14 +25,13 @@ public class CalorieCalculator {
     public CalorieCalculator(Context context) {
         setHeight(spu.getUserHeight(context));
         setAge(spu.getUserAge(context));
-        setWeight(spu.getUserWeight(context));
+        setWeight(spu.getUserWeight(context).intValue());
         setWeightGoal(spu.getUserTargetWeight(context));
         setGoalDeadline(spu.getUserDeadline(context));
         setGender(spu.getUserGender(context));
 
         dh = new DatabaseHelper(context);
-
-        setEatenFood(dh.getEatenFoods());
+        setEatenFood(dh.getTodayEatenFoods());
     }
 
     /**
@@ -59,9 +58,9 @@ public class CalorieCalculator {
      * @return additionally Calories to reach weight Goal
      */
     private float calculateExtraCaloriesForWeightGoal(){
-        float extraCalories = (getWeightGoal() - getWeight()) * 7716.1791764707f;
+        float extraCalories = (getWeightGoal() - getWeight()) * 7.7161791764707f;
         Date today = new Date();
-        long diff = today.getTime() - getGoalDeadline().getTime();
+        long diff = getGoalDeadline().getTime() - today.getTime() ;
         long daysLeft =  TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         return extraCalories / daysLeft;
     }
@@ -72,14 +71,24 @@ public class CalorieCalculator {
      * @return calories left for today
      */
     public int getDailyCaloriesLeft(){
-
         float dailyCalories = calculateDailyCalories() + calculateExtraCaloriesForWeightGoal();
         int lastCalories = 0;
+
         for(int i=0; i<getEatenFood().size()-1; i++){
-            lastCalories =+ getEatenFood().get(i).getCaloriesPer100g();
+            lastCalories = lastCalories + getEatenFood().get(i).getCalories();
+            System.out.println(getEatenFood().get(i).getCalories());
         }
 
         return (int) (dailyCalories-lastCalories);
+    }
+
+    /**
+     * Calculates needed calories per day
+     *
+     * @return daily needed calories to reach goal
+     */
+    public int getDailyCalories(){
+        return (int) (calculateDailyCalories() + calculateExtraCaloriesForWeightGoal());
     }
 
     public float getHeight() {

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,7 +17,6 @@ import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
 
 public class AgeFragment extends Fragment {
 
-    private EditText ageNumber;
     private final OnFirstLaunchStepFinished finishListener;
 
     public AgeFragment(OnFirstLaunchStepFinished myFinishListener) {
@@ -28,23 +26,21 @@ public class AgeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_age, container, false);
-        Button confirmButton = view.findViewById(R.id.btn_confirmAge);
-        ageNumber = view.findViewById(R.id.edit_ageNumber);
+        EditText ageNumber = view.findViewById(R.id.edit_ageNumber);
 
         // On-Confirm operation
-        confirmButton.setOnClickListener(v -> {
+        view.findViewById(R.id.btn_confirmAge).setOnClickListener(v -> {
+
             String stringAge = ageNumber.getText().toString();
             if(!stringAge.matches("")) {
-                int age = Integer.parseInt(stringAge);
-                SharedPreferenceUtils.saveUserAge(AgeFragment.this.getContext(), age);
+
+                SharedPreferenceUtils.saveUserAge(getContext(), Integer.parseInt(stringAge));
                 finishListener.onStepFinished();
             } else {
-                Toast.makeText(
-                        AgeFragment.this.getContext(),
-                        R.string.error_number,
-                        Toast.LENGTH_SHORT)
-                        .show();
+
+                Toast.makeText(getContext(), R.string.error_number, Toast.LENGTH_SHORT).show();
             }
         });
         return view;

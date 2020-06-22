@@ -1,79 +1,98 @@
 package com.mobilesysteme.fatnessapp.activities;
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.mobilesysteme.fatnessapp.DatabaseHelper;
 import com.mobilesysteme.fatnessapp.FoodListAdapter;
-import com.mobilesysteme.fatnessapp.OnFoodCheckListener;
+import com.mobilesysteme.fatnessapp.OnFoodAddListener;
 import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.sqlObjects.Food;
 import com.mobilesysteme.fatnessapp.sqlObjects.FoodGroup;
 
-import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class FoodListActivity extends AppCompatActivity implements OnFoodCheckListener {
+public class FoodListActivity extends AppCompatActivity implements OnFoodAddListener {
 
     private static DatabaseHelper databaseHelper;
-    private List<Food> selectedItems;
-    private int position;
+    private List<Food> allItems;
+    private Map<Food, Integer> selectedItems;
+    private Map<Food, Integer> foodWithChangedDefaultValues;
 
-    private RecyclerView foodListRecyclerView;
-    private RecyclerView.LayoutManager linearLayoutManager;
-    private FoodListAdapter foodListAdapter;
-
-    private FloatingActionButton floatingActionButton;
-
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foodlist);
+
+        initToolbar();
+
         databaseHelper = new DatabaseHelper(getApplicationContext());
-        selectedItems = new ArrayList<>();
+        selectedItems = new HashMap<>();
+        foodWithChangedDefaultValues = new HashMap<>();
 
-        position = getIntent().getIntExtra("POSITION", 0);
+        setAllItems(getRecursiveFoodList(getIntent().getIntExtra("POSITION", 0)));
 
-        // Setup toolbar and activity title
-        Toolbar toolbar = (Toolbar) findViewById(R.id.foodlist_toolbar);
+        // Create RecyclerView with List Elements for Sub Food Groups
+        RecyclerView foodListRecyclerView = findViewById(R.id.rv_FoodList);
+        // Hide Keyboard when touched outside
+        foodListRecyclerView.setOnTouchListener((v, event) -> {
+            InputMethodManager input = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            input.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            return false;
+        });
+
+        initLayoutManager(foodListRecyclerView);
+        initFoodListAdapter(foodListRecyclerView);
+        initFloatingActionButton();
+    }
+
+    private void initLayoutManager(RecyclerView foodListRecyclerView) {
+        RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        foodListRecyclerView.setLayoutManager(linearLayoutManager);
+    }
+
+    private void initFoodListAdapter(RecyclerView foodListRecyclerView) {
+        FoodListAdapter foodListAdapter = new FoodListAdapter(getAllItems(), this);
+        foodListRecyclerView.setAdapter(foodListAdapter);
+    }
+
+    private void initFloatingActionButton() {
+        FloatingActionButton floatingActionButton = findViewById(R.id.fab_confirmFood);
+        floatingActionButton.setOnClickListener(view -> confirmFood());
+    }
+
+    /**
+     * Setup toolbar and activity title
+     */
+    private void initToolbar() {
+
+        Toolbar toolbar = findViewById(R.id.foodlist_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Nahrungsmittel hinzufügen");
-
-        // Create RecyclerView with List Elements for Sub Food Groups
-        foodListRecyclerView = findViewById(R.id.rv_FoodList);
-        //Setup layout manager
-        linearLayoutManager = new LinearLayoutManager(this);
-        foodListRecyclerView.setLayoutManager(linearLayoutManager);
-        // add adapter
-        foodListAdapter = new FoodListAdapter(getRecursiveFoodList(position), this);
-        foodListRecyclerView.setAdapter(foodListAdapter);
-
-        // Setup Floating Action Button
-        floatingActionButton = findViewById(R.id.fab_confirmFood);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                confirmFood();
-            }
-        });
-
     }
 
     public List<Food> getRecursiveFoodList(int foodgroup_id) {
+
         List<Food> resultSet = databaseHelper.getFoodByFoodGroupId(foodgroup_id);
         List<FoodGroup> childGroups = databaseHelper.getChildFoodGroups(foodgroup_id);
-        if(childGroups.size() > 0) {
-            for(FoodGroup foodGroup : childGroups) {
+        if (childGroups.size() > 0) {
+            for (FoodGroup foodGroup : childGroups) {
                 List<Food> subResult = databaseHelper.getFoodByFoodGroupId(foodGroup.getId());
                 resultSet.addAll(subResult);
             }
@@ -81,18 +100,81 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodCheckLi
         return resultSet;
     }
 
-    @Override
-    public void onFoodChecked(Food food) {
-        selectedItems.add(food);
+    /**
+     * Saves all eaten food into EatenFood table and finish this activity
+     */
+    public void confirmFood() {
+
+        for(Food food : selectedItems.keySet()){
+            databaseHelper.addEatenFood(food.getId(), selectedItems.get(food), new Date());
+        }
+        if(foodWithChangedDefaultValues.size()>0){
+            getChangeDefaultDialogAnswer();
+        }else{
+            finish();
+        }
+
+    }
+
+    public List<Food> getAllItems() {
+        return allItems;
+    }
+
+    public void setAllItems(List<Food> allItems) {
+        this.allItems = allItems;
+    }
+
+    /**
+     * Open an alert dialog, which asks the user to store default value changes into the database
+     */
+    private void getChangeDefaultDialogAnswer() {
+
+        DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+            switch (which) {
+                case DialogInterface.BUTTON_POSITIVE:
+                    //Yes button clicked
+                    for(Food food : foodWithChangedDefaultValues.keySet()){
+                        databaseHelper.updateFood(food.getId(), food.getGroupId(),
+                                food.getName(), food.getUnitId(), food.getCalories(),
+                                foodWithChangedDefaultValues.get(food));
+                    }
+                    finish();
+                    break;
+
+                case DialogInterface.BUTTON_NEGATIVE:
+                    finish();
+                    break;
+            }
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Sollen die veränderten Standard Werte der Nahrungsmittel gespeichert werden?").setPositiveButton("Ja", dialogClickListener)
+                .setNegativeButton("Nein", dialogClickListener);
+        builder.create();
+        builder.show();
     }
 
     @Override
-    public void onFoodUnchecked(Food food) {
+    public void addFood(Food food, int caloriesSum) {
+
+        if(!selectedItems.containsKey(food)) {
+            selectedItems.put(food, caloriesSum);
+        }else{
+            selectedItems.replace(food,caloriesSum);
+        }
+    }
+
+    @Override
+    public void rmFood(Food food) {
         selectedItems.remove(food);
     }
 
-    public void confirmFood() {
-        System.out.println(selectedItems);
-        finish();
+    @Override
+    public void isDefaultChanged(Food food, int changedValue) {
+
+        if(!foodWithChangedDefaultValues.containsKey(food)) {
+            foodWithChangedDefaultValues.put(food, changedValue);
+        }else{
+            foodWithChangedDefaultValues.replace(food,changedValue);
+        }
     }
 }

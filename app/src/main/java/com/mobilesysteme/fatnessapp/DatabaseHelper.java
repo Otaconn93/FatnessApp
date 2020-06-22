@@ -409,7 +409,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (cursor.moveToFirst()) {
 
                 do {
-                    foods.add( buildFood(cursor));
+                    foods.add(buildFood(cursor));
                 } while (cursor.moveToNext());
             }
 
@@ -582,11 +582,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int _id = cursor.getInt(cursor.getColumnIndex(FOOD_ID));
         int group_id = cursor.getInt(cursor.getColumnIndex(FOOD_GROUP_ID));
         String name = cursor.getString(cursor.getColumnIndex(FOOD_NAME));
-        int unit_id = cursor.getInt(cursor.getColumnIndex(FOOD_UNIT_ID));
         int calories = cursor.getInt(cursor.getColumnIndex(FOOD_CALORIES));
+        int unit_id = cursor.getInt(cursor.getColumnIndex(FOOD_UNIT_ID));
         int default_quantity = cursor.getInt(cursor.getColumnIndex(FOOD_DEFAULT_QUANTITY));
 
-        return new Food(_id, group_id, name, unit_id, calories, default_quantity);
+        return new Food(_id, group_id, name, calories, unit_id, default_quantity);
     }
 
     private Recipe buildRecipe(Cursor cursor) {

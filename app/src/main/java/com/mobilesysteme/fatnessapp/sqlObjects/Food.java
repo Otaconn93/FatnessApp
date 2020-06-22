@@ -63,4 +63,9 @@ public class Food {
     public int getDefaultQuantity() {
         return default_quantity;
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

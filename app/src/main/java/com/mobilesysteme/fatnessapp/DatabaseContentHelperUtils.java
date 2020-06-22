@@ -52,7 +52,7 @@ public abstract class DatabaseContentHelperUtils {
         databaseHelper.addRecipeIngredient(2, 95, 100); // tomate
         databaseHelper.addRecipeIngredient(2, 23, 100); // Brechbohnen
         databaseHelper.addRecipeIngredient(2, 97, 83); // Zwiebel
-        databaseHelper.addRecipeIngredient(2, 32, 3); // Knoblauch-Zehe
+        databaseHelper.addRecipeIngredient(2, 33, 3); // Knoblauch-Zehe
         databaseHelper.addRecipeIngredient(2, 32, 20); // Olivenöl
 
         databaseHelper.addRecipe("Nudeln mit Arrabiata", "Nudeln nach Packungsanleitung aufsetzen\n" +
@@ -66,7 +66,7 @@ public abstract class DatabaseContentHelperUtils {
         databaseHelper.addRecipeIngredient(3, 143, 200); // Nudeln
         databaseHelper.addRecipeIngredient(3, 95, 100); // tomate
         databaseHelper.addRecipeIngredient(3, 97, 83); // Zwiebel
-        databaseHelper.addRecipeIngredient(3, 32, 3); // Knoblauch-Zehe
+        databaseHelper.addRecipeIngredient(3, 33, 3); // Knoblauch-Zehe
         databaseHelper.addRecipeIngredient(3, 32, 20); // Olivenöl
         databaseHelper.addRecipeIngredient(3, 3, 50); // Pasta-Käse
 
@@ -83,7 +83,7 @@ public abstract class DatabaseContentHelperUtils {
         databaseHelper.addRecipeIngredient(4, 108, 30); // Hackfleisch (ca. 30 Gramm pro Person)
         databaseHelper.addRecipeIngredient(4, 95, 50); // tomate
         databaseHelper.addRecipeIngredient(4, 97, 83); // Zwiebel
-        databaseHelper.addRecipeIngredient(4, 32, 3); // Knoblauch-Zehe
+        databaseHelper.addRecipeIngredient(4, 33, 3); // Knoblauch-Zehe
         databaseHelper.addRecipeIngredient(4, 34, 5); // Tomatenmark
 
         databaseHelper.addRecipe("Nudeln mit Linsen", "Linsen nach Packungsanleitung aufsetzen (dauert meisten 45-60 min)\n" +
@@ -102,7 +102,7 @@ public abstract class DatabaseContentHelperUtils {
         databaseHelper.addRecipeIngredient(5, 82, 140); // 1 Lauch
         databaseHelper.addRecipeIngredient(5, 78, 124); // 2 Karotten
         databaseHelper.addRecipeIngredient(5, 97, 83); // Zwiebel
-        databaseHelper.addRecipeIngredient(5, 32, 3); // Knoblauch-Zehe
+        databaseHelper.addRecipeIngredient(5, 33, 3); // Knoblauch-Zehe
         databaseHelper.addRecipeIngredient(5, 32, 20); // Olivenöl
 
         databaseHelper.addRecipe("Reis mit Erbsen-Curry", "Reis nach Packungsanleitung aufsetzen\n" +
@@ -116,7 +116,7 @@ public abstract class DatabaseContentHelperUtils {
         databaseHelper.addRecipeIngredient(6, 136, 200); // Reis
         databaseHelper.addRecipeIngredient(6, 22, 200); // Grüne Erbsen
         databaseHelper.addRecipeIngredient(6, 97, 83); // Zwiebel
-        databaseHelper.addRecipeIngredient(6, 32, 3); // Knoblauch-Zehe
+        databaseHelper.addRecipeIngredient(6, 33, 3); // Knoblauch-Zehe
         databaseHelper.addRecipeIngredient(6, 31, 3); // 1 Stück Butter aka rapsöl ;p
 
         databaseHelper.addRecipe("Räubertopf", "\n" +
@@ -134,7 +134,7 @@ public abstract class DatabaseContentHelperUtils {
         databaseHelper.addRecipeIngredient(7, 78, 124); // 2 Karotten
         databaseHelper.addRecipeIngredient(7, 71, 200); // 1 kleiner Teller tiefgefrorener Champignons
         databaseHelper.addRecipeIngredient(7, 97, 83); // Zwiebel
-        databaseHelper.addRecipeIngredient(7, 32, 3); // Knoblauch-Zehe
+        databaseHelper.addRecipeIngredient(7, 33, 3); // Knoblauch-Zehe
         databaseHelper.addRecipeIngredient(7, 34, 5); // Tomatenmark
         databaseHelper.addRecipeIngredient(7, 32, 20); // Olivenöl
 

@@ -5,43 +5,94 @@
     android:id="@+id/cv_foodItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    android:layout_margin="@dimen/margin_small">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <Button
+            android:id="@+id/btn_addFood"
+            android:layout_width="@dimen/foodItemButtonWidth"
+            android:layout_height="@dimen/foodItemButtonHeight"
+            android:text="@string/plus"
+            android:textSize="@dimen/textSize_medium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/tv_foodAmount"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/bernierregularfont"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:fontFamily="@font/bernierregular"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/colorAccent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Food Name" />
+            tools:text="@string/food_name" />
 
         <TextView
             android:id="@+id/tv_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:fontFamily="@font/bernierregular"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_name"
-            tools:text="Food Details" />
+            tools:text="@string/food_details" />
 
-        <CheckBox
-            android:id="@+id/cb_food"
+        <Button
+            android:id="@+id/btn_rmFood"
+            android:layout_width="@dimen/foodItemButtonWidth"
+            android:layout_height="@dimen/foodItemButtonHeight"
+            android:onClick="rmItem"
+            android:text="@string/minus"
+            android:textSize="@dimen/textSize_medium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_foodAmount"
+            app:layout_constraintHorizontal_bias="0.967"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_foodAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/bernierregular"
+            android:text="@string/empty"
+            android:textSize="@dimen/textSize_medium"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.84"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/ev_defaultValue"
+            android:layout_width="@dimen/foodItemEditWidth"
+            android:layout_height="@dimen/foodItemEditHeight"
+            android:autofillHints="@string/autofill_food"
+            android:ems="10"
+            android:fontFamily="@font/bernierregular"
+            android:inputType="phone"
+            android:text="@string/twohundred"
+            android:imeOptions="actionDone"
+            android:focusableInTouchMode="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/btn_addFood"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.482"
+            tools:ignore="LabelFor" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

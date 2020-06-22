@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,7 +17,6 @@ import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
 
 public class HeightFragment extends Fragment {
 
-    private EditText heightNumber;
     private final OnFirstLaunchStepFinished finishListener;
 
     public HeightFragment(OnFirstLaunchStepFinished myFinishListener) {
@@ -28,25 +26,24 @@ public class HeightFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_height, container, false);
-        Button confirmButton = view.findViewById(R.id.btn_confirmHeight);
-        heightNumber = view.findViewById(R.id.edit_heightNumber);
+        EditText heightNumber = view.findViewById(R.id.edit_heightNumber);
 
         // On-Confirm operation
-        confirmButton.setOnClickListener(v -> {
+        view.findViewById(R.id.btn_confirmHeight).setOnClickListener(v -> {
+
             String stringHeight = heightNumber.getText().toString();
             if(!stringHeight.matches("")) {
-                int height = Integer.parseInt(stringHeight);
-                SharedPreferenceUtils.saveUserHeight(HeightFragment.this.getContext(), height);
+
+                SharedPreferenceUtils.saveUserHeight(getContext(), Integer.parseInt(stringHeight));
                 finishListener.onStepFinished();
             } else {
-                Toast.makeText(
-                        HeightFragment.this.getContext(),
-                        R.string.error_number,
-                        Toast.LENGTH_SHORT)
-                        .show();
+
+                Toast.makeText(getContext(), R.string.error_number, Toast.LENGTH_SHORT).show();
             }
         });
+
         return view;
     }
 }
