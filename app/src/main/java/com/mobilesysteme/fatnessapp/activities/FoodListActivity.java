@@ -185,6 +185,6 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
      * @return calories sum of selected food item
      */
     private int calculateCaloriesPer100GToSumCalories(int gramsSum, Food food){
-        return (int) ((float)(gramsSum/100) * food.getCalories());
+        return (int) ((float)(gramsSum/100) * food.getCaloriesPer100g());
     }
 }

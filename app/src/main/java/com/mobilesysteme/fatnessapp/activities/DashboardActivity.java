@@ -40,7 +40,7 @@ public class DashboardActivity extends AppCompatActivity {
     private List<String> weightDateEntries;
     private ProgressBar progressBar;
     private CalorieCalculator calorieCalculator;
-    private static final int weekInMs = 604800000;
+    private static final int WEEK_IN_MS = 604800000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,7 +159,7 @@ public class DashboardActivity extends AppCompatActivity {
     private boolean checkLastWeightDateOutdated(){
         Date today = new Date();
         Date lastEntry = DateUtils.getDateFromString(weightDateEntries.get(weightDateEntries.size()-1));
-        return lastEntry.getTime() < today.getTime() - weekInMs;
+        return lastEntry.getTime() < today.getTime() - WEEK_IN_MS;
     }
 
     /**

@@ -19,6 +19,7 @@ public class CalorieCalculator {
     private float weightGoal = 88; // in kg
     private Date goalDeadline;
     private DatabaseHelper dh;
+    private static final float CALORIE_PER_KILO = 7716.1791764707f;
 
     public CalorieCalculator(Context context) {
         goalDeadline = new Date();
@@ -56,7 +57,7 @@ public class CalorieCalculator {
      * @return additionally Calories to reach weight Goal
      */
     private float calculateExtraCaloriesForWeightGoal(){
-        float extraCalories = (getWeightGoal() - getWeight()) * 7716.1791764707f;
+        float extraCalories = (getWeightGoal() - getWeight()) * CALORIE_PER_KILO;
         Date today = new Date();
         long diff = getGoalDeadline().getTime() - today.getTime() ;
         long daysLeft =  TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
@@ -71,8 +72,8 @@ public class CalorieCalculator {
     public int getDailyCaloriesLeft(){
         float dailyCalories = calculateDailyCalories() + calculateExtraCaloriesForWeightGoal();
         int lastCalories = 0;
-        for(int i=0; i<dh.getTodayEatenFoods().size()-1; i++){
-            lastCalories = lastCalories + dh.getTodayEatenFoods().get(i).getCalories();
+        for(EatenFood eaten : getEatenFood()){
+            lastCalories = lastCalories + eaten.getCalories();
         }
 
         return (int) (dailyCalories-lastCalories);
@@ -122,5 +123,9 @@ public class CalorieCalculator {
     public Date getGoalDeadline() { return goalDeadline; }
 
     public void setGoalDeadline(Date goalDeadline) { this.goalDeadline = goalDeadline; }
+
+    private List<EatenFood> getEatenFood(){
+        return dh.getTodayEatenFoods();
+    }
 
 }
