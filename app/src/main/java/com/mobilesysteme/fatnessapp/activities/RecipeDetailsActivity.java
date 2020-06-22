@@ -39,8 +39,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         setupToolbar();
         makeIngredientList();
         makeDescription();
-        int totalCalories = makeTotalCalories();
-        setupFloatingActionButton(totalCalories);
+        setupFloatingActionButton(makeTotalCalories());
     }
 
     /**
@@ -61,14 +60,16 @@ public class RecipeDetailsActivity extends AppCompatActivity {
      */
     private int makeTotalCalories() {
         TextView totalCaloriesView = findViewById(R.id.tv_totalCalories);
-        int totalCalories = 0;
+        double totalCalories = 0;
         for(Map.Entry<Food, Integer> ingredient : ingredients.entrySet()) {
 
-            int calories = ingredient.getKey().getCalories() * ingredient.getValue();
+            double calories = ingredient.getKey().getCaloriesForAmount(ingredient.getValue());
             totalCalories += calories;
         }
-        totalCaloriesView.setText(totalCalories + " kcal");
-        return totalCalories;
+
+        int totalCaloriesRounded = Double.valueOf(totalCalories).intValue();
+        totalCaloriesView.setText(String.format(Locale.GERMANY, "%d kcal", totalCaloriesRounded));
+        return totalCaloriesRounded;
     }
 
     /**
