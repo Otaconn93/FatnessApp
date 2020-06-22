@@ -19,6 +19,7 @@ import com.mobilesysteme.fatnessapp.sqlObjects.Unit;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -326,22 +327,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param recipe_id id of the Recipe that u want to get the ingredients from
      * @return a List of all the used ingredients as Food
      */
-    public List<Food> getIngredientsByRecipeId(int recipe_id) {
+    public Map<Food, Integer> getIngredientMapByRecipeId(int recipe_id) {
 
-        String select = "SELECT " + RECIPEINGREDIENT_INGREDIENT_ID
-                + " FROM " + RECIPEINGREDIENT_TABLE_NAME
+        String select = "SELECT *"
+                + " FROM " + RECIPEINGREDIENT_TABLE_NAME + " JOIN " + FOOD_TABLE_NAME
+                + " ON " + RECIPEINGREDIENT_TABLE_NAME + "." + RECIPEINGREDIENT_INGREDIENT_ID
+                + " = " + FOOD_TABLE_NAME + "." + FOOD_ID
                 + " WHERE " + RECIPEINGREDIENT_RECIPE_ID + " = '" + recipe_id + "'";
 
         try(SQLiteDatabase db = this.getReadableDatabase();
             Cursor cursor = db.rawQuery(select, null)) {
 
-            List<Food> ingredients = new ArrayList<>();
+            Map<Food, Integer> ingredients = new HashMap<>();
             if (cursor.moveToFirst()) {
 
                 do {
-                    int ingredient_id = cursor.getInt(0);
-                    Food food = getFoodById(ingredient_id);                                             // TODO get by a single sql-statement
-                    ingredients.add(food);
+                    ingredients.put(buildFood(cursor), cursor.getInt(cursor.getColumnIndex(RECIPEINGREDIENT_INGREDIENT_QUANTITY)));
                 } while (cursor.moveToNext());
             }
 

@@ -1,7 +1,6 @@
 package com.mobilesysteme.fatnessapp.activities;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,14 +16,17 @@ import com.mobilesysteme.fatnessapp.fragments.AddRecipeFragment;
 import com.mobilesysteme.fatnessapp.sqlObjects.Food;
 import com.mobilesysteme.fatnessapp.sqlObjects.Recipe;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class RecipeDetailsActivity extends AppCompatActivity {
 
-    DatabaseHelper databaseHelper;
-    Recipe recipe;
-    private List<Food> ingredients;
+    private DatabaseHelper databaseHelper;
+    private Recipe recipe;
+    private Map<Food, Integer> ingredients;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,7 +34,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipedetails);
         databaseHelper = new DatabaseHelper(getApplicationContext());
         recipe = databaseHelper.getRecipeById(getIntent().getIntExtra(AddRecipeFragment.RECIPE_ID_KEY, 1));
-        ingredients = databaseHelper.getIngredientsByRecipeId(recipe.getId());
+        ingredients = databaseHelper.getIngredientMapByRecipeId(recipe.getId());
 
         setupToolbar();
         makeIngredientList();
@@ -60,9 +62,9 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     private int makeTotalCalories() {
         TextView totalCaloriesView = findViewById(R.id.tv_totalCalories);
         int totalCalories = 0;
-        for(Food ingredient: ingredients) {
-            // TODO da die Datenbank nur Food und nicht RecipeIngredient zurückgibt, ist eine Verrechnung der rezeptbezogenen Mengen nicht möglich
-            int calories = ingredient.getCalories() * ingredient.getDefaultQuantity();
+        for(Map.Entry<Food, Integer> ingredient : ingredients.entrySet()) {
+
+            int calories = ingredient.getKey().getCalories() * ingredient.getValue();
             totalCalories += calories;
         }
         totalCaloriesView.setText(totalCalories + " kcal");
@@ -75,7 +77,14 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     private void makeIngredientList() {
         // TODO da die Datenbank nur Food und nicht RecipeIngredient zurückgibt, ist eine Verrechnung der rezeptbezogenen Mengen nicht möglich
         ListView ingredientView = findViewById(R.id.lv_ingredients);
-        ingredientView.setAdapter(new ArrayAdapter<>(this, R.layout.list_item, R.id.tv_ingredientName, ingredients));
+        ingredientView.setAdapter(new ArrayAdapter<>(this, R.layout.list_item, R.id.tv_ingredientName, getIngredientsAsParsedList(ingredients)));
+    }
+
+    private static List<String> getIngredientsAsParsedList(Map<Food, Integer> ingredients) {
+
+        List<String> parsedIngredients = new ArrayList<>();
+        ingredients.forEach((k, v) -> parsedIngredients.add(String.format(Locale.GERMANY, "%s (%dg)", k.getName(), v)));
+        return parsedIngredients;
     }
 
     /**
