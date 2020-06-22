@@ -54,9 +54,9 @@ public abstract class DateUtils {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
                 .append(datePicker.getDayOfMonth())
-                .append(".")
+                .append("/")
                 .append(datePicker.getMonth() + 1)
-                .append(".")
+                .append("/")
                 .append(datePicker.getYear());
 
         return DateUtils.getDateFromString(stringBuilder.toString());
