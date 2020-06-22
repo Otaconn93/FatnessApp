@@ -11,10 +11,11 @@ import java.util.Locale;
 public abstract class DateUtils {
 
     public static final long DAY_IN_MILLI_SECS = 86400000;
+    public static final int WEEK_IN_MILLI_SECS = 604800000;
     public static final long YEAR_IN_MILLI_SECS = 31536000000L;
 
-    private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-    private static final DateFormat sqlDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+    private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.GERMANY);
+    private static final DateFormat sqlDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMANY);
 
     public static Date getDateFromString(String date) {
 
@@ -50,15 +51,8 @@ public abstract class DateUtils {
      */
     public static Date getDateFromDatePicker(DatePicker datePicker) {
 
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder
-                .append(datePicker.getDayOfMonth())
-                .append(".")
-                .append(datePicker.getMonth() + 1)
-                .append(".")
-                .append(datePicker.getYear());
-
-        return DateUtils.getDateFromString(stringBuilder.toString());
+        String date = String.format(Locale.GERMANY, "%d.%d.%d", datePicker.getDayOfMonth(), datePicker.getMonth() + 1, datePicker.getYear());
+        return DateUtils.getDateFromString(date);
     }
 
     public static Date getTodayMorning() {

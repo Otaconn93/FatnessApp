@@ -30,7 +30,7 @@ public class TimeGoalFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_timegoal, container, false);
 
         DatePicker datePicker = view.findViewById(R.id.edit_datePicker);
-        datePicker.setMinDate(System.currentTimeMillis() + 86400000); // 86.400.000 milliseconds = one day
+        datePicker.setMinDate(System.currentTimeMillis() + DateUtils.DAY_IN_MILLI_SECS);
 
         view.findViewById(R.id.btn_confirmTimeGoal).setOnClickListener(v -> {
 

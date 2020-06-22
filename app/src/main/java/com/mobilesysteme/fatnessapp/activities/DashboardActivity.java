@@ -40,7 +40,6 @@ public class DashboardActivity extends AppCompatActivity {
     private List<String> weightDateEntries;
     private ProgressBar progressBar;
     private CalorieCalculator calorieCalculator;
-    private static final int WEEK_IN_MS = 604800000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +48,7 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
         DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
         if(SharedPreferenceUtils.getFirstLaunch(this)) {
+
             Intent intent = new Intent(this, FirstLaunchActivity.class);
             startActivity(intent);
             databaseHelper.refillDatabase();
@@ -62,11 +62,14 @@ public class DashboardActivity extends AppCompatActivity {
 
         setTitle("Healthy Fatness");
         calorieCalculator = new CalorieCalculator(this);
+
         dailyCalories = findViewById(R.id.tv_dailyCalories);
-        progressBar = findViewById(R.id.progressBar);
         dailyCalories.setText(String.valueOf(calorieCalculator.getDailyCaloriesLeft()));
+
         int progress = (int) (((float)(calorieCalculator.getDailyCalories()-calorieCalculator.getDailyCaloriesLeft())/calorieCalculator.getDailyCalories()) * 100);
+        progressBar = findViewById(R.id.progressBar);
         progressBar.setProgress(progress);
+
         Toolbar toolbar = findViewById(R.id.dashToolbar);
         setSupportActionBar(toolbar);
 
@@ -83,11 +86,13 @@ public class DashboardActivity extends AppCompatActivity {
      * Creates line chart to show last user weight inputs
      */
     private void initLineChart() {
+
         weigtEntries = new ArrayList<>();
         weightDateEntries = new ArrayList<>();
-        LineChart lineChart = findViewById(R.id.lineChart);
+
         fillLineChartList();
-        LineDataSet lineDataSet = new LineDataSet(weigtEntries, "");
+
+        LineChart lineChart = findViewById(R.id.lineChart);
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(true);
@@ -95,6 +100,9 @@ public class DashboardActivity extends AppCompatActivity {
         xAxis.setCenterAxisLabels(false);
         xAxis.setEnabled(true);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(weightDateEntries));
+
+        LineDataSet lineDataSet = new LineDataSet(weigtEntries, "");
+
         LineData lineData = new LineData(lineDataSet);
         lineChart.setData(lineData);
         lineChart.invalidate();
@@ -126,10 +134,12 @@ public class DashboardActivity extends AppCompatActivity {
      * Put user weight entries into line chart lists
      */
     private void fillLineChartList() {
+
         Map<Long, Integer> userWeightEntries = SharedPreferenceUtils.getUserWeightHistory(this);
 
         int i = 0;
         for(Long dateKey : userWeightEntries.keySet()){
+
             weigtEntries.add(new Entry(i, userWeightEntries.get(dateKey).intValue()));
             Date date = new Date(dateKey);
             weightDateEntries.add(DateUtils.getDateAsString(date));
@@ -139,13 +149,17 @@ public class DashboardActivity extends AppCompatActivity {
 
     @Override
     public void onResume() {
+
         super.onResume();
         calorieCalculator = new CalorieCalculator(this);
         int caloriesLeft = calorieCalculator.getDailyCaloriesLeft();
         if(caloriesLeft >= 0){
+
             dailyCalories.setText(String.valueOf(caloriesLeft));
-            int progress = (int) (((float)(calorieCalculator.getDailyCalories()-calorieCalculator.getDailyCaloriesLeft())/calorieCalculator.getDailyCalories()) * 100);            progressBar.setProgress(progress);
+            int progress = (int) (((float)(calorieCalculator.getDailyCalories()-calorieCalculator.getDailyCaloriesLeft())/calorieCalculator.getDailyCalories()) * 100);
+            progressBar.setProgress(progress);
         }else{
+
             dailyCalories.setText("0");
             progressBar.setProgress(100);
         }
@@ -157,14 +171,18 @@ public class DashboardActivity extends AppCompatActivity {
      * @return true if last weight is older than one week
      */
     private boolean checkLastWeightDateOutdated(){
+
         Date today = new Date();
         Date lastEntry = DateUtils.getDateFromString(weightDateEntries.get(weightDateEntries.size()-1));
-        return lastEntry.getTime() < today.getTime() - WEEK_IN_MS;
+        if (lastEntry == null) {
+            return true;
+        }
+
+        return lastEntry.getTime() < today.getTime() - DateUtils.WEEK_IN_MILLI_SECS;
     }
 
     /**
      * Creates a dialog to update the current weight in settings
-     * @return dialog window with one button
      */
     private void createDialogForWeightUpdate() {
 
@@ -177,7 +195,7 @@ public class DashboardActivity extends AppCompatActivity {
                 case DialogInterface.BUTTON_NEUTRAL:
                     break;
                 case DialogInterface.BUTTON_NEGATIVE:
-                    SharedPreferenceUtils.saveUserWeightNow(this, SharedPreferenceUtils.getUserWeight(this).intValue());
+                    SharedPreferenceUtils.saveUserWeightNow(this, SharedPreferenceUtils.getUserWeight(this));
                     break;
             }
         };
