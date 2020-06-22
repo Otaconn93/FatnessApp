@@ -541,7 +541,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * @return a List of all EatenRecipes that where consumed today
      */
-    public int getTodayConsumedCalories() {
+    @Deprecated
+    public double getTodayConsumedCalories() {
 
         String select = "SELECT Sum(" + EATEN_CALORIES + ") " +
                 "FROM " + EATENRECIPE_TABLE_NAME +  ", " + EATENRECIPE_TABLE_NAME
@@ -753,25 +754,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(EATEN_DATE, DateUtils.getSqlDateAsString(date));
 
         return add(EATENRECIPE_TABLE_NAME, contentValues);
-    }
-
-    public int addEatenToday(Eaten eaten, int quantity) {
-
-        Class classOfEaten = eaten.getClass();
-        if(EatenFood.class.equals(classOfEaten)) {
-
-            return addEatenFood(eaten.getId(), getConsumedCalories(eaten, quantity), new Date());
-        } else if(EatenRecipe.class.equals(classOfEaten)) {
-
-            return addEatenRecipe(eaten.getId(), getConsumedCalories(eaten, quantity), new Date());
-        } else {
-            
-            return -1;
-        }
-    }
-
-    private int getConsumedCalories(Eaten eaten, int quantity) {
-        return eaten.getCalories() / 100 * quantity;
     }
 
     private int add(String tableName, ContentValues contentValues) {
