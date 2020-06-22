@@ -130,6 +130,6 @@ public class CalorieCalculator {
     private List<EatenFood> getEatenFood(){
         return dh.getTodayEatenFoods();
     }
-    private List<EatenRecipe> getEatenRecipe() { return dh.getEatenRecipes();}
+    private List<EatenRecipe> getEatenRecipe() { return dh.getTodayEatenRecipes();}
 
 }
