@@ -76,16 +76,12 @@ public class RecipeDetailsActivity extends AppCompatActivity {
      * populates the ingredient list view
      */
     private void makeIngredientList() {
-        // TODO da die Datenbank nur Food und nicht RecipeIngredient zurückgibt, ist eine Verrechnung der rezeptbezogenen Mengen nicht möglich
-        ListView ingredientView = findViewById(R.id.lv_ingredients);
-        ingredientView.setAdapter(new ArrayAdapter<>(this, R.layout.list_item, R.id.tv_ingredientName, getIngredientsAsParsedList(ingredients)));
-    }
-
-    private static List<String> getIngredientsAsParsedList(Map<Food, Integer> ingredients) {
 
         List<String> parsedIngredients = new ArrayList<>();
         ingredients.forEach((k, v) -> parsedIngredients.add(String.format(Locale.GERMANY, "%s (%dg)", k.getName(), v)));
-        return parsedIngredients;
+
+        ListView ingredientView = findViewById(R.id.lv_ingredients);
+        ingredientView.setAdapter(new ArrayAdapter<>(this, R.layout.list_item, R.id.tv_ingredientName, parsedIngredients));
     }
 
     /**
