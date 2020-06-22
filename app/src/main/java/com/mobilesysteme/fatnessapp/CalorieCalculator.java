@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
 import com.mobilesysteme.fatnessapp.sqlObjects.EatenFood;
+import com.mobilesysteme.fatnessapp.sqlObjects.EatenRecipe;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -17,21 +17,20 @@ public class CalorieCalculator {
     private float age = 25;
     private Gender gender;
     private float weightGoal = 88; // in kg
-    private Date goalDeadline = new Date();
-    private SharedPreferenceUtils spu = new SharedPreferenceUtils();
-    private List<EatenFood> eatenFood = new ArrayList<>();
+    private Date goalDeadline;
     private DatabaseHelper dh;
+    private static final float CALORIE_PER_KILO = 7716.1791764707f;
 
     public CalorieCalculator(Context context) {
-        setHeight(spu.getUserHeight(context));
-        setAge(spu.getUserAge(context));
-        setWeight(spu.getUserWeight(context).intValue());
-        setWeightGoal(spu.getUserTargetWeight(context));
-        setGoalDeadline(spu.getUserDeadline(context));
-        setGender(spu.getUserGender(context));
+        goalDeadline = new Date();
+        setHeight(SharedPreferenceUtils.getUserHeight(context));
+        setAge(SharedPreferenceUtils.getUserAge(context));
+        setWeight(SharedPreferenceUtils.getUserWeight(context).intValue());
+        setWeightGoal(SharedPreferenceUtils.getUserTargetWeight(context));
+        setGoalDeadline(SharedPreferenceUtils.getUserDeadline(context));
+        setGender(SharedPreferenceUtils.getUserGender(context));
 
         dh = new DatabaseHelper(context);
-        setEatenFood(dh.getTodayEatenFoods());
     }
 
     /**
@@ -44,9 +43,9 @@ public class CalorieCalculator {
      */
     private float calculateDailyCalories(){
         if(getGender().id == 0){
-            return (float) ((float) 655 + (9.6 * getWeight()) + (1.8 * getHeight()) - (4.7 * getAge()));
+            return (float) (655 + (9.6 * getWeight()) + (1.8 * getHeight()) - (4.7 * getAge()));
         }else if(getGender().id == 1){
-            return (float) ((float) 66 + (13.7 * getWeight()) + (5 * getHeight()) - (6.8 * getAge()));
+            return (float) (66 + (13.7 * getWeight()) + (5 * getHeight()) - (6.8 * getAge()));
         }
         return 0;
     }
@@ -58,7 +57,7 @@ public class CalorieCalculator {
      * @return additionally Calories to reach weight Goal
      */
     private float calculateExtraCaloriesForWeightGoal(){
-        float extraCalories = (getWeightGoal() - getWeight()) * 7.7161791764707f;
+        float extraCalories = (getWeightGoal() - getWeight()) * CALORIE_PER_KILO;
         Date today = new Date();
         long diff = getGoalDeadline().getTime() - today.getTime() ;
         long daysLeft =  TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
@@ -73,10 +72,11 @@ public class CalorieCalculator {
     public int getDailyCaloriesLeft(){
         float dailyCalories = calculateDailyCalories() + calculateExtraCaloriesForWeightGoal();
         int lastCalories = 0;
-
-        for(int i=0; i<getEatenFood().size()-1; i++){
-            lastCalories = lastCalories + getEatenFood().get(i).getCalories();
-            System.out.println(getEatenFood().get(i).getCalories());
+        for(EatenFood eaten : getEatenFood()){
+            lastCalories = lastCalories + eaten.getCalories();
+        }
+        for(EatenRecipe eatenRecipe : getEatenRecipe()){
+            lastCalories = lastCalories + eatenRecipe.getCalories();
         }
 
         return (int) (dailyCalories-lastCalories);
@@ -127,8 +127,9 @@ public class CalorieCalculator {
 
     public void setGoalDeadline(Date goalDeadline) { this.goalDeadline = goalDeadline; }
 
-    public List<EatenFood> getEatenFood() { return eatenFood; }
-
-    public void setEatenFood(List<EatenFood> eatenFood) { this.eatenFood = eatenFood; }
+    private List<EatenFood> getEatenFood(){
+        return dh.getTodayEatenFoods();
+    }
+    private List<EatenRecipe> getEatenRecipe() { return dh.getEatenRecipes();}
 
 }

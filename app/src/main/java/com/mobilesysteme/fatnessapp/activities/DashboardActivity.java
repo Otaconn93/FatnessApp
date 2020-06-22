@@ -40,16 +40,13 @@ public class DashboardActivity extends AppCompatActivity {
     private List<String> weightDateEntries;
     private ProgressBar progressBar;
     private CalorieCalculator calorieCalculator;
-    private static final int weekInMs = 604800000;
+    private static final int WEEK_IN_MS = 604800000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
-
-
         DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
         if(SharedPreferenceUtils.getFirstLaunch(this)) {
             Intent intent = new Intent(this, FirstLaunchActivity.class);
@@ -59,7 +56,6 @@ public class DashboardActivity extends AppCompatActivity {
         } else {
             init();
         }
-
     }
 
     private void init() {
@@ -78,7 +74,6 @@ public class DashboardActivity extends AppCompatActivity {
         fabAdd.setOnClickListener(v -> startActivity(new Intent(this, AddActivity.class)));
 
         initLineChart();
-
         if(checkLastWeightDateOutdated()){
             createDialogForWeightUpdate();
         }
@@ -149,8 +144,7 @@ public class DashboardActivity extends AppCompatActivity {
         int caloriesLeft = calorieCalculator.getDailyCaloriesLeft();
         if(caloriesLeft >= 0){
             dailyCalories.setText(String.valueOf(caloriesLeft));
-            int progress = (int) ((calorieCalculator.getDailyCalories()-calorieCalculator.getDailyCaloriesLeft()/calorieCalculator.getDailyCalories()) * 100);
-            progressBar.setProgress(progress);
+            int progress = (int) (((float)(calorieCalculator.getDailyCalories()-calorieCalculator.getDailyCaloriesLeft())/calorieCalculator.getDailyCalories()) * 100);            progressBar.setProgress(progress);
         }else{
             dailyCalories.setText("0");
             progressBar.setProgress(100);
@@ -165,7 +159,7 @@ public class DashboardActivity extends AppCompatActivity {
     private boolean checkLastWeightDateOutdated(){
         Date today = new Date();
         Date lastEntry = DateUtils.getDateFromString(weightDateEntries.get(weightDateEntries.size()-1));
-        return lastEntry.getTime() < today.getTime() - weekInMs;
+        return lastEntry.getTime() < today.getTime() - WEEK_IN_MS;
     }
 
     /**
