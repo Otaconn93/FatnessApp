@@ -62,7 +62,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         int totalCalories = 0;
         for(Food ingredient: ingredients) {
             // TODO da die Datenbank nur Food und nicht RecipeIngredient zurückgibt, ist eine Verrechnung der rezeptbezogenen Mengen nicht möglich
-            int calories = ingredient.getCalories() * ingredient.getDefaultQuantity();
+            int calories = ingredient.getCaloriesPer100g() * ingredient.getDefaultQuantity();
             totalCalories += calories;
         }
         totalCaloriesView.setText(totalCalories + " kcal");

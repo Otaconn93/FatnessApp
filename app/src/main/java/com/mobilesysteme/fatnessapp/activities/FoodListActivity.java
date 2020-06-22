@@ -135,7 +135,7 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
                     //Yes button clicked
                     for(Food food : foodWithChangedDefaultValues.keySet()){
                         databaseHelper.updateFood(food.getId(), food.getGroupId(),
-                                food.getName(), food.getUnitId(), food.getCalories(),
+                                food.getName(), food.getUnitId(), food.getCaloriesPer100g(),
                                 foodWithChangedDefaultValues.get(food));
                     }
                     finish();
