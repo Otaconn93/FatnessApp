@@ -1,6 +1,5 @@
 package com.mobilesysteme.fatnessapp.preferences;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.text.InputType;
 
@@ -82,34 +81,35 @@ public class SettingsActivity extends AppCompatActivity {
 
         public class DataStore extends PreferenceDataStore {
 
+            private UserAttributeHandler userAttributeHandler;
+
+            public DataStore() {
+                this.userAttributeHandler = new UserAttributeHandler(getContext());
+            }
+
             @Nullable
             @Override
             public String getString(String key, @Nullable String defValue) {
 
-                Context context = getContext();
-                if (context == null) {
-                    return null;
-                }
-
                 Object value = -1;
                 switch (key) {
                     case SharedPreferenceUtils.USER_HEIGHT_KEY:
-                        value = SharedPreferenceUtils.getUserHeight(context);
+                        value = SharedPreferenceUtils.getUserHeight(getContext());
                         break;
                     case SharedPreferenceUtils.USER_WEIGHT_KEY:
-                        value = SharedPreferenceUtils.getUserWeight(context);
+                        value = SharedPreferenceUtils.getUserWeight(getContext());
                         break;
                     case SharedPreferenceUtils.USER_AGE_KEY:
-                        value = SharedPreferenceUtils.getUserAge(context);
+                        value = SharedPreferenceUtils.getUserAge(getContext());
                         break;
                     case SharedPreferenceUtils.USER_GENDER_KEY:
-                        value = SharedPreferenceUtils.getUserGender(context);
+                        value = SharedPreferenceUtils.getUserGender(getContext());
                         break;
                     case SharedPreferenceUtils.USER_TARGETWEIGHT_KEY:
-                        value = SharedPreferenceUtils.getUserTargetWeight(context);
+                        value = SharedPreferenceUtils.getUserTargetWeight(getContext());
                         break;
                     case SharedPreferenceUtils.USER_DEADLINE_KEY:
-                        value = DateUtils.getDateAsString(SharedPreferenceUtils.getUserDeadline(context));
+                        value = DateUtils.getDateAsString(SharedPreferenceUtils.getUserDeadline(getContext()));
                         break;
                 }
 
@@ -119,29 +119,58 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void putString(String key, @Nullable String value) {
 
-                Context context = getContext();
-                if (context == null) {
-                    return;
-                }
-
                 switch (key) {
                     case SharedPreferenceUtils.USER_HEIGHT_KEY:
-                        SharedPreferenceUtils.saveUserHeight(context, Integer.valueOf(value));
+
+                        if (!userAttributeHandler.handleSaveHeight(value)) {
+
+                            String height = String.valueOf(SharedPreferenceUtils.getUserHeight(getContext()));
+                            ((EditTextPreference)findPreference(SharedPreferenceUtils.USER_HEIGHT_KEY)).setText(height);
+                        }
+
                         break;
                     case SharedPreferenceUtils.USER_WEIGHT_KEY:
-                        SharedPreferenceUtils.saveUserWeightNow(context, Integer.valueOf(value));
+
+                        if (!userAttributeHandler.handleSaveWeight(value)) {
+
+                            String weight = String.valueOf(SharedPreferenceUtils.getUserWeight(getContext()));
+                            ((EditTextPreference)findPreference(SharedPreferenceUtils.USER_WEIGHT_KEY)).setText(weight);
+                        }
+
                         break;
                     case SharedPreferenceUtils.USER_AGE_KEY:
-                        SharedPreferenceUtils.saveUserAge(context, Integer.valueOf(value));
+
+                        if (!userAttributeHandler.handleSaveAge(value)) {
+
+                            String age = String.valueOf(SharedPreferenceUtils.getUserAge(getContext()));
+                            ((EditTextPreference)findPreference(SharedPreferenceUtils.USER_AGE_KEY)).setText(age);
+                        }
+
                         break;
                     case SharedPreferenceUtils.USER_GENDER_KEY:
-                        SharedPreferenceUtils.saveUserGender(context, Gender.findGenderById(Integer.valueOf(value)));
+
+                        if (!userAttributeHandler.handleSaveGender(Integer.parseInt(value))) {
+
+                            String genderId = String.valueOf(SharedPreferenceUtils.getUserGender(getContext()).getId());
+                            ((ListPreference)findPreference(SharedPreferenceUtils.USER_GENDER_KEY)).setValue(genderId);
+                        }
+
                         break;
                     case SharedPreferenceUtils.USER_TARGETWEIGHT_KEY:
-                        SharedPreferenceUtils.saveUserTargetWeight(context, Integer.valueOf(value));
+
+                        if (!userAttributeHandler.handleSaveTargetWeight(value)) {
+
+                            String targetWeight = String.valueOf(SharedPreferenceUtils.getUserTargetWeight(getContext()));
+                            ((EditTextPreference)findPreference(SharedPreferenceUtils.USER_TARGETWEIGHT_KEY)).setText(targetWeight);
+                        }
+
                         break;
                     case SharedPreferenceUtils.USER_DEADLINE_KEY:
-                        SharedPreferenceUtils.saveUserDeadline(context, DateUtils.getDateFromString(value));
+
+                        userAttributeHandler.handleSaveDeadline(DateUtils.getDateFromString(value));
+                        String deadline = DateUtils.getDateAsString(SharedPreferenceUtils.getUserDeadline(getContext()));
+                        ((EditTextPreference)findPreference(SharedPreferenceUtils.USER_DEADLINE_KEY)).setText(deadline);
+
                         break;
                 }
             }

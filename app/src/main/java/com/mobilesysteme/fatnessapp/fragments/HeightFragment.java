@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
 import com.mobilesysteme.fatnessapp.R;
-import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
+import com.mobilesysteme.fatnessapp.preferences.UserAttributeHandler;
 
 public class HeightFragment extends Fragment {
 
@@ -36,8 +36,9 @@ public class HeightFragment extends Fragment {
             String stringHeight = heightNumber.getText().toString();
             if(!stringHeight.matches("")) {
 
-                SharedPreferenceUtils.saveUserHeight(getContext(), Integer.parseInt(stringHeight));
-                finishListener.onStepFinished();
+                if (new UserAttributeHandler(getContext()).handleSaveHeight(stringHeight)) {
+                    finishListener.onStepFinished();
+                }
             } else {
 
                 Toast.makeText(getContext(), R.string.error_number, Toast.LENGTH_SHORT).show();

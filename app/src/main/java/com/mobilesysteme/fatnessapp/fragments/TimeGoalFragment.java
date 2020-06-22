@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.mobilesysteme.fatnessapp.DateUtils;
 import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
 import com.mobilesysteme.fatnessapp.R;
-import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
+import com.mobilesysteme.fatnessapp.preferences.UserAttributeHandler;
 
 public class TimeGoalFragment extends Fragment {
 
@@ -34,8 +34,9 @@ public class TimeGoalFragment extends Fragment {
 
         view.findViewById(R.id.btn_confirmTimeGoal).setOnClickListener(v -> {
 
-            SharedPreferenceUtils.saveUserDeadline(getContext(), DateUtils.getDateFromDatePicker(datePicker));
-            finishListener.onStepFinished();
+            if (new UserAttributeHandler(getContext()).handleSaveDeadline(DateUtils.getDateFromDatePicker(datePicker))) {
+                finishListener.onStepFinished();
+            }
         });
 
         return view;

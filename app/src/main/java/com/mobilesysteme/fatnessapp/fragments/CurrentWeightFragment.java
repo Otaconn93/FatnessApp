@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
 import com.mobilesysteme.fatnessapp.R;
-import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
+import com.mobilesysteme.fatnessapp.preferences.UserAttributeHandler;
 
 public class CurrentWeightFragment extends Fragment {
 
@@ -32,9 +32,9 @@ public class CurrentWeightFragment extends Fragment {
         // On-Confirm operation
         view.findViewById(R.id.btn_confirmCurrentWeight).setOnClickListener(v -> {
 
-            int weight = Integer.parseInt(String.valueOf(currentWeightNumber.getText()));
-            SharedPreferenceUtils.saveUserWeightNow(CurrentWeightFragment.this.getContext(), weight);
-            finishListener.onStepFinished();
+            if (new UserAttributeHandler(getContext()).handleSaveWeight(String.valueOf(currentWeightNumber.getText()))) {
+                finishListener.onStepFinished();
+            }
         });
 
         return view;
