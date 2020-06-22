@@ -309,4 +309,15 @@ public class SharedPreferenceUtils {
                 .remove(USER_DEADLINE_KEY)
                 .apply();
     }
+
+    public static void resetAll(Context context) {
+
+        removeUserWeight(context);
+        removeUserAge(context);
+        removeUserDeadline(context);
+        removeUserGender(context);
+        removeUserTargetWeight(context);
+        removeUserHeight(context);
+        saveFirstLaunch(context, true);
+    }
 }

@@ -51,8 +51,15 @@ public abstract class DateUtils {
      */
     public static Date getDateFromDatePicker(DatePicker datePicker) {
 
-        String date = String.format(Locale.GERMANY, "%d.%d.%d", datePicker.getDayOfMonth(), datePicker.getMonth() + 1, datePicker.getYear());
-        return DateUtils.getDateFromString(date);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append(datePicker.getDayOfMonth())
+                .append(".")
+                .append(datePicker.getMonth() + 1)
+                .append(".")
+                .append(datePicker.getYear());
+
+        return DateUtils.getDateFromString(stringBuilder.toString());
     }
 
     public static Date getTodayMorning() {
