@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
 import com.mobilesysteme.fatnessapp.sqlObjects.EatenFood;
+import com.mobilesysteme.fatnessapp.sqlObjects.EatenRecipe;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -75,6 +75,9 @@ public class CalorieCalculator {
         for(EatenFood eaten : getEatenFood()){
             lastCalories = lastCalories + eaten.getCalories();
         }
+        for(EatenRecipe eatenRecipe : getEatenRecipe()){
+            lastCalories = lastCalories + eatenRecipe.getCalories();
+        }
 
         return (int) (dailyCalories-lastCalories);
     }
@@ -127,5 +130,6 @@ public class CalorieCalculator {
     private List<EatenFood> getEatenFood(){
         return dh.getTodayEatenFoods();
     }
+    private List<EatenRecipe> getEatenRecipe() { return dh.getEatenRecipes();}
 
 }
