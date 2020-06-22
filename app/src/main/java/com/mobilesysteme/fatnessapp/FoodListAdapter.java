@@ -3,7 +3,6 @@ package com.mobilesysteme.fatnessapp;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -12,23 +11,30 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mobilesysteme.fatnessapp.sqlObjects.Food;
 
 import java.util.List;
-
+import java.util.Locale;
 
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodListViewHolder> {
-    private List<Food> dataset;
+
+    private List<Food> foods;
     private OnFoodAddListener listener;
     private final Context context;
 
     public static class FoodListViewHolder extends RecyclerView.ViewHolder {
-        public CardView cv;
-        public FoodListViewHolder(CardView v) {
-            super(v);
-            cv = v;
+
+        private CardView cardView;
+
+        public FoodListViewHolder(CardView cardView) {
+            super(cardView);
+            this.cardView = cardView;
+        }
+
+        public CardView getCardView() {
+            return cardView;
         }
     }
 
     public FoodListAdapter(List<Food> myDataset, OnFoodAddListener listener, Context context) {
-        dataset = myDataset;
+        this.foods = myDataset;
         this.listener = listener;
         this.context = context;
     }
@@ -36,41 +42,57 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
     @NonNull
     @Override
     public FoodListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         CardView view = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.food_item, parent, false);
-        FoodListViewHolder vh = new FoodListViewHolder(view);
-        return vh;
+        return new FoodListViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final FoodListViewHolder holder, final int position) {
-        final Food currentFood = dataset.get(position);
-        TextView name = holder.cv.findViewById(R.id.tv_name);
-        TextView currentGrams = holder.cv.findViewById(R.id.tv_details);
-        EditText defaultValue = holder.cv.findViewById(R.id.ev_defaultValue);
-        TextView amountText = holder.cv.findViewById(R.id.tv_foodAmount);
 
-        name.setText(currentFood.getName());
+        final Food currentFood = foods.get(position);
+        final TextView currentGrams = holder.getCardView().findViewById(R.id.tv_details);
+        final EditText defaultValue = holder.getCardView().findViewById(R.id.ev_defaultValue);
+        final TextView amountText = holder.getCardView().findViewById(R.id.tv_foodAmount);
+
+        ((TextView)holder.getCardView().findViewById(R.id.tv_name)).setText(currentFood.getName());
         currentGrams.setText("");
-        defaultValue.setText(Integer.toString(currentFood.getDefaultQuantity()));
+        defaultValue.setText(String.format(Locale.GERMANY, "%d", currentFood.getDefaultQuantity()));
 
         defaultValue.addTextChangedListener(new DefaultValueTextWatcher(currentFood, listener, context, defaultValue));
 
-        final Button addBtn = holder.cv.findViewById(R.id.btn_addFood);
-        addBtn.setOnClickListener(view -> {
-            amountText.setText(Integer.toString(getAmount(amountText)+1));
+        initButtonAddFood(holder, currentFood, currentGrams, defaultValue, amountText);
+
+        initButtonRemoveFood(holder, currentFood, currentGrams, defaultValue, amountText);
+    }
+
+    /**
+     * gives the AddButton the functionality to increase the quantity of Food
+     */
+    private void initButtonAddFood(@NonNull FoodListViewHolder holder, Food currentFood, TextView currentGrams, EditText defaultValue, TextView amountText) {
+
+        holder.getCardView().findViewById(R.id.btn_addFood).setOnClickListener(view -> {
+            amountText.setText(String.format(Locale.GERMANY, "%d", getAmount(amountText)+1));
             currentGrams.setText(displayUnitWithGramm(defaultValue,amountText));
             listener.addFood(currentFood,getUnitSum(defaultValue,amountText));
         });
+    }
 
-        final Button rmBtn = holder.cv.findViewById(R.id.btn_rmFood);
-        rmBtn.setOnClickListener(view -> {
+    /**
+     * gives the RemoveButton the functionality to decrease the quantity of Food
+     */
+    private void initButtonRemoveFood(@NonNull FoodListViewHolder holder, Food currentFood, TextView currentGrams, EditText defaultValue, TextView amountText) {
+
+        holder.getCardView().findViewById(R.id.btn_rmFood).setOnClickListener(view -> {
             if(getAmount(amountText) > 0){
 
                 amountText.setText(String.valueOf(getAmount(amountText)-1));
                 if(getUnitSum(defaultValue,amountText)>0) {
+
                     currentGrams.setText(displayUnitWithGramm(defaultValue,amountText));
                     listener.addFood(currentFood,getUnitSum(defaultValue,amountText));
                 }else{
+
                     currentGrams.setText("");
                     listener.rmFood(currentFood);
                 }
@@ -80,7 +102,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
 
     @Override
     public int getItemCount() {
-        return dataset.size();
+        return foods.size();
     }
 
     /**
@@ -91,8 +113,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
      * @return multiplication product of default calories and amount
      */
     private int getUnitSum(EditText defaultValue, TextView amountText){
-        int sum = Integer.parseInt(defaultValue.getText().toString().trim()) * Integer.parseInt(amountText.getText().toString());
-        return sum;
+        return Integer.parseInt(defaultValue.getText().toString().trim()) * Integer.parseInt(amountText.getText().toString());
     }
 
     /**
@@ -113,6 +134,6 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodLi
      * @return formatted calorie text with g unit
      */
     private String displayUnitWithGramm(EditText defaultValue, TextView amountText){
-        return String.format("%d g", getUnitSum(defaultValue,amountText));
+        return String.format(Locale.GERMANY, "%d g", getUnitSum(defaultValue,amountText));
     }
 }

@@ -8,11 +8,12 @@ import android.widget.Toast;
 
 import com.mobilesysteme.fatnessapp.sqlObjects.Food;
 
-class DefaultValueTextWatcher implements TextWatcher {
+public class DefaultValueTextWatcher implements TextWatcher {
+
     private final Food currentFood;
     private final OnFoodAddListener listener;
     private final Context context;
-    private EditText editText;
+    private final EditText editText;
     private final String oldValue;
 
     public DefaultValueTextWatcher(Food currentFood, OnFoodAddListener listener, Context context, EditText editText) {
@@ -20,7 +21,7 @@ class DefaultValueTextWatcher implements TextWatcher {
         this.listener = listener;
         this.context = context;
         this.editText = editText;
-        oldValue = editText.getText().toString();
+        this.oldValue = editText.getText().toString();
     }
 
     @Override
@@ -45,16 +46,12 @@ class DefaultValueTextWatcher implements TextWatcher {
     }
 
     private boolean checkValidInputs(String input){
-        int number = 0;
+
         try {
-            number = Integer.parseInt(input);
+            int number = Integer.parseInt(input);
+            return (number >= 0 && number <= 10000);
         } catch (NumberFormatException e) {
             return false;
-        }
-        if(number>10000 || number < 0){
-            return false;
-        }else{
-            return true;
         }
     }
 }

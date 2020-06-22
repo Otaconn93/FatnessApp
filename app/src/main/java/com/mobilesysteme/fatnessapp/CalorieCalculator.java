@@ -7,30 +7,18 @@ import com.mobilesysteme.fatnessapp.sqlObjects.EatenFood;
 import com.mobilesysteme.fatnessapp.sqlObjects.EatenRecipe;
 
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class CalorieCalculator {
 
-    private float height = 180; // in cm
-    private float weight = 78; // in kg
-    private float age = 25;
-    private Gender gender;
-    private float weightGoal = 88; // in kg
-    private Date goalDeadline;
-    private DatabaseHelper dh;
+    private final Context context;
+    private final DatabaseHelper databaseHelper;
     private static final float CALORIE_PER_KILO = 7716.1791764707f;
 
     public CalorieCalculator(Context context) {
-        goalDeadline = new Date();
-        setHeight(SharedPreferenceUtils.getUserHeight(context));
-        setAge(SharedPreferenceUtils.getUserAge(context));
-        setWeight(SharedPreferenceUtils.getUserWeight(context).intValue());
-        setWeightGoal(SharedPreferenceUtils.getUserTargetWeight(context));
-        setGoalDeadline(SharedPreferenceUtils.getUserDeadline(context));
-        setGender(SharedPreferenceUtils.getUserGender(context));
 
-        dh = new DatabaseHelper(context);
+        this.context = context;
+        databaseHelper = new DatabaseHelper(context);
     }
 
     /**
@@ -41,11 +29,17 @@ public class CalorieCalculator {
      *
      * @return average calories per Day calculated from personal details
      */
-    private float calculateDailyCalories(){
-        if(getGender().id == 0){
-            return (float) (655 + (9.6 * getWeight()) + (1.8 * getHeight()) - (4.7 * getAge()));
-        }else if(getGender().id == 1){
-            return (float) (66 + (13.7 * getWeight()) + (5 * getHeight()) - (6.8 * getAge()));
+    private float calculateDailyCalories() {
+
+        int height = SharedPreferenceUtils.getUserHeight(context);
+        Gender gender = SharedPreferenceUtils.getUserGender(context);
+        int weight = SharedPreferenceUtils.getUserWeight(context);
+        int age = SharedPreferenceUtils.getUserAge(context);
+
+        if(gender == Gender.MALE){
+            return (float) (655 + (9.6 * weight) + (1.8 * height) - (4.7 * age));
+        }else if(gender == Gender.FEMALE){
+            return (float) (66 + (13.7 * weight) + (5 * height) - (6.8 * age));
         }
         return 0;
     }
@@ -57,10 +51,14 @@ public class CalorieCalculator {
      * @return additionally Calories to reach weight Goal
      */
     private float calculateExtraCaloriesForWeightGoal(){
-        float extraCalories = (getWeightGoal() - getWeight()) * CALORIE_PER_KILO;
-        Date today = new Date();
-        long diff = getGoalDeadline().getTime() - today.getTime() ;
-        long daysLeft =  TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+
+        int weight = SharedPreferenceUtils.getUserWeight(context);
+        int targetWeight = SharedPreferenceUtils.getUserTargetWeight(context);
+        Date deadline = SharedPreferenceUtils.getUserDeadline(context);
+
+        float extraCalories = (targetWeight - weight) * CALORIE_PER_KILO;
+        long diff = deadline.getTime() - DateUtils.getTodayMorning().getTime() ;
+        long daysLeft = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         return extraCalories / daysLeft;
     }
 
@@ -70,13 +68,16 @@ public class CalorieCalculator {
      * @return calories left for today
      */
     public int getDailyCaloriesLeft(){
+
         float dailyCalories = calculateDailyCalories() + calculateExtraCaloriesForWeightGoal();
+
         int lastCalories = 0;
-        for(EatenFood eaten : getEatenFood()){
-            lastCalories = lastCalories + eaten.getCalories();
+        for(EatenFood eaten : databaseHelper.getTodayEatenFoods()){
+            lastCalories += eaten.getCalories();
         }
-        for(EatenRecipe eatenRecipe : getEatenRecipe()){
-            lastCalories = lastCalories + eatenRecipe.getCalories();
+
+        for(EatenRecipe eatenRecipe : databaseHelper.getTodayEatenRecipes()){
+            lastCalories += eatenRecipe.getCalories();
         }
 
         return (int) (dailyCalories-lastCalories);
@@ -90,46 +91,4 @@ public class CalorieCalculator {
     public int getDailyCalories(){
         return (int) (calculateDailyCalories() + calculateExtraCaloriesForWeightGoal());
     }
-
-    public float getHeight() {
-        return height;
-    }
-
-    public float getWeight() {
-        return weight;
-    }
-
-    public float getAge() {
-        return age;
-    }
-
-    public void setHeight(float height) {
-        this.height = height;
-    }
-
-    public void setWeight(float weight) {
-        this.weight = weight;
-    }
-
-    public void setAge(float age) {
-        this.age = age;
-    }
-
-    public Gender getGender() { return gender; }
-
-    public void setGender(Gender gender) { this.gender = gender; }
-
-    public float getWeightGoal() { return weightGoal; }
-
-    public void setWeightGoal(float weightGoal) { this.weightGoal = weightGoal; }
-
-    public Date getGoalDeadline() { return goalDeadline; }
-
-    public void setGoalDeadline(Date goalDeadline) { this.goalDeadline = goalDeadline; }
-
-    private List<EatenFood> getEatenFood(){
-        return dh.getTodayEatenFoods();
-    }
-    private List<EatenRecipe> getEatenRecipe() { return dh.getEatenRecipes();}
-
 }

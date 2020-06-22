@@ -59,7 +59,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
 
-        private void bindNumberPreference(DataStore dataStore, String preferenceKey, Integer value) {
+        private void bindNumberPreference(DataStore dataStore, String preferenceKey, int value) {
 
             EditTextPreference preference = findPreference(preferenceKey);
             if (preference != null) {

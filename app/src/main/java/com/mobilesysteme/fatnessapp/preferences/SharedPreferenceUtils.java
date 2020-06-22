@@ -41,14 +41,14 @@ public class SharedPreferenceUtils {
      * @param context the ApplicationContext needed to access the SharedPreferences
      * @return the weight of the user in kilogram
      */
-    public static Integer getUserWeight(Context context) {
+    public static int getUserWeight(Context context) {
 
         TreeMap<Long, Integer> userWeightHistory = getUserWeightHistory(context);
         if (userWeightHistory.isEmpty()) {
-            return null;
+            throw new RuntimeException("Saved weight should never be empty");
         }
 
-        return userWeightHistory.get(userWeightHistory.lastKey());
+        return userWeightHistory.get(userWeightHistory.lastKey()).intValue();
     }
 
     /**
