@@ -16,12 +16,22 @@ import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
 import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.preferences.UserAttributeHandler;
 
+/**
+ * @author Maximilian Grabau
+ */
 public class GenderFragment extends Fragment {
 
-    private final OnFirstLaunchStepFinished finishListener;
+    private OnFirstLaunchStepFinished finishListener;
+    private final int actionId = R.id.action_genderFragment2_to_ageFragment;
 
-    public GenderFragment(OnFirstLaunchStepFinished myFinishListener) {
-        finishListener = myFinishListener;
+    public GenderFragment() {
+        // Silence is golden
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        finishListener = (OnFirstLaunchStepFinished) getActivity();
     }
 
     @Nullable
@@ -47,7 +57,7 @@ public class GenderFragment extends Fragment {
                 }
 
                 if (new UserAttributeHandler(getContext()).handleSaveGender(genderId)) {
-                    finishListener.onStepFinished();
+                    finishListener.onStepFinished(actionId);
                 }
             } else {
 
