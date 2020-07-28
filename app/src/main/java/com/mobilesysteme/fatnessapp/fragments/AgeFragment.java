@@ -35,12 +35,13 @@ public class AgeFragment extends Fragment {
 
             String stringAge = ageNumber.getText().toString();
             if(!stringAge.matches("")) {
-
-                if (new UserAttributeHandler(getContext()).handleSaveAge(stringAge)) {
+                try {
+                    new UserAttributeHandler(getContext()).handleSaveAge(stringAge);
                     finishListener.onStepFinished();
+                } catch (RuntimeException e) {
+                    Toast.makeText(getContext(), R.string.error_age_to_high, Toast.LENGTH_LONG).show();
                 }
             } else {
-
                 Toast.makeText(getContext(), R.string.error_number, Toast.LENGTH_SHORT).show();
             }
         });

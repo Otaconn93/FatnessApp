@@ -35,10 +35,8 @@ public class TargetWeightFragment extends Fragment {
 
             String stringWeight = targetWeightNumber.getText().toString();
             if(!stringWeight.matches("")) {
-
-                if (new UserAttributeHandler(getContext()).handleSaveTargetWeight(stringWeight)) {
-                    finishListener.onStepFinished();
-                }
+                new UserAttributeHandler(getContext()).handleSaveTargetWeight(stringWeight);
+                finishListener.onStepFinished();
             } else {
 
                 Toast.makeText(getContext(), R.string.error_number, Toast.LENGTH_SHORT).show();

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,9 +33,17 @@ public class CurrentWeightFragment extends Fragment {
         // On-Confirm operation
         view.findViewById(R.id.btn_confirmCurrentWeight).setOnClickListener(v -> {
 
-            if (new UserAttributeHandler(getContext()).handleSaveWeight(String.valueOf(currentWeightNumber.getText()))) {
-                finishListener.onStepFinished();
+            if (!currentWeightNumber.getText().toString().matches("")) {
+                try {
+                    new UserAttributeHandler(getContext()).handleSaveWeight(String.valueOf(currentWeightNumber.getText()));
+                    finishListener.onStepFinished();
+                } catch (RuntimeException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Toast.makeText(getContext(), R.string.error_number, Toast.LENGTH_SHORT).show();
             }
+
         });
 
         return view;

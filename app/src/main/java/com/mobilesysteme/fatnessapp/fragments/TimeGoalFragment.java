@@ -34,9 +34,9 @@ public class TimeGoalFragment extends Fragment {
 
         view.findViewById(R.id.btn_confirmTimeGoal).setOnClickListener(v -> {
 
-            if (new UserAttributeHandler(getContext()).handleSaveDeadline(DateUtils.getDateFromDatePicker(datePicker))) {
-                finishListener.onStepFinished();
-            }
+            new UserAttributeHandler(getContext()).handleSaveDeadline(DateUtils.getDateFromDatePicker(datePicker));
+            finishListener.onStepFinished();
+
         });
 
         return view;

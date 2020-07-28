@@ -46,9 +46,9 @@ public class GenderFragment extends Fragment {
                     genderId = Gender.FEMALE.getId();
                 }
 
-                if (new UserAttributeHandler(getContext()).handleSaveGender(genderId)) {
-                    finishListener.onStepFinished();
-                }
+                new UserAttributeHandler(getContext()).handleSaveGender(genderId);
+                finishListener.onStepFinished();
+
             } else {
 
                 Toast.makeText(getContext(), R.string.error_gender, Toast.LENGTH_SHORT).show();

@@ -122,7 +122,7 @@ public class SettingsActivity extends AppCompatActivity {
                 switch (key) {
                     case SharedPreferenceUtils.USER_HEIGHT_KEY:
 
-                        if (!userAttributeHandler.handleSaveHeight(value)) {
+                        if (!userAttributeHandler.validateHeight(Integer.parseInt(value))) {
 
                             String height = String.valueOf(SharedPreferenceUtils.getUserHeight(getContext()));
                             ((EditTextPreference)findPreference(SharedPreferenceUtils.USER_HEIGHT_KEY)).setText(height);
@@ -131,7 +131,7 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                     case SharedPreferenceUtils.USER_WEIGHT_KEY:
 
-                        if (!userAttributeHandler.handleSaveWeight(value)) {
+                        if (!userAttributeHandler.validateWeight(Integer.parseInt(value))) {
 
                             String weight = String.valueOf(SharedPreferenceUtils.getUserWeight(getContext()));
                             ((EditTextPreference)findPreference(SharedPreferenceUtils.USER_WEIGHT_KEY)).setText(weight);
@@ -140,7 +140,7 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                     case SharedPreferenceUtils.USER_AGE_KEY:
 
-                        if (!userAttributeHandler.handleSaveAge(value)) {
+                        if (!userAttributeHandler.validateAge(Integer.parseInt(value))) {
 
                             String age = String.valueOf(SharedPreferenceUtils.getUserAge(getContext()));
                             ((EditTextPreference)findPreference(SharedPreferenceUtils.USER_AGE_KEY)).setText(age);
@@ -149,7 +149,7 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                     case SharedPreferenceUtils.USER_GENDER_KEY:
 
-                        if (!userAttributeHandler.handleSaveGender(Integer.parseInt(value))) {
+                        if (!userAttributeHandler.validateGender(Gender.findGenderById(Integer.parseInt(value)))) {
 
                             String genderId = String.valueOf(SharedPreferenceUtils.getUserGender(getContext()).getId());
                             ((ListPreference)findPreference(SharedPreferenceUtils.USER_GENDER_KEY)).setValue(genderId);
@@ -158,7 +158,7 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                     case SharedPreferenceUtils.USER_TARGETWEIGHT_KEY:
 
-                        if (!userAttributeHandler.handleSaveTargetWeight(value)) {
+                        if (!userAttributeHandler.validateTargetWeight(Integer.parseInt(value))) {
 
                             String targetWeight = String.valueOf(SharedPreferenceUtils.getUserTargetWeight(getContext()));
                             ((EditTextPreference)findPreference(SharedPreferenceUtils.USER_TARGETWEIGHT_KEY)).setText(targetWeight);
