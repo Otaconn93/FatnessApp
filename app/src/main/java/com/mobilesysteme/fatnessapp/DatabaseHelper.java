@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.mobilesysteme.fatnessapp.sqlObjects.Eaten;
 import com.mobilesysteme.fatnessapp.sqlObjects.EatenFood;
 import com.mobilesysteme.fatnessapp.sqlObjects.EatenRecipe;
 import com.mobilesysteme.fatnessapp.sqlObjects.Food;
@@ -539,27 +538,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    /**
-     * @return a List of all EatenRecipes that where consumed today
-     */
-    @Deprecated
-    public double getTodayConsumedCalories() {
-
-        String select = "SELECT Sum(" + EATEN_CALORIES + ") " +
-                "FROM " + EATENRECIPE_TABLE_NAME +  ", " + EATENRECIPE_TABLE_NAME
-                + " WHERE DATE(" + EATEN_DATE + ") = DATE('now')";
-
-        try(SQLiteDatabase db = this.getReadableDatabase();
-            Cursor cursor = db.rawQuery(select, null)) {
-
-            if (cursor.moveToFirst()) {
-                return cursor.getInt(cursor.getColumnIndex(EATEN_CALORIES));
-            }
-
-            return -1;
-        }
-    }
-
     private Unit buildUnit(Cursor cursor) {
 
         int _id = cursor.getInt(cursor.getColumnIndex(UNIT_ID));
@@ -730,7 +708,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param date the Date on which the Food was eaten
      * @return the id of the newly inserted EatenFood or -1 if it was not successful
      */
-    public int addEatenFood(int food_id, int calories, Date date) {         // sag bescheid wenn du es anders haben willst
+    public int addEatenFood(int food_id, int calories, Date date) {
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(EATEN_EATEN_ID, food_id);
@@ -805,7 +783,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     public void updateEatenFood(int _id, int food_id, int calories, Date date) {
 
-        String query = "UPDATE " + EATENFOOD_TABLE_NAME + " SET " + EATEN_EATEN_ID + " = '" + food_id + "', " + EATEN_CALORIES + " = '" + calories + "', " + EATEN_DATE + " = '" + date + "' WHERE " + EATEN_ID + " = '" + _id + "'";
+        String query = "UPDATE " + EATENFOOD_TABLE_NAME + " SET " + EATEN_EATEN_ID + " = '" + food_id + "', " + EATEN_CALORIES + " = '" + calories + "', " + EATEN_DATE + " = '" + DateUtils.getSqlDateAsString(date) + "' WHERE " + EATEN_ID + " = '" + _id + "'";
         update(query);
     }
 
@@ -814,7 +792,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     public void updateEatenRecipe(int _id, int recipe_id, int calories, Date date) {
 
-        String query = "UPDATE " + EATENFOOD_TABLE_NAME + " SET " + EATEN_EATEN_ID + " = '" + recipe_id + "', " + EATEN_CALORIES + " = '" + calories + "', " + EATEN_DATE + " = '" + date + "' WHERE " + EATEN_ID + " = '" + _id + "'";
+        String query = "UPDATE " + EATENRECIPE_TABLE_NAME + " SET " + EATEN_EATEN_ID + " = '" + recipe_id + "', " + EATEN_CALORIES + " = '" + calories + "', " + EATEN_DATE + " = '" + DateUtils.getSqlDateAsString(date) + "' WHERE " + EATEN_ID + " = '" + _id + "'";
         update(query);
     }
 
