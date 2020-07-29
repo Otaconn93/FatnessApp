@@ -15,12 +15,22 @@ import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
 import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.preferences.UserAttributeHandler;
 
+/**
+ * @author Maximilian Grabau
+ */
 public class HeightFragment extends Fragment {
 
-    private final OnFirstLaunchStepFinished finishListener;
+    private OnFirstLaunchStepFinished finishListener;
+    private final int actionId = R.id.action_heightFragment_to_currentWeightFragment;
 
-    public HeightFragment(OnFirstLaunchStepFinished myFinishListener) {
-        finishListener = myFinishListener;
+    public HeightFragment() {
+        // Silence is golden
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        finishListener = (OnFirstLaunchStepFinished) getActivity();
     }
 
     @Nullable
@@ -37,7 +47,7 @@ public class HeightFragment extends Fragment {
             if(!stringHeight.matches("")) {
 
                 if (new UserAttributeHandler(getContext()).handleSaveHeight(stringHeight)) {
-                    finishListener.onStepFinished();
+                    finishListener.onStepFinished(actionId);
                 }
             } else {
 
