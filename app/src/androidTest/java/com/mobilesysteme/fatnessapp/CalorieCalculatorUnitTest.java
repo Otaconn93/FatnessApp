@@ -1,16 +1,14 @@
 package com.mobilesysteme.fatnessapp;
 
 import android.content.Context;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
 import java.util.Date;
-
 import static org.junit.Assert.*;
 
 
@@ -20,7 +18,7 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class CalorieCalculatorUnitTest {
 
-    private Context context = ApplicationProvider.getApplicationContext();
+    private Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
     private CalorieCalculator calorieCalculator;
     private DatabaseHelper databaseHelper;
 
