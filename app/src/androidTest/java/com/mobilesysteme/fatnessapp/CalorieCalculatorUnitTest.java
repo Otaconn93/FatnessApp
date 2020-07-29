@@ -2,7 +2,6 @@ package com.mobilesysteme.fatnessapp;
 
 import android.content.Context;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,7 +9,6 @@ import org.junit.runner.RunWith;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
-
 import java.util.Date;
 
 import static org.junit.Assert.*;
@@ -25,37 +23,80 @@ public class CalorieCalculatorUnitTest {
     private Context context = ApplicationProvider.getApplicationContext();
     private CalorieCalculator calorieCalculator;
     private DatabaseHelper databaseHelper;
-    private static final int WEEK_IN_MS = 604800000;
 
     @Before
     public void init() {
         calorieCalculator = new CalorieCalculator(context);
         databaseHelper = new DatabaseHelper(context);
         databaseHelper.refillDatabase();
-
-        SharedPreferenceUtils.saveUserWeightNow(context, 50);
-        SharedPreferenceUtils.saveUserAge(context, 25);
-        SharedPreferenceUtils.saveUserGender(context, Gender.MALE);
-        SharedPreferenceUtils.saveUserDeadline(context, new Date(new Date().getTime() + WEEK_IN_MS));
-        SharedPreferenceUtils.saveUserHeight(context, 175);
-        SharedPreferenceUtils.saveUserTargetWeight(context, 75);
-
     }
 
     @Test
-    public void checkCaloriesPerDay() {
+    public void checkCaloriesPerDay_Male() {
+
+        setSharedPrefencesValues(50, 25, Gender.MALE, new Date(new Date().getTime() + DateUtils.WEEK_IN_MILLI_SECS), 175, 75);
         assertEquals(28890, calorieCalculator.getDailyCalories());
     }
 
     @Test
-    public void checkDailyCaloriesLeft(){
+    public void checkDailyCaloriesLeft_Male(){
+
+        setSharedPrefencesValues(50, 25, Gender.MALE, new Date(new Date().getTime() + DateUtils.WEEK_IN_MILLI_SECS), 175, 75);
         databaseHelper.addEatenFood(1, 1000, new Date());
         assertEquals(27890, calorieCalculator.getDailyCaloriesLeft());
-
     }
 
-    @After
-    public void after(){
-        databaseHelper.refillDatabase();
+    @Test
+    public void checkCaloriesPerDay_Female() {
+
+        setSharedPrefencesValues(50, 25, Gender.FEMALE, new Date(new Date().getTime() + DateUtils.WEEK_IN_MILLI_SECS), 175, 75);
+        assertEquals(29013, calorieCalculator.getDailyCalories());
     }
+
+    @Test
+    public void checkDailyCaloriesLeft_Female(){
+
+        setSharedPrefencesValues(50, 25, Gender.FEMALE, new Date(new Date().getTime() + DateUtils.WEEK_IN_MILLI_SECS), 175, 75);
+        databaseHelper.addEatenFood(1, 1000, new Date());
+        assertEquals(28013, calorieCalculator.getDailyCaloriesLeft());
+    }
+
+    @Test
+    public void checkDailyCaloriesLeftWithMinValues_Male(){
+
+        setSharedPrefencesValues(2, 0, Gender.MALE, new Date(new Date().getTime() + DateUtils.DAY_IN_MILLI_SECS), 50, 5);
+        assertEquals(23912, calorieCalculator.getDailyCaloriesLeft());
+    }
+
+    @Test
+    public void checkDailyCaloriesLeftWithMinValues_Female(){
+
+        setSharedPrefencesValues(2, 0, Gender.FEMALE, new Date(new Date().getTime() + DateUtils.DAY_IN_MILLI_SECS), 50, 5);
+        assertEquals(23491, calorieCalculator.getDailyCaloriesLeft());
+    }
+
+    @Test
+    public void checkDailyCaloriesLeftWithMaxValues_Male(){
+
+        setSharedPrefencesValues(499, 150, Gender.MALE, new Date(new Date().getTime() + DateUtils.YEAR_IN_MILLI_SECS * 9L), 300, 500);
+        assertEquals(5282, calorieCalculator.getDailyCaloriesLeft());
+    }
+
+    @Test
+    public void checkDailyCaloriesLeftWithMaxValues_Female(){
+
+        setSharedPrefencesValues(499, 150, Gender.FEMALE, new Date(new Date().getTime() + DateUtils.YEAR_IN_MILLI_SECS * 9L), 300, 500);
+        assertEquals(7384, calorieCalculator.getDailyCaloriesLeft());
+    }
+
+    private void setSharedPrefencesValues(int weight, int age, Gender gender, Date deadline, int height, int targetWeight){
+
+        SharedPreferenceUtils.saveUserWeightNow(context, weight);
+        SharedPreferenceUtils.saveUserAge(context, age);
+        SharedPreferenceUtils.saveUserGender(context, gender);
+        SharedPreferenceUtils.saveUserDeadline(context,deadline);
+        SharedPreferenceUtils.saveUserHeight(context, height);
+        SharedPreferenceUtils.saveUserTargetWeight(context, targetWeight);
+    }
+
 }
