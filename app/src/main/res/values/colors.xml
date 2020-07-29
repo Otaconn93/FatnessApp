@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--@author Shamil Gradov-->
 <resources>
 
     <color name="textWhite">#FFFFFF</color>
     <color name="colorAccent">#000000</color>
     <color name="barempty">#8da0b5</color>
     <color name="barfilling">#f85a00</color>
-    <!--<color name="buttonbackground">#002f95</color>-->
     <color name="linechartbackground">#DCDCDC</color>
     <color name="buttonOK">#8bee00</color>
     <color name="color1">#ff7171</color>
     <color name="color2">#ff914d</color>
     <color name="welcome2">#ffe785</color>
-    <!-- Color Palette 1 Tryout -->
-    <color name="tryoutgrey">#2d4059</color>
     <color name="tryoutred">#ea5455</color>
     <color name="tryoutorange">#f07b3f</color>
     <color name="color3">#ffaa85</color>
-    <color name="welcome3">#c4fdb2</color>
-    <color name="color4">#65c9e2</color>
 
 
 </resources>

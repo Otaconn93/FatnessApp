@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--@author Shamil Gradov-->
+<!--https://www.fontfabric.com/fonts/bernier/-->
 <font-family xmlns:android="http://schemas.android.com/apk/res/android">
     <font
         android:font="@font/bernierregular"

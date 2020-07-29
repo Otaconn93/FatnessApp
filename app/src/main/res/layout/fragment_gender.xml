@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--@author Shamil Gradov-->
+<!--@author Maximilian Grabau-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/welcome2"
     tools:context=".activities.DashboardActivity">
 
     <TextView
         android:id="@+id/textView2"
+        android:paddingLeft="@dimen/margin_small"
+        android:paddingRight="@dimen/margin_small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_normal"
@@ -97,11 +100,7 @@
     <Button
         android:id="@+id/btn_confirmGender"
         style="@style/AppTheme.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_normal"
-        android:fontFamily="@font/bernierregular"
-        android:textSize="@dimen/textSize_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

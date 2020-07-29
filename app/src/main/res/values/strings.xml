@@ -1,5 +1,7 @@
 <resources>
 
+    <!-- @author Shamil Gradov -->
+
     <!-- Branding-->
     <string name="app_name">Healthy Fatness</string>
     <string name="app_logo">App Logo</string>
@@ -108,6 +110,12 @@
     <string name="food_details">Food Details</string>
     <string name="twohundred">200</string>
     <string name="autofill_food">default value</string>
+    <string name="ingredients">Zutaten</string>
+    <string name="steps">Arbeitsschritte</string>
+    <string name="calories">Kalorien</string>
+    <string name="nahrungsmittel">Nahrungsmittel</string>
+    <string name="Rezepte">Rezepte</string>
+    <string name="gprostueck">Gramm / Stück</string>
 
     <!-- Miscellaneous -->
     <string name="title_activity_drawer">drawerActivity</string>
