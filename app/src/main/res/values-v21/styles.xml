@@ -1,4 +1,9 @@
 <resources>
+
+    <!-- @author Shamil Gradov -->
+    <!-- @author Maximilian Grabau -->
+    <!-- @author Hannes Hoffmann -->
+
             <style name="AppTheme.NoActionBar">
             <item name="windowActionBar">false</item>
             <item name="windowNoTitle">true</item>

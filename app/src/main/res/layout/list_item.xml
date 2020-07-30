@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--@author Shamil Gradov-->
+<!--@author Maximilian Grabau-->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,5 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorAccent"
-        tools:text="IngredientName" />
+        tools:layout_editor_absoluteX="1dp"
+        tools:text="IngredientName"
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>
