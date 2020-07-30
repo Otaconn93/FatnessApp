@@ -11,6 +11,9 @@ import androidx.fragment.app.Fragment;
 import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
 import com.mobilesysteme.fatnessapp.R;
 
+/**
+ * @author Maximilian Grabau
+ */
 public class WelcomeFragment extends Fragment {
 
     private final OnFirstLaunchStepFinished finishListener;

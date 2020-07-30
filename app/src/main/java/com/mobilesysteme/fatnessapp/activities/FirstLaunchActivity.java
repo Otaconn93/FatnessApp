@@ -23,7 +23,9 @@ import java.lang.reflect.Constructor;
 import java.util.LinkedList;
 import java.util.Queue;
 
-@SuppressWarnings("unchecked")
+/**
+ * @MaxGrabau
+ */
 public class FirstLaunchActivity extends AppCompatActivity implements OnFirstLaunchStepFinished {
 
     private Queue<Class> fragmentQueue; // queue which handles the order of fragments to load

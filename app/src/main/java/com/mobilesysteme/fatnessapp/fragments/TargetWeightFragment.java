@@ -15,6 +15,9 @@ import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
 import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.preferences.UserAttributeHandler;
 
+/**
+ * @author Maximilian Grabau
+ */
 public class TargetWeightFragment extends Fragment {
 
     private final OnFirstLaunchStepFinished finishListener;
