@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--@author Shamil Gradov-->
+<!--@author Maximilian Grabau-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/welcome2"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
     <androidx.appcompat.widget.Toolbar
@@ -25,7 +26,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/bernierregular"
-        android:text="Zutaten"
+        android:text="@string/ingredients"
         android:textColor="@color/colorAccent"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +50,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/bernierregular"
-        android:text="Arbeitsschritte"
+        android:text="@string/steps"
         android:textColor="@color/colorAccent"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,11 +70,11 @@
     <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/bernierregular"
-        android:text="Kalorien"
+        android:text="@string/calories"
         android:textColor="@color/colorAccent"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"

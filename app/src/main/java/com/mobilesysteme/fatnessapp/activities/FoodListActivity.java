@@ -25,6 +25,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *
+ * Activity with all foods in a category. The user can select specific consumed food.
+ *
+ * @author Kevin Bücher
+ *
+ */
 public class FoodListActivity extends AppCompatActivity implements OnFoodAddListener {
 
     private static DatabaseHelper databaseHelper;
@@ -87,6 +94,12 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
         setTitle("Nahrungsmittel hinzufügen");
     }
 
+    /**
+     * Creates a set of food from with the same category
+     *
+     * @param foodgroup_id
+     * @return a set of all food in one category
+     */
     public List<Food> getRecursiveFoodList(int foodgroup_id) {
 
         List<Food> resultSet = databaseHelper.getFoodByFoodGroupId(foodgroup_id);
@@ -152,6 +165,12 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
         builder.show();
     }
 
+    /**
+     * Adds food, if the user clicked at least one time on the increase button
+     *
+     * @param food
+     * @param calorieSum
+     */
     @Override
     public void addFood(Food food, int calorieSum) {
 
@@ -162,6 +181,11 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
         }
     }
 
+    /**
+     * Removes food, if the user clicks on the discounter button till 0 is reached.
+     *
+     * @param food
+     */
     @Override
     public void rmFood(Food food) {
         selectedItems.remove(food);

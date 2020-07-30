@@ -1,5 +1,9 @@
 <resources>
 
+    <!-- @author Shamil Gradov -->
+    <!-- @author Maximilian Grabau -->
+    <!-- @author Hannes Hoffmann -->
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -7,6 +11,7 @@
         <item name="colorPrimaryDark">@color/barfilling</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorHint">@color/textWhite</item>
+        <item name="android:colorBackground">@color/welcome2</item>
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -20,6 +25,10 @@
         <item name="android:text">@string/weiter</item>
         <item name="background">@drawable/roundedbutton</item>
         <item name="backgroundTint">@color/tryoutorange</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/textSize_small</item>
+        <item name="android:fontFamily">@font/bernierregular</item>
     </style>
 
 </resources>

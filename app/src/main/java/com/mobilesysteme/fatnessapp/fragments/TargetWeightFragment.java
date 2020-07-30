@@ -15,12 +15,22 @@ import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
 import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.preferences.UserAttributeHandler;
 
+/**
+ * @author Maximilian Grabau
+ */
 public class TargetWeightFragment extends Fragment {
 
-    private final OnFirstLaunchStepFinished finishListener;
+    private OnFirstLaunchStepFinished finishListener;
+    private final int actionId = R.id.action_targetWeightFragment_to_timeGoalFragment;
 
-    public TargetWeightFragment(OnFirstLaunchStepFinished myFinishListener) {
-        finishListener = myFinishListener;
+    public TargetWeightFragment() {
+        // Silence is golden
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        finishListener = (OnFirstLaunchStepFinished) getActivity();
     }
 
     @Nullable
@@ -37,7 +47,7 @@ public class TargetWeightFragment extends Fragment {
             if(!stringWeight.matches("")) {
 
                 if (new UserAttributeHandler(getContext()).handleSaveTargetWeight(stringWeight)) {
-                    finishListener.onStepFinished();
+                    finishListener.onStepFinished(actionId);
                 }
             } else {
 

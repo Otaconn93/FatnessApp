@@ -11,12 +11,22 @@ import androidx.fragment.app.Fragment;
 import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
 import com.mobilesysteme.fatnessapp.R;
 
+/**
+ * @author Maximilian Grabau
+ */
 public class WelcomeFragment extends Fragment {
 
-    private final OnFirstLaunchStepFinished finishListener;
+    private OnFirstLaunchStepFinished finishListener;
+    private final int actionId = R.id.action_welcomeFragment_to_genderFragment;
 
-    public WelcomeFragment(OnFirstLaunchStepFinished myFinishListener) {
-        finishListener = myFinishListener;
+    public WelcomeFragment() {
+        // Silence is golden
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        finishListener = (OnFirstLaunchStepFinished) getActivity();
     }
 
     @Nullable
@@ -24,7 +34,7 @@ public class WelcomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_welcome, container, false);
-        view.findViewById(R.id.btn_confirmWelcome).setOnClickListener(v -> finishListener.onStepFinished());
+        view.findViewById(R.id.btn_confirmWelcome).setOnClickListener(v -> finishListener.onStepFinished(actionId));
 
         return view;
     }

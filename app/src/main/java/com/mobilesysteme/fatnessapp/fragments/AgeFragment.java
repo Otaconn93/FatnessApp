@@ -15,12 +15,22 @@ import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
 import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.preferences.UserAttributeHandler;
 
+/**
+ * @author Maximilian Grabau
+ */
 public class AgeFragment extends Fragment {
 
-    private final OnFirstLaunchStepFinished finishListener;
+    private OnFirstLaunchStepFinished finishListener;
+    private final int actionId = R.id.action_ageFragment_to_heightFragment;
 
-    public AgeFragment(OnFirstLaunchStepFinished myFinishListener) {
-        finishListener = myFinishListener;
+    public AgeFragment() {
+        // Silence is golden
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        finishListener = (OnFirstLaunchStepFinished) getActivity();
     }
 
     @Nullable
@@ -37,7 +47,7 @@ public class AgeFragment extends Fragment {
             if(!stringAge.matches("")) {
 
                 if (new UserAttributeHandler(getContext()).handleSaveAge(stringAge)) {
-                    finishListener.onStepFinished();
+                    finishListener.onStepFinished(actionId);
                 }
             } else {
 
