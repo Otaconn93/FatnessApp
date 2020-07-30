@@ -1,5 +1,9 @@
 package com.mobilesysteme.fatnessapp;
 
+/**
+ * The enum containing the possible genders
+ * @author Hoffmann
+ */
 public enum Gender {
 
     MALE(0, "Männlich"),

@@ -8,6 +8,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * A Utils class handling the parsing of Dates and containing different time units in shape of milli seconds
+ * @author Hoffmann (aka 13Dexter31)
+ */
 public abstract class DateUtils {
 
     public static final long DAY_IN_MILLI_SECS = 86400000;
@@ -17,6 +21,11 @@ public abstract class DateUtils {
     private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.GERMANY);
     private static final DateFormat sqlDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMANY);
 
+    /**
+     * Extracts the date from a given String using the format dd/MM/yyyy
+     * @param date the String to extract the date from
+     * @return the extracted date
+     */
     public static Date getDateFromString(String date) {
 
         try {
@@ -27,6 +36,11 @@ public abstract class DateUtils {
         }
     }
 
+    /**
+     * Extracts the date from a given String using the format yyyy-MM-dd HH:mm:ss
+     * @param date the String to extract the date from
+     * @return the extracted date
+     */
     public static Date getSqlDateFromString(String date) {
 
         try {
@@ -37,10 +51,20 @@ public abstract class DateUtils {
         }
     }
 
+    /**
+     * Parses the date to a String in format dd/MM/yyyy
+     * @param date the date used to parse a String from
+     * @return the String containing the date
+     */
     public static String getDateAsString(Date date) {
         return dateFormat.format(date);
     }
 
+    /**
+     * Parses the date to a String in format dd/MM/yyyy
+     * @param date the date used to parse a String from
+     * @return the String containing the date
+     */
     public static String getSqlDateAsString(Date date) {
         return sqlDateFormat.format(date);
     }
@@ -51,17 +75,13 @@ public abstract class DateUtils {
      */
     public static Date getDateFromDatePicker(DatePicker datePicker) {
 
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder
-                .append(datePicker.getDayOfMonth())
-                .append("/")
-                .append(datePicker.getMonth() + 1)
-                .append("/")
-                .append(datePicker.getYear());
-
-        return DateUtils.getDateFromString(stringBuilder.toString());
+        String date = String.format(Locale.GERMANY, "%d/%d/%d", datePicker.getDayOfMonth(), datePicker.getMonth() + 1, datePicker.getYear());
+        return DateUtils.getDateFromString(date);
     }
 
+    /**
+     * @return the Date of today morning - meaning the actual first second of today in form of a Date
+     */
     public static Date getTodayMorning() {
 
         long dateInMilliSecs = new Date().getTime();

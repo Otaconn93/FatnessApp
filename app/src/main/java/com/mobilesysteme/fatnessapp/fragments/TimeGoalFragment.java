@@ -20,16 +20,10 @@ import com.mobilesysteme.fatnessapp.preferences.UserAttributeHandler;
  */
 public class TimeGoalFragment extends Fragment {
 
-    private OnFirstLaunchStepFinished finishListener;
+    private final OnFirstLaunchStepFinished finishListener;
 
-    public TimeGoalFragment() {
-        // Silence is golden
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        finishListener = (OnFirstLaunchStepFinished) getActivity();
+    public TimeGoalFragment(OnFirstLaunchStepFinished myFinishListener) {
+        finishListener = myFinishListener;
     }
 
     @Nullable
@@ -44,7 +38,7 @@ public class TimeGoalFragment extends Fragment {
         view.findViewById(R.id.btn_confirmTimeGoal).setOnClickListener(v -> {
 
             if (new UserAttributeHandler(getContext()).handleSaveDeadline(DateUtils.getDateFromDatePicker(datePicker))) {
-                finishListener.openDashboardActivity();
+                finishListener.onStepFinished();
             }
         });
 

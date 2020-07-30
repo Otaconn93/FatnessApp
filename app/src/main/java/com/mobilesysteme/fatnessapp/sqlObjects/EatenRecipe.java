@@ -4,6 +4,11 @@ import androidx.annotation.Nullable;
 
 import java.util.Date;
 
+/**
+ * The equivalent for the object within the data base
+ * Gives informations aboud a specific recipe that got eaten in an unknown quantity
+ * @author Hoffmann
+ */
 public class EatenRecipe implements Eaten {
 
     private int _id;

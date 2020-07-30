@@ -19,17 +19,10 @@ import com.mobilesysteme.fatnessapp.preferences.UserAttributeHandler;
  */
 public class CurrentWeightFragment extends Fragment {
 
-    private OnFirstLaunchStepFinished finishListener;
-    private final int actionId = R.id.action_currentWeightFragment_to_targetWeightFragment;
+    private final OnFirstLaunchStepFinished finishListener;
 
-    public CurrentWeightFragment() {
-        // Silence is golden
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        finishListener = (OnFirstLaunchStepFinished) getActivity();
+    public CurrentWeightFragment(OnFirstLaunchStepFinished myFinishListener) {
+        finishListener = myFinishListener;
     }
 
     @Nullable
@@ -42,8 +35,8 @@ public class CurrentWeightFragment extends Fragment {
         // On-Confirm operation
         view.findViewById(R.id.btn_confirmCurrentWeight).setOnClickListener(v -> {
 
-            if (new UserAttributeHandler(getContext()).handleSaveWeight(String.valueOf(currentWeightNumber.getText()))) {
-                finishListener.onStepFinished(actionId);
+            if (new UserAttributeHandler(getContext()).handleSaveWeightNow(String.valueOf(currentWeightNumber.getText()))) {
+                finishListener.onStepFinished();
             }
         });
 

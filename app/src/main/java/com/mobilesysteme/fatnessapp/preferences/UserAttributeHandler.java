@@ -9,6 +9,10 @@ import com.mobilesysteme.fatnessapp.R;
 
 import java.util.Date;
 
+/**
+ * The Activity in which the Settings like the SheredPreferences can be entered by the user
+ * @author Hoffmann
+ */
 public class UserAttributeHandler {
 
     private Context context;
@@ -17,9 +21,14 @@ public class UserAttributeHandler {
         this.context = context;
     }
 
-    public boolean handleSaveHeight(String value) {
+    /**
+     * Uses the SharedPreferenceUtils to store the height of the user
+     * @param heightAsString the String to extract the height from
+     * @return false if the given value was not qualified to store
+     */
+    public boolean handleSaveHeight(String heightAsString) {
 
-        int height = Integer.parseInt(value);
+        int height = Integer.parseInt(heightAsString);
         if (height < 50) {
 
             Toast.makeText(context, R.string.error_height_to_low, Toast.LENGTH_LONG).show();
@@ -35,11 +44,17 @@ public class UserAttributeHandler {
         }
     }
 
-    public boolean handleSaveWeight(String value) {
+    /**
+     * Uses the SharedPreferenceUtils to store the weight of the user
+     * @param date indicates the date when the user had the given weight
+     * @param weightAsString the String to extract the weight from
+     * @return false if the given value was not qualified to store
+     */
+    public boolean handleSaveWeight(Date date, String weightAsString) {
 
-        int weight = Integer.parseInt(value);
+        int weight = Integer.parseInt(weightAsString);
         int targetWeight = SharedPreferenceUtils.getUserTargetWeight(context);
-        if (targetWeight != 0 && weight >= targetWeight) {
+        if (targetWeight != 0 && weight > targetWeight) {
 
             Toast.makeText(context,  R.string.error_weight_beyond_target_weight, Toast.LENGTH_LONG).show();
             return false;
@@ -53,14 +68,28 @@ public class UserAttributeHandler {
             return false;
         } else {
 
-            SharedPreferenceUtils.saveUserWeightNow(context, weight);
+            SharedPreferenceUtils.saveUserWeight(context, date, weight);
             return true;
         }
     }
 
-    public boolean handleSaveAge(String value) {
+    /**
+     * Uses the SharedPreferenceUtils to store the weight of the user
+     * @param weightAsString the String to extract the weight from
+     * @return false if the given value was not qualified to store
+     */
+    public boolean handleSaveWeightNow(String weightAsString) {
+        return handleSaveWeight(new Date(), weightAsString);
+    }
 
-        int age = Integer.parseInt(value);
+    /**
+     * Uses the SharedPreferenceUtils to store the age of the user
+     * @param ageAsString the String to extract the age from
+     * @return false if the given value was not qualified to store
+     */
+    public boolean handleSaveAge(String ageAsString) {
+
+        int age = Integer.parseInt(ageAsString);
         if (age > 150) {
 
             Toast.makeText(context, R.string.error_age_to_high, Toast.LENGTH_LONG).show();
@@ -72,9 +101,13 @@ public class UserAttributeHandler {
         }
     }
 
-    public boolean handleSaveGender(int value) {
+    /**
+     * Uses the SharedPreferenceUtils to store the gender of the user
+     * @param gender the gender to store
+     * @return false if the given value was not qualified to store
+     */
+    public boolean handleSaveGender(Gender gender) {
 
-        Gender gender = Gender.findGenderById(value);
         if (gender == null) {
 
             Toast.makeText(context, R.string.error_no_gender_found, Toast.LENGTH_LONG).show();
@@ -85,10 +118,15 @@ public class UserAttributeHandler {
         return true;
     }
 
-    public boolean handleSaveTargetWeight(String value) {
+    /**
+     * Uses the SharedPreferenceUtils to store the target weight of the user
+     * @param targetWeightAsString the String to extract the target weight from
+     * @return false if the given value was not qualified to store
+     */
+    public boolean handleSaveTargetWeight(String targetWeightAsString) {
 
-        int targetWeight = Integer.parseInt(value);
-        if (targetWeight <= SharedPreferenceUtils.getUserWeight(context)) {
+        int targetWeight = Integer.parseInt(targetWeightAsString);
+        if (targetWeight < SharedPreferenceUtils.getUserWeight(context)) {
 
             Toast.makeText(context, R.string.error_target_weight_below_weight, Toast.LENGTH_LONG).show();
             return false;
@@ -107,6 +145,11 @@ public class UserAttributeHandler {
         }
     }
 
+    /**
+     * Uses the SharedPreferenceUtils to store the deadline of the user
+     * @param date the date to store
+     * @return false if the given value was not qualified to store
+     */
     public boolean handleSaveDeadline(Date date) {
 
         if (date == null) {

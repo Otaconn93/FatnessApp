@@ -15,6 +15,10 @@ import com.mobilesysteme.fatnessapp.DateUtils;
 import com.mobilesysteme.fatnessapp.Gender;
 import com.mobilesysteme.fatnessapp.R;
 
+/**
+ * The Activity in which the Settings like the SheredPreferences can be entered by the user
+ * @author Hoffmann
+ */
 public class SettingsActivity extends AppCompatActivity {
 
     @Override
@@ -31,6 +35,9 @@ public class SettingsActivity extends AppCompatActivity {
                 .commit();
     }
 
+    /**
+     * Used to actually handle the settings
+     */
     public static class SettingsFragment extends PreferenceFragmentCompat {
 
         @Override
@@ -79,6 +86,9 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
 
+        /**
+         * Needed to indicate the SettingsFragment where the data is coming from an where to save it to
+         */
         public class DataStore extends PreferenceDataStore {
 
             private UserAttributeHandler userAttributeHandler;
@@ -131,7 +141,7 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                     case SharedPreferenceUtils.USER_WEIGHT_KEY:
 
-                        if (!userAttributeHandler.handleSaveWeight(value)) {
+                        if (!userAttributeHandler.handleSaveWeightNow(value)) {
 
                             String weight = String.valueOf(SharedPreferenceUtils.getUserWeight(getContext()));
                             ((EditTextPreference)findPreference(SharedPreferenceUtils.USER_WEIGHT_KEY)).setText(weight);
@@ -149,7 +159,7 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                     case SharedPreferenceUtils.USER_GENDER_KEY:
 
-                        if (!userAttributeHandler.handleSaveGender(Integer.parseInt(value))) {
+                        if (!userAttributeHandler.handleSaveGender(Gender.findGenderById(Integer.parseInt(value)))) {
 
                             String genderId = String.valueOf(SharedPreferenceUtils.getUserGender(getContext()).getId());
                             ((ListPreference)findPreference(SharedPreferenceUtils.USER_GENDER_KEY)).setValue(genderId);

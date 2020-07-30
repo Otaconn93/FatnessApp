@@ -16,17 +16,10 @@ import com.mobilesysteme.fatnessapp.R;
  */
 public class WelcomeFragment extends Fragment {
 
-    private OnFirstLaunchStepFinished finishListener;
-    private final int actionId = R.id.action_welcomeFragment_to_genderFragment;
+    private final OnFirstLaunchStepFinished finishListener;
 
-    public WelcomeFragment() {
-        // Silence is golden
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        finishListener = (OnFirstLaunchStepFinished) getActivity();
+    public WelcomeFragment(OnFirstLaunchStepFinished myFinishListener) {
+        finishListener = myFinishListener;
     }
 
     @Nullable
@@ -34,7 +27,7 @@ public class WelcomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_welcome, container, false);
-        view.findViewById(R.id.btn_confirmWelcome).setOnClickListener(v -> finishListener.onStepFinished(actionId));
+        view.findViewById(R.id.btn_confirmWelcome).setOnClickListener(v -> finishListener.onStepFinished());
 
         return view;
     }

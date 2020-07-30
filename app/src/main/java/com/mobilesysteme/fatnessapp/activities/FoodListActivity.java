@@ -26,11 +26,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
  * Activity with all foods in a category. The user can select specific consumed food.
- *
  * @author Kevin Bücher
- *
  */
 public class FoodListActivity extends AppCompatActivity implements OnFoodAddListener {
 
@@ -96,7 +93,6 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
 
     /**
      * Creates a set of food from with the same category
-     *
      * @param foodgroup_id
      * @return a set of all food in one category
      */
@@ -167,7 +163,6 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
 
     /**
      * Adds food, if the user clicked at least one time on the increase button
-     *
      * @param food
      * @param calorieSum
      */
@@ -183,7 +178,6 @@ public class FoodListActivity extends AppCompatActivity implements OnFoodAddList
 
     /**
      * Removes food, if the user clicks on the discounter button till 0 is reached.
-     *
      * @param food
      */
     @Override
