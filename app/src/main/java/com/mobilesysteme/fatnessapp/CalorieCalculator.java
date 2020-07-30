@@ -33,6 +33,8 @@ public class CalorieCalculator {
      * Women: BMR = 655 + (9.6 x weight in kg) + (1.8 x height in cm) - (4.7 x age in years)
      * Men: BMR = 66 + (13.7 x weight in kg) + (5 x height in cm) - (6.8 x age in years)
      *
+     * Quelle: https://www.bmi-calculator.net/bmr-calculator/bmr-formula.php
+     *
      * @return average calories per Day calculated from personal details
      */
     private float calculateDailyCalories() {
@@ -53,6 +55,8 @@ public class CalorieCalculator {
     /**
      *  Calculates extra Calories for weight goal per day.
      *  1 kg = 7716.1791764707 Calories -> divided by number of days to deadline
+     *
+     *  Quelle: https://www.convertunits.com/from/calories/to/kilo
      *
      * @return additionally Calories to reach weight Goal
      */
