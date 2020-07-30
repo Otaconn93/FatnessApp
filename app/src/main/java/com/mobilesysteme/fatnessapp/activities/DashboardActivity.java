@@ -33,7 +33,11 @@ import java.util.Date;
 import java.util.Map;
 import java.util.List;
 
-
+/**
+ * Main Activity with all statistics of the users calories and weight.
+ *
+ * @author Kevin Bücher
+ */
 public class DashboardActivity extends AppCompatActivity {
     private TextView dailyCalories;
     private List<Entry> weigtEntries;

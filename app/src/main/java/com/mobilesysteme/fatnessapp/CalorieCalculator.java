@@ -9,6 +9,12 @@ import com.mobilesysteme.fatnessapp.sqlObjects.EatenRecipe;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Calculator for all calorie calculations like how many calories the user have to consume
+ * and how many are left.
+ *
+ * @author Kevin Bücher
+ */
 public class CalorieCalculator {
 
     private final Context context;
