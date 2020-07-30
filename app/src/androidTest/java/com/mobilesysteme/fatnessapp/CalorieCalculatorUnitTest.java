@@ -14,6 +14,9 @@ import static org.junit.Assert.*;
 
 /**
  * dashboard unit test, which tests correct displayed calories.
+ *
+ * @author Kevin Bücher
+ *
  */
 @RunWith(AndroidJUnit4.class)
 public class CalorieCalculatorUnitTest {
