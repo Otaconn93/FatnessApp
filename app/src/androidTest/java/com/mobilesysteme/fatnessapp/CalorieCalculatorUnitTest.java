@@ -80,8 +80,8 @@ public class CalorieCalculatorUnitTest {
     @Test
     public void checkDailyCaloriesWithMinValues_Male() {
 
-        setSharedPrefencesValues(50, 25, Gender.MALE, new Date(new Date().getTime() + DateUtils.WEEK_IN_MILLI_SECS), 175, 75);
-        assertEquals(28890, calorieCalculator.getDailyCalories());
+        setSharedPrefencesValues(2, 0, Gender.MALE, new Date(new Date().getTime() + DateUtils.DAY_IN_MILLI_SECS), 50, 5);
+        assertEquals(23912, calorieCalculator.getDailyCalories());
     }
 
     /**
@@ -92,7 +92,7 @@ public class CalorieCalculatorUnitTest {
 
         setSharedPrefencesValues(2, 0, Gender.MALE, new Date(new Date().getTime() + DateUtils.DAY_IN_MILLI_SECS), 50, 5);
         databaseHelper.addEatenFood(1, 1000, new Date());
-        assertEquals(27890, calorieCalculator.getDailyCaloriesLeft());
+        assertEquals(22912, calorieCalculator.getDailyCaloriesLeft());
     }
 
     /**
