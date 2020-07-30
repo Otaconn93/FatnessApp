@@ -33,7 +33,7 @@ public class DefaultValueTextWatcher implements TextWatcher {
     @Override
     public void afterTextChanged(Editable s) {
         if(!checkValidInputs(String.valueOf(s))){
-            Toast.makeText(context, "Der eingegebene Wert ist ungültig! (Gramm darf nicht negativ sein! " +
+            Toast.makeText(context, "Der eingegebene Wert ist ungültig! (Gramm darf nicht negativ oder 0 sein! " +
                     "Gramm darf nicht höher sein als 10kg! Gramm darf nur aus natürlichen Zahlen bestehen!)",
                     Toast.LENGTH_LONG).show();
             editText.setText(oldValue);
@@ -49,7 +49,7 @@ public class DefaultValueTextWatcher implements TextWatcher {
 
         try {
             int number = Integer.parseInt(input);
-            return (number >= 0 && number <= 10000);
+            return (number > 0 && number <= 10000);
         } catch (NumberFormatException e) {
             return false;
         }
