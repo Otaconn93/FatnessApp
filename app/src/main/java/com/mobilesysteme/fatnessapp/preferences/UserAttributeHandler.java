@@ -54,7 +54,7 @@ public class UserAttributeHandler {
 
         int weight = Integer.parseInt(weightAsString);
         int targetWeight = SharedPreferenceUtils.getUserTargetWeight(context);
-        if (targetWeight != 0 && weight >= targetWeight) {
+        if (targetWeight != 0 && weight > targetWeight) {
 
             Toast.makeText(context,  R.string.error_weight_beyond_target_weight, Toast.LENGTH_LONG).show();
             return false;
@@ -126,7 +126,7 @@ public class UserAttributeHandler {
     public boolean handleSaveTargetWeight(String targetWeightAsString) {
 
         int targetWeight = Integer.parseInt(targetWeightAsString);
-        if (targetWeight <= SharedPreferenceUtils.getUserWeight(context)) {
+        if (targetWeight < SharedPreferenceUtils.getUserWeight(context)) {
 
             Toast.makeText(context, R.string.error_target_weight_below_weight, Toast.LENGTH_LONG).show();
             return false;
