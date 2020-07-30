@@ -47,16 +47,16 @@ public class GenderFragment extends Fragment {
             int selectedId = radioGroup.getCheckedRadioButtonId();
             if(selectedId >= 0) {
 
-                int genderId = -1;
+                Gender gender = null;
                 if (selectedId == R.id.radio_male) {
 
-                    genderId = Gender.MALE.getId();
+                    gender = Gender.MALE;
                 } else if (selectedId == R.id.radio_female) {
 
-                    genderId = Gender.FEMALE.getId();
+                    gender = Gender.FEMALE;
                 }
 
-                if (new UserAttributeHandler(getContext()).handleSaveGender(genderId)) {
+                if (new UserAttributeHandler(getContext()).handleSaveGender(gender)) {
                     finishListener.onStepFinished(actionId);
                 }
             } else {

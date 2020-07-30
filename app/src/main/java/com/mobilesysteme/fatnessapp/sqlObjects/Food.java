@@ -2,6 +2,11 @@ package com.mobilesysteme.fatnessapp.sqlObjects;
 
 import androidx.annotation.Nullable;
 
+/**
+ * The equivalent for the object within the data base
+ * Contains all needed informations for a specific Food
+ * @author Hoffmann
+ */
 public class Food {
 
     private int _id;

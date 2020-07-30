@@ -23,6 +23,9 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
+/**
+ * @author Hoffmann
+ */
 @RunWith(AndroidJUnit4.class)
 public class DatabaseHelperTest {
 
@@ -392,10 +395,5 @@ public class DatabaseHelperTest {
             assertTrue(ingredientQuantityMap.containsKey(foodId));
             assertEquals(ingredientQuantityMap.get(foodId), updatedIngredientEntry.getValue());
         }
-    }
-
-    @Test
-    public void todayEatenCalories() {
-
     }
 }

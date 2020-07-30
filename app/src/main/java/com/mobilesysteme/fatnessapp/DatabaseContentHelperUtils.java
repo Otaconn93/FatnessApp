@@ -2,8 +2,16 @@ package com.mobilesysteme.fatnessapp;
 
 import android.util.Log;
 
+/**
+ * A class used to fill the Database with hardcoded values
+ * @author Hoffmann
+ */
 public abstract class DatabaseContentHelperUtils {
 
+    /**
+     * Fills the data base tables with the following hardcoded entries
+     * @param databaseHelper the helper class used to get access to the database
+     */
     public static void fillDatabase(DatabaseHelper databaseHelper) {
 
         try {
@@ -455,7 +463,7 @@ public abstract class DatabaseContentHelperUtils {
         databaseHelper.addFoodGroup(-1, "Backwaren und Getreideprodukte");
         databaseHelper.addFoodGroup(-1, "Hülsenfrüchte");
         databaseHelper.addFoodGroup(-1, "Getränke");
-        databaseHelper.addFoodGroup(-1, "Süßigkeiten und Fast Food");
+        databaseHelper.addFoodGroup(-1, "Süßigkeiten und Fastfood");
         databaseHelper.addFoodGroup(-1, "Sonstiges");
 
         databaseHelper.addFoodGroup(1, "Obst");                                             // 9

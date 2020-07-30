@@ -10,7 +10,11 @@ import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.TreeMap;
 
-public class SharedPreferenceUtils {
+/**
+ * A utils handeling the usages of the SharedPreferences
+ * @author Hoffmann
+ */
+public abstract class SharedPreferenceUtils {
 
     private static final String FILE_NAME = "FatnessPreferences";
 
@@ -119,13 +123,23 @@ public class SharedPreferenceUtils {
         return new Date(context.getSharedPreferences(FILE_NAME, 0)
                 .getLong(USER_DEADLINE_KEY, 0));
     }
+
+    /**
+     * extracts from the SharedPreferences the information whether or not the app is started for the first time
+     * @param context the ApplicationContext needed to access the SharedPreferences
+     * @return false if the FirstLaunchFlow already got executed successfully at least once since installation
+     */
+    public static boolean getFirstLaunch(Context context) {
+        return context.getSharedPreferences(FILE_NAME, 0)
+                .getBoolean(FIRST_LAUNCH_KEY, true);
+    }
   
     /**
      * saves the users height to the SharedPreferences
      * @param context the ApplicationContext needed to access the SharedPreferences
      * @param heightInCentimeter the height of the user in centimeter
      */
-    public static void saveUserHeight(Context context, int heightInCentimeter) {
+    static void saveUserHeight(Context context, int heightInCentimeter) {
 
         context.getSharedPreferences(FILE_NAME, 0)
                 .edit()
@@ -139,7 +153,7 @@ public class SharedPreferenceUtils {
      * @param date the Date where the user had the given
      * @param weightInKilogram the weight of the user in kilogram
      */
-    public static void saveUserWeight(Context context, Date date, int weightInKilogram) {
+    static void saveUserWeight(Context context, Date date, int weightInKilogram) {
 
         TreeMap<Long, Integer> userWeightHistory = getUserWeightHistory(context);
         if (userWeightHistory.isEmpty()) {
@@ -155,20 +169,11 @@ public class SharedPreferenceUtils {
     }
 
     /**
-     * saves the users weight to the SharedPreferences for right now
-     * @param context the ApplicationContext needed to access the SharedPreferences
-     * @param weightInKilogram the weight of the user in kilogram
-     */
-    public static void saveUserWeightNow(Context context, int weightInKilogram) {
-        saveUserWeight(context, new Date(), weightInKilogram);
-    }
-
-    /**
      * saves the users age to the SharedPreferences
      * @param context the ApplicationContext needed to access the SharedPreferences
      * @param ageInYears the age of the user in years
      */
-    public static void saveUserAge(Context context, int ageInYears) {
+    static void saveUserAge(Context context, int ageInYears) {
 
         context.getSharedPreferences(FILE_NAME, 0)
                 .edit()
@@ -181,7 +186,7 @@ public class SharedPreferenceUtils {
      * @param context the ApplicationContext needed to access the SharedPreferences
      * @param gender the gender of the user
      */
-    public static void saveUserGender(Context context, Gender gender) {
+    static void saveUserGender(Context context, Gender gender) {
 
         context.getSharedPreferences(FILE_NAME, 0)
                 .edit()
@@ -190,24 +195,11 @@ public class SharedPreferenceUtils {
     }
 
     /**
-     * saves the users targeted weight to the SharedPreferences
-     * saves the status of the first activity launch to the SharedPreferences
-     * @param context the ApplicationContext needed to access the SharedPreferences
-     * @param newValue updated first launch value
-     */
-    public static void saveFirstLaunch(Context context, boolean newValue) {
-        context.getSharedPreferences(FILE_NAME, 0)
-                .edit()
-                .putBoolean(FIRST_LAUNCH_KEY, newValue)
-                .apply();
-    }
-
-    /**
      * extracts the users height from the SharedPreferences
      * @param context the ApplicationContext needed to access the SharedPreferences
      * @param targetWeight the targeted weight of the user in kg
      */
-    public static void saveUserTargetWeight(Context context, int targetWeight) {
+    static void saveUserTargetWeight(Context context, int targetWeight) {
 
         context.getSharedPreferences(FILE_NAME, 0)
                 .edit()
@@ -220,7 +212,7 @@ public class SharedPreferenceUtils {
      * @param context the ApplicationContext needed to access the SharedPreferences
      * @param deadline the date of the users deadline
      */
-    public static void saveUserDeadline(Context context, Date deadline) {
+    static void saveUserDeadline(Context context, Date deadline) {
 
         context.getSharedPreferences(FILE_NAME, 0)
                 .edit()
@@ -229,13 +221,16 @@ public class SharedPreferenceUtils {
     }
 
     /**
-     *  extracts the status of the first app launch from the SharedPreferences
+     * saves within the SharedPreferences the information whether or not the app is started for the first time
      * @param context the ApplicationContext needed to access the SharedPreferences
-     * @return if the app is launched for the first time
+     * @param isFirstLaunch updated first launch value
      */
-    public static boolean getFirstLaunch(Context context) {
-        return context.getSharedPreferences(FILE_NAME, 0)
-                .getBoolean(FIRST_LAUNCH_KEY, true);
+    public static void saveFirstLaunch(Context context, boolean isFirstLaunch) {
+
+        context.getSharedPreferences(FILE_NAME, 0)
+                .edit()
+                .putBoolean(FIRST_LAUNCH_KEY, isFirstLaunch)
+                .apply();
     }
 
     /**
@@ -310,6 +305,18 @@ public class SharedPreferenceUtils {
                 .apply();
     }
 
+    /**
+     * removes the users deadline to achieve its target weight from the SharedPreferences
+     * @param context the ApplicationContext needed to access the SharedPreferences
+     */
+    public static void removeFirstLaunch(Context context) {
+
+        context.getSharedPreferences(FILE_NAME, 0)
+                .edit()
+                .remove(FIRST_LAUNCH_KEY)
+                .apply();
+    }
+
     public static void resetAll(Context context) {
 
         removeUserWeight(context);
@@ -318,6 +325,6 @@ public class SharedPreferenceUtils {
         removeUserGender(context);
         removeUserTargetWeight(context);
         removeUserHeight(context);
-        saveFirstLaunch(context, true);
+        removeFirstLaunch(context);
     }
 }
