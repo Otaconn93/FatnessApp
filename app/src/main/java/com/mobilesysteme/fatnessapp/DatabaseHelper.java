@@ -22,6 +22,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The Helper class which is building and using the data base
+ * @author Hoffmann
+ */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "fatness.db";
@@ -806,58 +810,58 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * delete one the Unit with the given id
      */
-    public boolean deleteUnitById(int _id) {
-        return delete("DELETE FROM " + UNIT_TABLE_NAME + " WHERE " + UNIT_ID + " = '" + _id + "'");
+    public void deleteUnitById(int _id) {
+        delete("DELETE FROM " + UNIT_TABLE_NAME + " WHERE " + UNIT_ID + " = '" + _id + "'");
     }
 
     /**
      * delete one the FoodGroup with the given id
      */
-    public boolean deleteFoodGroupById(int _id) {
-        return delete("DELETE FROM " + FOODGROUP_TABLE_NAME + " WHERE " + FOODGROUP_ID + " = '" + _id + "'");
+    public void deleteFoodGroupById(int _id) {
+        delete("DELETE FROM " + FOODGROUP_TABLE_NAME + " WHERE " + FOODGROUP_ID + " = '" + _id + "'");
     }
 
     /**
      * delete one the Food with the given id
      */
-    public boolean deleteFoodById(int _id) {
-        return delete("DELETE FROM " + FOOD_TABLE_NAME + " WHERE " + FOOD_ID + " = '" + _id + "'");
+    public void deleteFoodById(int _id) {
+        delete("DELETE FROM " + FOOD_TABLE_NAME + " WHERE " + FOOD_ID + " = '" + _id + "'");
     }
 
     /**
      * delete one the Recipe with the given id
      */
-    public boolean deleteRecipeById(int _id) {
-        return delete("DELETE FROM " + RECIPE_TABLE_NAME + " WHERE " + RECIPE_ID + " = '" + _id + "'");
+    public void deleteRecipeById(int _id) {
+        delete("DELETE FROM " + RECIPE_TABLE_NAME + " WHERE " + RECIPE_ID + " = '" + _id + "'");
     }
 
     /**
      * delete one the RecipeIngredient with the given id
      */
-    public boolean deleteRecipeIngredientsByRecipeId(int recipe_id) {
-        return delete("DELETE FROM " + RECIPEINGREDIENT_TABLE_NAME + " WHERE " + RECIPEINGREDIENT_RECIPE_ID + " = '" + recipe_id + "'");
+    public void deleteRecipeIngredientsByRecipeId(int recipe_id) {
+        delete("DELETE FROM " + RECIPEINGREDIENT_TABLE_NAME + " WHERE " + RECIPEINGREDIENT_RECIPE_ID + " = '" + recipe_id + "'");
     }
 
     /**
      * delete one the EatenFood with the given id
      */
-    public boolean deleteEatenFoodById(int _id) {
-        return delete("DELETE FROM " + EATENFOOD_TABLE_NAME + " WHERE " + EATEN_ID + " = '" + _id + "'");
+    public void deleteEatenFoodById(int _id) {
+        delete("DELETE FROM " + EATENFOOD_TABLE_NAME + " WHERE " + EATEN_ID + " = '" + _id + "'");
     }
 
     /**
      * delete one the EatenRecipe with the given id
      */
-    public boolean deleteEatenRecipeById(int _id) {
-        return delete("DELETE FROM " + EATENRECIPE_TABLE_NAME + " WHERE " + EATEN_ID + " = '" + _id + "'");
+    public void deleteEatenRecipeById(int _id) {
+        delete("DELETE FROM " + EATENRECIPE_TABLE_NAME + " WHERE " + EATEN_ID + " = '" + _id + "'");
     }
 
-    private boolean delete(String deleteStatement) {
+    private void delete(String deleteStatement) {
 
         try(SQLiteDatabase db = this.getWritableDatabase();
             Cursor cursor = db.rawQuery(deleteStatement, null)) {
 
-            return cursor.moveToFirst();
+            cursor.moveToFirst();
         }
     }
 }

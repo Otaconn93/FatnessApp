@@ -35,7 +35,7 @@ public class CurrentWeightFragment extends Fragment {
         // On-Confirm operation
         view.findViewById(R.id.btn_confirmCurrentWeight).setOnClickListener(v -> {
 
-            if (new UserAttributeHandler(getContext()).handleSaveWeight(String.valueOf(currentWeightNumber.getText()))) {
+            if (new UserAttributeHandler(getContext()).handleSaveWeightNow(String.valueOf(currentWeightNumber.getText()))) {
                 finishListener.onStepFinished();
             }
         });

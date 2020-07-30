@@ -27,17 +27,14 @@ import com.mobilesysteme.fatnessapp.DateUtils;
 import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.preferences.SettingsActivity;
 import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
+import com.mobilesysteme.fatnessapp.preferences.UserAttributeHandler;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 import java.util.List;
 
-/**
- * Main Activity with all statistics of the users calories and weight.
- *
- * @author Kevin Bücher
- */
+
 public class DashboardActivity extends AppCompatActivity {
     private TextView dailyCalories;
     private List<Entry> weigtEntries;
@@ -56,6 +53,7 @@ public class DashboardActivity extends AppCompatActivity {
             Intent intent = new Intent(this, FirstLaunchActivity.class);
             startActivity(intent);
             databaseHelper.refillDatabase();
+            SharedPreferenceUtils.resetAll(getApplicationContext());
             finish();
         } else {
             init();
@@ -199,7 +197,7 @@ public class DashboardActivity extends AppCompatActivity {
                 case DialogInterface.BUTTON_NEUTRAL:
                     break;
                 case DialogInterface.BUTTON_NEGATIVE:
-                    SharedPreferenceUtils.saveUserWeightNow(this, SharedPreferenceUtils.getUserWeight(this));
+                    new UserAttributeHandler(getApplicationContext()).handleSaveWeightNow(String.valueOf(SharedPreferenceUtils.getUserWeight(this)));
                     break;
             }
         };
