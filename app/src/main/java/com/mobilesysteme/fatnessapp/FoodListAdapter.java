@@ -13,6 +13,12 @@ import com.mobilesysteme.fatnessapp.sqlObjects.Food;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Adapter for the cards in FoodListActivity. Describes the functionality every single card.
+ *
+ * @author Kevin Bücher
+ *
+ */
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodListViewHolder> {
 
     private List<Food> foods;
