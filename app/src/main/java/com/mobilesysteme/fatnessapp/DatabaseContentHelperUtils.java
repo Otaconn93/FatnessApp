@@ -65,13 +65,13 @@ public abstract class DatabaseContentHelperUtils {
 
         databaseHelper.addRecipe("Nudeln mit Arrabiata", "Nudeln nach Packungsanleitung aufsetzen\n" +
                 "Zwiebeln und Knoblauchzehe schneiden\n" +
-                "Olivenöl in Pfanne erhitzen4. Zwiebel und Knoblauch andünsten\n" +
+                "Olivenöl in Pfanne erhitzen. Zwiebel und Knoblauch andünsten\n" +
                 "Tomaten hinzugeben\n" +
                 "Ein wenig Wasser hinzufügen\n" +
                 "Oben genannte Gewürze hinzufügen\n" +
                 "ca.10 min köcheln lassen\n" +
                 "Fertig!");
-        databaseHelper.addRecipeIngredient(3, 143, 200); // Nudeln
+        databaseHelper.addRecipeIngredient(3, 134, 200); // Nudeln
         databaseHelper.addRecipeIngredient(3, 95, 100); // tomate
         databaseHelper.addRecipeIngredient(3, 97, 83); // Zwiebel
         databaseHelper.addRecipeIngredient(3, 33, 3); // Knoblauch-Zehe
@@ -104,7 +104,7 @@ public abstract class DatabaseContentHelperUtils {
                 "Nudeln nach Packungsanleitung aufsetzen\n" +
                 "Gemüse und Linsen köcheln lassen, bis alles gut durch ist\n" +
                 "Fertig!");
-        databaseHelper.addRecipeIngredient(5, 143, 200); // Nudeln
+        databaseHelper.addRecipeIngredient(5, 134, 200); // Nudeln
         databaseHelper.addRecipeIngredient(5, 26, 100); // Linsen
         databaseHelper.addRecipeIngredient(5, 79, 180); // 2 mittelgroße Kartoffeln
         databaseHelper.addRecipeIngredient(5, 82, 140); // 1 Lauch
@@ -199,7 +199,7 @@ public abstract class DatabaseContentHelperUtils {
                 "Feta-Käse zerkleinern und auf dem Gemüse zerstreuen\n" +
                 "Gemüse zusammen mit den Nudeln anrichten\n" +
                 "Fertig!");
-        databaseHelper.addRecipeIngredient(11, 143, 200); // Nudeln
+        databaseHelper.addRecipeIngredient(11, 134, 200); // Nudeln
         databaseHelper.addRecipeIngredient(11, 85, 310); // 2 Paprika-Schoten
         databaseHelper.addRecipeIngredient(11, 96, 420); // 3 kleine Zucchini
         databaseHelper.addRecipeIngredient(11, 95, 100); // tomate
