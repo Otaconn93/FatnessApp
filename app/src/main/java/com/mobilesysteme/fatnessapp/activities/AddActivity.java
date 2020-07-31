@@ -11,6 +11,9 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.mobilesysteme.fatnessapp.R;
 import com.mobilesysteme.fatnessapp.TabStatusAdapter;
 
+/**
+ * @author Grabau, Bücher, Hoffmann
+ */
 public class AddActivity extends AppCompatActivity {
 
     @Override

@@ -12,6 +12,9 @@ import com.mobilesysteme.fatnessapp.sqlObjects.FoodGroup;
 
 import java.util.List;
 
+/**
+ * @author Grabau
+ */
 public class RootFoodGroupAdapter extends RecyclerView.Adapter<RootFoodGroupAdapter.RootFoodGroupViewHolder> {
 
     private List<FoodGroup> foodGroups;

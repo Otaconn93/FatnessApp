@@ -8,6 +8,9 @@ import android.widget.Toast;
 
 import com.mobilesysteme.fatnessapp.sqlObjects.Food;
 
+/**
+ * @author Bücher
+ */
 public class DefaultValueTextWatcher implements TextWatcher {
 
     private final Food currentFood;

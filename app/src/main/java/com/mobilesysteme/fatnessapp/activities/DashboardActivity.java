@@ -34,7 +34,9 @@ import java.util.Date;
 import java.util.Map;
 import java.util.List;
 
-
+/**
+ * @author Grabau, Bücher, Hoffmann
+ */
 public class DashboardActivity extends AppCompatActivity {
     private TextView dailyCalories;
     private List<Entry> weigtEntries;

@@ -9,6 +9,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.mobilesysteme.fatnessapp.fragments.AddFoodFragment;
 import com.mobilesysteme.fatnessapp.fragments.AddRecipeFragment;
 
+/**
+ * @author Grabau
+ */
 public class TabStatusAdapter extends FragmentStateAdapter {
 
     private final AddFoodFragment addFoodFragment;

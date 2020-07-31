@@ -22,6 +22,9 @@ import com.mobilesysteme.fatnessapp.sqlObjects.Recipe;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Grabau
+ */
 public class AddRecipeFragment extends Fragment implements OnRecipeClickListener {
 
     public static final String RECIPE_ID_KEY = "RECIPE_ID";

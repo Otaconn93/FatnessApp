@@ -10,7 +10,7 @@ import java.util.Locale;
 
 /**
  * A Utils class handling the parsing of Dates and containing different time units in shape of milli seconds
- * @author Hoffmann (aka 13Dexter31)
+ * @author Hoffmann
  */
 public abstract class DateUtils {
 

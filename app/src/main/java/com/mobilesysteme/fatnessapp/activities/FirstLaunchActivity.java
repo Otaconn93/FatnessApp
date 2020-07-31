@@ -24,7 +24,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * @MaxGrabau
+ * @author Grabau, Hoffmann
  */
 public class FirstLaunchActivity extends AppCompatActivity implements OnFirstLaunchStepFinished {
 

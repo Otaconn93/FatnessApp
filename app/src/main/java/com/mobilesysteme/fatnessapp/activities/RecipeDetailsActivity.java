@@ -22,6 +22,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * @author Grabau
+ */
 public class RecipeDetailsActivity extends AppCompatActivity {
 
     private DatabaseHelper databaseHelper;

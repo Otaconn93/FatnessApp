@@ -24,6 +24,9 @@ import com.mobilesysteme.fatnessapp.sqlObjects.FoodGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Grabau
+ */
 public class AddFoodFragment extends Fragment implements OnFoodGroupClickListener {
 
     private DatabaseHelper databaseHelper;

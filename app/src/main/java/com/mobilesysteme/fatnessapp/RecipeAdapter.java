@@ -12,6 +12,9 @@ import com.mobilesysteme.fatnessapp.sqlObjects.Recipe;
 
 import java.util.List;
 
+/**
+ * @author Grabau
+ */
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
     private List<Recipe> recipes;
