@@ -16,7 +16,10 @@ import com.mobilesysteme.fatnessapp.R;
  */
 public class WelcomeFragment extends Fragment {
 
-    private final OnFirstLaunchStepFinished finishListener;
+    private OnFirstLaunchStepFinished finishListener;
+
+    public WelcomeFragment() {
+    }
 
     public WelcomeFragment(OnFirstLaunchStepFinished myFinishListener) {
         finishListener = myFinishListener;

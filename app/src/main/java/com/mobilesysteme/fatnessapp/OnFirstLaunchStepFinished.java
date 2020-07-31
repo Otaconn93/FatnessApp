@@ -10,4 +10,6 @@ public interface OnFirstLaunchStepFinished {
      * Indicates that a step of the first launch flow is completed.
      */
     void onStepFinished();
+
+    void onStepCanceled();
 }

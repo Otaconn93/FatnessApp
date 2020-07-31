@@ -21,7 +21,10 @@ import com.mobilesysteme.fatnessapp.preferences.UserAttributeHandler;
  */
 public class GenderFragment extends Fragment {
 
-    private final OnFirstLaunchStepFinished finishListener;
+    private OnFirstLaunchStepFinished finishListener;
+
+    public GenderFragment() {
+    }
 
     public GenderFragment(OnFirstLaunchStepFinished myFinishListener) {
         finishListener = myFinishListener;
