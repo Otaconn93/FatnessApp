@@ -20,7 +20,10 @@ import com.mobilesysteme.fatnessapp.preferences.UserAttributeHandler;
  */
 public class TimeGoalFragment extends Fragment {
 
-    private final OnFirstLaunchStepFinished finishListener;
+    private OnFirstLaunchStepFinished finishListener;
+
+    public TimeGoalFragment() {
+    }
 
     public TimeGoalFragment(OnFirstLaunchStepFinished myFinishListener) {
         finishListener = myFinishListener;

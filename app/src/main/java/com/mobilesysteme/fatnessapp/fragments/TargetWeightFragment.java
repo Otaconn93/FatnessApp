@@ -20,7 +20,10 @@ import com.mobilesysteme.fatnessapp.preferences.UserAttributeHandler;
  */
 public class TargetWeightFragment extends Fragment {
 
-    private final OnFirstLaunchStepFinished finishListener;
+    private OnFirstLaunchStepFinished finishListener;
+
+    public TargetWeightFragment() {
+    }
 
     public TargetWeightFragment(OnFirstLaunchStepFinished myFinishListener) {
         finishListener = myFinishListener;

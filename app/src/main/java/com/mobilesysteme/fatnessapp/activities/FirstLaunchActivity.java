@@ -8,27 +8,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.mobilesysteme.fatnessapp.FirstLaunchFlow;
 import com.mobilesysteme.fatnessapp.OnFirstLaunchStepFinished;
-import com.mobilesysteme.fatnessapp.fragments.AgeFragment;
-import com.mobilesysteme.fatnessapp.fragments.CurrentWeightFragment;
 import com.mobilesysteme.fatnessapp.R;
-import com.mobilesysteme.fatnessapp.fragments.GenderFragment;
-import com.mobilesysteme.fatnessapp.fragments.HeightFragment;
-import com.mobilesysteme.fatnessapp.fragments.TargetWeightFragment;
-import com.mobilesysteme.fatnessapp.fragments.TimeGoalFragment;
-import com.mobilesysteme.fatnessapp.fragments.WelcomeFragment;
 import com.mobilesysteme.fatnessapp.preferences.SharedPreferenceUtils;
 
 import java.lang.reflect.Constructor;
-import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * @MaxGrabau
  */
 public class FirstLaunchActivity extends AppCompatActivity implements OnFirstLaunchStepFinished {
 
-    private Queue<Class> fragmentQueue; // queue which handles the order of fragments to load
+    private FirstLaunchFlow firstLaunchFlow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,29 +29,36 @@ public class FirstLaunchActivity extends AppCompatActivity implements OnFirstLau
         init();
     }
 
+    @Override
+    public void onBackPressed() {
+
+        super.onBackPressed();
+
+        firstLaunchFlow.decrementCursor();
+        replaceFragment(getFragmentFromConstructor(firstLaunchFlow.getFragment()), false);
+    }
+
     /**
      * Initializes the new FirstLaunchActivity and sets up the fragment queue.
      */
     public void init() {
 
-        initFirstLaunchFlow();
-
-        replaceFragment(new WelcomeFragment(this), false);
+        firstLaunchFlow = FirstLaunchFlow.getInstance();
+        replaceFragment(getFragmentFromConstructor(firstLaunchFlow.getFragment()), false);
     }
 
-    /**
-     * initializes the Queue with the order of the first launch flow Fragments
-     */
-    private void initFirstLaunchFlow() {
+    private Fragment getFragmentFromConstructor(Constructor constructor) {
 
-        fragmentQueue = new LinkedList<>();
+        if (constructor == null) {
+            return null;
+        }
 
-        fragmentQueue.add(GenderFragment.class);
-        fragmentQueue.add(AgeFragment.class);
-        fragmentQueue.add(HeightFragment.class);
-        fragmentQueue.add(CurrentWeightFragment.class);
-        fragmentQueue.add(TargetWeightFragment.class);
-        fragmentQueue.add(TimeGoalFragment.class);
+        try {
+            return (Fragment) constructor.newInstance(this);
+        } catch (ReflectiveOperationException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -93,16 +92,26 @@ public class FirstLaunchActivity extends AppCompatActivity implements OnFirstLau
      */
     @Override
     public void onStepFinished() {
-        try {
-            if(fragmentQueue.size() >= 1) {
-                Class nextFragment = fragmentQueue.poll();
-                Constructor constructor = nextFragment.getConstructor(OnFirstLaunchStepFinished.class);
-                replaceFragment((Fragment) constructor.newInstance(this), true);
-            } else {
-                openDashboardActivity();
-            }
-        } catch (ReflectiveOperationException e) {
-            e.printStackTrace();
+
+        firstLaunchFlow.incrementCursor();
+        Fragment fragment = getFragmentFromConstructor(firstLaunchFlow.getFragment());
+        if(fragment != null) {
+            replaceFragment(fragment, true);
+        } else {
+            openDashboardActivity();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * Instantiates a new fragment from the class given by the fragmentQueue and loads it into the activity
+     */
+    @Override
+    public void onStepCanceled() {
+
+        Fragment fragment = getFragmentFromConstructor(firstLaunchFlow.goBack());
+        if(fragment != null) {
+            replaceFragment(fragment, true);
         }
     }
 }

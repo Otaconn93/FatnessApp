@@ -20,7 +20,10 @@ import com.mobilesysteme.fatnessapp.preferences.UserAttributeHandler;
  */
 public class AgeFragment extends Fragment {
 
-    private final OnFirstLaunchStepFinished finishListener;
+    private OnFirstLaunchStepFinished finishListener;
+
+    public AgeFragment() {
+    }
 
     public AgeFragment(OnFirstLaunchStepFinished myFinishListener) {
         finishListener = myFinishListener;

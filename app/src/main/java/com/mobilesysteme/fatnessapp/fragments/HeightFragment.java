@@ -20,7 +20,10 @@ import com.mobilesysteme.fatnessapp.preferences.UserAttributeHandler;
  */
 public class HeightFragment extends Fragment {
 
-    private final OnFirstLaunchStepFinished finishListener;
+    private OnFirstLaunchStepFinished finishListener;
+
+    public HeightFragment() {
+    }
 
     public HeightFragment(OnFirstLaunchStepFinished myFinishListener) {
         finishListener = myFinishListener;
